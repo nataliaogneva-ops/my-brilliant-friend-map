@@ -4,30 +4,44 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Brilliant Friend by Elena Ferrante — Book Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
+  /* ── Design System: Industrial Editorial v2.0 ── */
   --cluster-greco:     #1A3A5C;
-  --cluster-cerullo:   #7B2D8B;
+  --cluster-cerullo:   #6B1F7A;
   --cluster-carracci:  #B5411C;
-  --cluster-peluso:    #2E6B3E;
-  --cluster-sarratore: #8B6914;
-  --cluster-cappuccio: #1D6B8A;
-  --cluster-solara:    #A0272B;
-  --cluster-scanno:    #3D6B4F;
-  --cluster-spagnuolo: #6B3A6B;
-  --cluster-other:     #4A4A5A;
+  --cluster-peluso:    #1E5C30;
+  --cluster-sarratore: #7A5A0A;
+  --cluster-cappuccio: #0F5470;
+  --cluster-solara:    #9E1F23;
+  --cluster-scanno:    #2A5C40;
+  --cluster-spagnuolo: #5A2A5A;
+  --cluster-other:     #3E3830;
 
-  --surface-bg:    #0D1117;
-  --surface-panel: #161B22;
-  --surface-card:  #1C2431;
-  --surface-hover: #252D3A;
+  /* Surfaces */
+  --surface-bg:    #F4EAD5;
+  --surface-panel: #DBCBAF;
+  --surface-card:  #F4EAD5;
+  --surface-hover: #EDE0C4;
 
-  --text-primary:   #E6EDF3;
-  --text-secondary: #8B949E;
-  --text-muted:     #484F58;
+  /* Text */
+  --text-primary:   #3E2C1B;
+  --text-secondary: #7A614A;
+  --text-muted:     rgba(62,44,27,0.45);
 
-  --border-subtle:  rgba(255,255,255,0.07);
-  --border-default: rgba(255,255,255,0.12);
+  /* Borders */
+  --border-subtle:  rgba(62,44,27,0.18);
+  --border-default: #3E2C1B;
+
+  /* Accent */
+  --accent: #0033CC;
+
+  /* Fonts */
+  --font-display: "Helvetica Neue", "Inter", sans-serif;
+  --font-mono:    "Space Mono", "Roboto Mono", monospace;
+  --font-serif:   "Playfair Display", "Georgia", serif;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-fast: 140ms;
@@ -36,7 +50,7 @@
 
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: var(--font-display);
   background: var(--surface-bg);
   color: var(--text-primary);
   height: 100dvh;
@@ -49,15 +63,14 @@ body {
 #header {
   flex-shrink: 0;
   background: var(--surface-panel);
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-default);
   z-index: 20;
 }
-#header-top {
-  padding: 14px 24px;
-}
+#header-top { padding: 14px 24px; }
 #header h1 {
-  font-size: 16px; font-weight: 600;
-  letter-spacing: .09em; text-transform: uppercase;
+  font-family: var(--font-mono);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: .10em; text-transform: uppercase;
   color: var(--text-secondary);
 }
 #header h1 span { color: var(--text-primary); }
@@ -68,67 +81,83 @@ body {
 /* ── Chapter strip ── */
 #chapter-strip {
   padding: 16px 24px 18px;
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-default);
   background: var(--surface-panel);
   position: sticky; top: 0; z-index: 10;
 }
 #chapter-strip-label {
-  display: flex; align-items: baseline; gap: 6px;
-  margin-bottom: 10px;
+  display: flex; align-items: baseline; gap: 8px;
+  margin-bottom: 14px;
 }
 #chapter-label-text {
-  font-size: 12px; font-weight: 700;
-  letter-spacing: .12em; text-transform: uppercase;
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .15em; text-transform: uppercase;
   color: var(--text-muted);
 }
 #chapter-val {
-  font-size: 26px; font-weight: 700;
-  color: var(--text-primary);
-  line-height: 1; min-width: 36px; letter-spacing: -.02em;
+  font-family: var(--font-mono);
+  font-size: 24px; font-weight: 700;
+  color: var(--accent);
+  line-height: 1; min-width: 36px;
 }
-#chapter-val-suffix { font-size: 14px; color: var(--text-muted); }
-#chapter-era { font-size: 14px; color: var(--text-secondary); font-style: italic; }
+#chapter-val-suffix {
+  font-family: var(--font-mono);
+  font-size: 12px; color: var(--text-muted);
+}
+#chapter-era {
+  font-family: var(--font-serif);
+  font-size: 14px; color: var(--text-secondary); font-style: italic;
+}
 
+/* Slider — 1px track, square #0033CC node */
 #chapter-slider {
   -webkit-appearance: none; appearance: none;
-  width: 100%; height: 4px; border-radius: 2px;
+  width: 100%; height: 1px;
   background: linear-gradient(
     to right,
-    var(--text-primary) 0%,
-    var(--text-primary) calc(var(--pct,0%) * 1%),
-    var(--surface-hover) calc(var(--pct,0%) * 1%),
-    var(--surface-hover) 100%
+    var(--accent) 0%,
+    var(--accent) calc(var(--pct,0%) * 1%),
+    var(--border-default) calc(var(--pct,0%) * 1%),
+    var(--border-default) 100%
   );
   outline: none; cursor: pointer;
 }
 #chapter-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 20px; height: 20px; border-radius: 50%;
-  background: var(--text-primary);
-  border: 3px solid var(--surface-bg);
-  box-shadow: 0 0 0 1.5px rgba(255,255,255,.25), 0 2px 8px rgba(0,0,0,.5);
+  width: 14px; height: 14px; border-radius: 0;
+  background: var(--accent);
+  border: none;
   transition: transform var(--dur-fast);
 }
-#chapter-slider:active::-webkit-slider-thumb { transform: scale(1.15); }
-#chapter-ticks { display: flex; justify-content: space-between; margin-top: 6px; padding: 0 2px; }
-#chapter-ticks span { font-size: 12px; color: var(--text-muted); }
+#chapter-slider:active::-webkit-slider-thumb { transform: scale(1.2); }
+#chapter-ticks {
+  display: flex; justify-content: space-between;
+  margin-top: 6px; padding: 0 1px;
+}
+#chapter-ticks span {
+  font-family: var(--font-mono);
+  font-size: 10px; text-transform: uppercase;
+  color: var(--text-muted);
+}
 
 /* ── Timeline ── */
-#timeline-bar { background: var(--surface-panel); }
-#timeline-header { padding: 10px 24px 6px; }
+#timeline-bar { background: var(--surface-bg); border-bottom: 1px solid var(--border-default); }
+#timeline-header { padding: 16px 24px 8px; }
 #timeline-header-label {
-  font-size: 14px; font-weight: 700;
-  letter-spacing: .12em; text-transform: uppercase;
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .15em; text-transform: uppercase;
   color: var(--text-muted);
 }
 #timeline-scroll {
-  display: flex; gap: 10px;
-  padding: 0 24px 12px;
+  display: flex; gap: 12px;
+  padding: 0 24px 16px;
   overflow-x: auto; scrollbar-width: thin;
   scrollbar-color: var(--border-default) transparent;
 }
-#timeline-scroll::-webkit-scrollbar { height: 3px; }
-#timeline-scroll::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 2px; }
+#timeline-scroll::-webkit-scrollbar { height: 2px; }
+#timeline-scroll::-webkit-scrollbar-thumb { background: var(--border-default); }
 
 .timeline-event {
   flex-shrink: 0; width: 180px; height: 172px;
@@ -141,62 +170,80 @@ body {
 }
 .timeline-event.future .tl-inner { transform: rotateY(180deg); }
 .tl-front, .tl-back {
-  position: absolute; inset: 0; border-radius: 8px;
+  position: absolute; inset: 0; border-radius: 0;
   backface-visibility: hidden; -webkit-backface-visibility: hidden;
 }
 .tl-front {
   background: var(--surface-card);
-  border: 1px solid var(--border-subtle);
-  padding: 8px 12px;
-  transition: background var(--dur-fast), border-color var(--dur-fast);
+  border: 1px solid var(--border-default);
+  box-shadow: 3px 3px 0 var(--border-default);
+  padding: 10px 12px;
+  transition: background var(--dur-fast);
 }
 .timeline-event.current .tl-front {
-  background: var(--surface-hover);
-  border-color: rgba(255,255,255,.2);
+  background: var(--surface-panel);
+  border-color: var(--accent);
+  box-shadow: 3px 3px 0 var(--accent);
 }
 .tl-back {
-  background: var(--surface-card);
-  border: 1px solid var(--border-subtle);
+  background: var(--surface-panel);
+  border: 1px solid var(--border-default);
+  box-shadow: 3px 3px 0 var(--border-default);
   transform: rotateY(180deg);
   display: flex; align-items: center; justify-content: center;
+  background-image: radial-gradient(circle, rgba(62,44,27,0.12) 1px, transparent 1px);
+  background-size: 8px 8px;
 }
 .tl-back-mark {
-  width: 28px; height: 28px; border-radius: 50%;
+  width: 24px; height: 24px; border-radius: 0;
   border: 1px solid var(--border-default); opacity: .3;
 }
-.timeline-num { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+.timeline-num { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
 .tl-dot {
-  width: 18px; height: 18px; border-radius: 50%;
-  background: var(--surface-hover);
+  width: 18px; height: 18px; border-radius: 0;
+  background: var(--surface-panel);
   border: 1px solid var(--border-default);
   display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 700; color: var(--text-secondary); flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 700; color: var(--text-secondary); flex-shrink: 0;
 }
-.tl-dot.current-dot { background: var(--text-primary); color: var(--surface-bg); border-color: transparent; }
-.timeline-year { font-size: 12px; color: var(--text-muted); }
-.timeline-title { font-size: 15px; font-weight: 600; color: var(--text-primary); line-height: 1.35; margin-bottom: 4px; }
-.timeline-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.55; }
+.tl-dot.current-dot { background: var(--accent); color: #F4EAD5; border-color: var(--accent); }
+.timeline-year {
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em;
+}
+.timeline-title {
+  font-family: var(--font-serif);
+  font-size: 15px; font-weight: 700; color: var(--text-primary); line-height: 1.3; margin-bottom: 5px;
+}
+.timeline-desc {
+  font-size: 11px; color: var(--text-secondary); line-height: 1.6;
+}
 
 /* ── Main grid ── */
 #cluster-grid {
   columns: 3; column-gap: 16px;
-  padding: 16px 24px 32px;
+  padding: 24px 24px 48px;
 }
 
 /* ── Family card ── */
 .family-card {
   background: var(--surface-card);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-default);
   border-left-width: 4px;
-  border-radius: 10px; overflow: hidden;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--border-default);
+  overflow: hidden;
   break-inside: avoid;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 .family-card-header {
-  padding: 12px 14px 10px;
-  border-bottom: 1px solid var(--border-subtle);
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid var(--border-default);
+  background: var(--surface-panel);
 }
 .family-card-header h2 {
+  font-family: var(--font-serif);
   font-size: 18px; font-weight: 700;
   letter-spacing: -.01em;
   color: var(--family-color, var(--text-primary));
@@ -204,34 +251,34 @@ body {
 }
 
 /* ── Character rows ── */
-.char-list { padding: 8px 14px 12px; display: flex; flex-direction: column; gap: 6px; }
+.char-list { padding: 10px 16px 14px; display: flex; flex-direction: column; gap: 8px; }
 
-.char-row { display: flex; flex-direction: column; gap: 1px; }
+.char-row { display: flex; flex-direction: column; gap: 2px; }
 
 .char-name {
   font-size: 13px; color: var(--text-secondary);
   line-height: 1.4;
 }
 .char-name.primary {
-  font-size: 17px; font-weight: 600;
+  font-size: 16px; font-weight: 700;
   color: var(--text-primary);
 }
 .char-role {
-  font-size: 12px; color: var(--text-muted);
-  font-style: italic;
-  line-height: 1.4;
+  font-family: var(--font-mono);
+  font-size: 11px; color: var(--text-muted);
+  line-height: 1.5; letter-spacing: .01em;
 }
 
 /* ── Responsive ── */
 @media (max-width: 700px) {
   #header-top { padding: 12px 16px; }
-  #header h1 { font-size: 13px; }
+  #header h1 { font-size: 11px; }
   #chapter-strip { padding: 12px 16px 14px; position: static; }
-  #chapter-val { font-size: 22px; }
-  #timeline-header { padding: 10px 16px 4px; }
+  #chapter-val { font-size: 20px; }
+  #timeline-header { padding: 12px 16px 6px; }
   #timeline-scroll { padding: 0 16px 12px; }
-  #cluster-grid { columns: 1; padding: 12px 16px 24px; }
-  .family-card { margin-bottom: 12px; }
+  #cluster-grid { columns: 1; padding: 16px 16px 32px; }
+  .family-card { margin-bottom: 16px; }
 }
 @media (min-width: 701px) and (max-width: 1100px) {
   #cluster-grid { columns: 2; }
