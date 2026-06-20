@@ -305,6 +305,15 @@ body {
   padding: 10px 12px;
 }
 
+/* Name row wrapper — aligns dot + name */
+.char-name-row { display: flex; align-items: center; gap: 7px; }
+
+/* Color-coded square dot for primary characters */
+.char-dot {
+  width: 8px; height: 8px; flex-shrink: 0;
+  background: var(--family-color, var(--border-default));
+}
+
 /* Names — consistent 15px, weight-only distinction */
 .char-name {
   font-family: var(--font-sans);
@@ -527,7 +536,8 @@ function renderCards(){
     family.members.forEach(m=>{
       const row = document.createElement('div');
       row.className = 'char-row';
-      row.innerHTML = `<span class="char-name${m.primary?' primary':''}">${m.name}</span>`
+      const dot = m.primary ? `<span class="char-dot"></span>` : '';
+      row.innerHTML = `<div class="char-name-row">${dot}<span class="char-name${m.primary?' primary':''}">${m.name}</span></div>`
         + (m.role ? `<span class="char-role">${m.role}</span>` : '');
       list.appendChild(row);
     });
