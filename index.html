@@ -120,49 +120,52 @@ body{
 #chapter-ticks{display:flex;justify-content:space-between;margin-top:4px;padding:0 2px}
 #chapter-ticks span{font-size:10px;color:var(--text-muted)}
 
-/* ============================================================  TIMELINE STRIP (in header)  */
+/* ============================================================  TIMELINE STRIP (always open)  */
 #timeline-bar{
   border-top:1px solid var(--border-subtle);
-  background:var(--surface-panel);overflow:hidden;
+  background:var(--surface-panel);
 }
-#timeline-toggle{
-  display:flex;align-items:center;gap:var(--sp-8);padding:var(--sp-6) var(--sp-24);
-  cursor:pointer;font-size:11px;font-weight:700;letter-spacing:.08em;
-  text-transform:uppercase;color:var(--text-muted);
-  transition:color var(--dur-fast);user-select:none;
+#timeline-header{
+  display:flex;align-items:center;gap:var(--sp-8);
+  padding:var(--sp-8) var(--sp-24) var(--sp-6);
 }
-#timeline-toggle:hover{color:var(--text-secondary)}
+#timeline-header-label{
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-muted);
+}
 #timeline-scroll{
-  display:none;
+  display:flex;
   gap:var(--sp-12);padding:0 var(--sp-24) var(--sp-12);
   overflow-x:auto;scrollbar-width:thin;
 }
-#timeline-scroll::-webkit-scrollbar{height:4px}
+#timeline-scroll::-webkit-scrollbar{height:3px}
 #timeline-scroll::-webkit-scrollbar-track{background:transparent}
 #timeline-scroll::-webkit-scrollbar-thumb{background:var(--border-default);border-radius:2px}
 .timeline-event{
-  flex-shrink:0;width:160px;background:var(--surface-card);
+  flex-shrink:0;width:152px;background:var(--surface-card);
   border:1px solid var(--border-subtle);border-radius:8px;
   padding:var(--sp-8) var(--sp-12);
-  transition:border-color var(--dur-fast),opacity var(--dur-med);
+  transition:border-color var(--dur-fast),opacity var(--dur-med),background var(--dur-fast);
 }
-.timeline-event.future{opacity:.35}
-.timeline-event.current{border-color:rgba(255,255,255,.25)}
+.timeline-event.future{opacity:.3}
+.timeline-event.current{
+  border-color:rgba(255,255,255,.22);
+  background:var(--surface-hover);
+}
 .timeline-num{
-  font-size:10px;font-weight:700;color:var(--text-muted);margin-bottom:2px;
-  display:flex;align-items:center;gap:var(--sp-6);
+  display:flex;align-items:center;gap:var(--sp-6);margin-bottom:4px;
 }
-.timeline-num .tl-dot{
-  width:16px;height:16px;border-radius:50%;background:var(--surface-hover);
+.tl-dot{
+  width:18px;height:18px;border-radius:50%;background:var(--surface-hover);
   border:1px solid var(--border-default);display:flex;align-items:center;
   justify-content:center;font-size:9px;font-weight:700;color:var(--text-secondary);
   flex-shrink:0;
 }
-.timeline-num .tl-dot.current-dot{
+.tl-dot.current-dot{
   background:var(--text-primary);color:var(--surface-bg);border-color:transparent;
 }
-.timeline-year{font-size:10px;color:var(--text-muted)}
-.timeline-title{font-size:12px;font-weight:600;color:var(--text-primary);margin:3px 0 4px}
+.timeline-year{font-size:10px;color:var(--text-muted);letter-spacing:.02em}
+.timeline-title{font-size:11px;font-weight:600;color:var(--text-primary);margin-bottom:3px;line-height:1.3}
 .timeline-desc{font-size:10px;color:var(--text-secondary);line-height:1.5}
 
 /* ============================================================  MAIN  */
@@ -182,13 +185,13 @@ body{
 }
 .family-card-header{
   display:flex;align-items:center;gap:var(--sp-8);
-  padding:var(--sp-10) var(--sp-16);
+  padding:var(--sp-12) var(--sp-16);
   border-bottom:1px solid var(--border-subtle);
   cursor:pointer;user-select:none;
 }
-.cluster-bar{width:3px;height:16px;border-radius:2px;flex-shrink:0}
+.cluster-bar{width:4px;height:20px;border-radius:2px;flex-shrink:0}
 .family-card-header h2{
-  font-size:12px;font-weight:700;letter-spacing:.07em;
+  font-size:11px;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:var(--text-primary);flex:1;
 }
 .card-chevron{
@@ -200,20 +203,22 @@ body{
 /* Character list */
 .char-list{
   padding:var(--sp-8) var(--sp-16) var(--sp-12);
-  display:flex;flex-direction:column;gap:2px;
+  display:flex;flex-direction:column;
   overflow:hidden;
   transition:max-height var(--dur-med) var(--ease-out), opacity var(--dur-med);
-  max-height:600px;
-  opacity:1;
+  max-height:600px;opacity:1;
 }
 .family-card.collapsed .char-list{
   max-height:0;opacity:0;padding-top:0;padding-bottom:0;
 }
 .char-row{
-  font-size:13px;color:var(--text-secondary);
-  padding:3px 0;line-height:1.4;
+  font-size:12px;color:var(--text-muted);
+  padding:3px 0;line-height:1.5;letter-spacing:.01em;
 }
-.char-row.primary{color:var(--text-primary);font-weight:500}
+.char-row.primary{
+  font-size:13px;color:var(--text-primary);font-weight:600;
+  letter-spacing:0;
+}
 
 /* ============================================================  MOBILE  */
 @media(max-width:700px){
@@ -256,9 +261,8 @@ body{
     </div>
   </div>
   <div id="timeline-bar">
-    <div id="timeline-toggle">
-      <i class="fa-solid fa-chevron-down fa-xs" id="tl-chevron"></i>
-      Timeline of Key Events
+    <div id="timeline-header">
+      <span id="timeline-header-label">Timeline of Key Events</span>
     </div>
     <div id="timeline-scroll"></div>
   </div>
@@ -412,7 +416,6 @@ const ERAS = [
 
 /* ============================================================  STATE  */
 let currentChapter = 1;
-let timelineOpen = false;
 
 function currentEra(){
   return (ERAS.find(e=>currentChapter<=e.max)||ERAS[ERAS.length-1]).label;
@@ -503,20 +506,9 @@ function renderTimeline(){
   });
 }
 
-const tlToggle  = document.getElementById('timeline-toggle');
-const tlScroll  = document.getElementById('timeline-scroll');
-const tlChevron = document.getElementById('tl-chevron');
-tlToggle.addEventListener('click', ()=>{
-  timelineOpen = !timelineOpen;
-  tlScroll.style.display  = timelineOpen ? 'flex' : 'none';
-  tlChevron.className = timelineOpen
-    ? 'fa-solid fa-chevron-up fa-xs'
-    : 'fa-solid fa-chevron-down fa-xs';
-  if(timelineOpen) renderTimeline();
-});
-
 /* ============================================================  INIT  */
 renderCards();
+renderTimeline();
 </script>
 </body>
 </html>
