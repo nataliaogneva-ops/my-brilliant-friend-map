@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Brilliant Friend by Elena Ferrante — Book Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
   /* ── Family identity colors ── */
@@ -18,170 +20,152 @@
   --cluster-spagnuolo: #5A2A5A;
   --cluster-other:     #3E3830;
 
-  /* ── Apple Design Analysis color tokens ── */
-  --color-primary:       #0066cc;
-  --color-primary-dark:  #2997ff;
-  --color-ink:           #1d1d1f;
-  --color-ink-muted:     #6e6e73;   /* Apple secondary text — 4.6:1 on white ✓ */
-  --color-ink-subtle:    #86868b;   /* tertiary: role text, ticks */
-  --color-ink-muted-80:  #333333;
-  --color-canvas:        #ffffff;
-  --color-parchment:     #f5f5f7;
-  --color-hairline:      #d2d2d7;   /* slightly stronger for definition */
-  --color-divider-soft:  #f0f0f0;
-  --color-surface-black: #1d1d1f;   /* near-black, not pure #000 */
-  --color-on-dark:       #f5f5f7;
-  --color-muted-on-dark: #a1a1a6;
+  /* ── Industrial Editorial v2.0 palette ── */
+  --surface-bg:    #F4EAD5;
+  --surface-panel: #DBCBAF;
+  --surface-card:  #F4EAD5;
+  --surface-hover: #EDE0C4;
+  --text-primary:  #3E2C1B;
+  --text-secondary:#7A614A;
+  --text-muted:    rgba(62,44,27,0.45);
+  --border-subtle: rgba(62,44,27,0.18);
+  --border-default:#3E2C1B;
+  --accent:        #0033CC;   /* ultramarine — active states only */
 
-  /* ── Radius scale ── */
-  --radius-sm:   8px;
-  --radius-md:   11px;
-  --radius-lg:   18px;
-  --radius-pill: 9999px;
+  /* ── Dual-type system ── */
+  --font-sans:  "Helvetica Neue", "Inter", sans-serif;   /* UI labels, names */
+  --font-mono:  "Space Mono", "Roboto Mono", monospace;  /* data, numbers, dates */
+  --font-serif: "Playfair Display", "Georgia", serif;    /* narrative, bios, descriptions */
 
-  /* ── Fonts ── */
-  --font-display: "SF Pro Display", system-ui, -apple-system, sans-serif;
-  --font-text:    "SF Pro Text",    system-ui, -apple-system, sans-serif;
-
-  --dur-fast: 140ms;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 140ms;
 }
 
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-  font-family: var(--font-text);
-  background: var(--color-parchment);
-  color: var(--color-ink);
+  font-family: var(--font-sans);
+  background: var(--surface-bg);
+  color: var(--text-primary);
   height: 100dvh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-/* ── Global nav bar (surface-black) ── */
+/* ── Header ── */
 #header {
   flex-shrink: 0;
-  background: var(--color-surface-black);
+  background: var(--surface-panel);
+  border-bottom: 1px solid var(--border-default);
   z-index: 20;
 }
-#header-top { padding: 13px 24px; }
+#header-top { padding: 14px 24px; }
 #header h1 {
-  font-family: var(--font-text);
-  font-size: 14px; font-weight: 500;
-  letter-spacing: -0.16px;
-  color: var(--color-muted-on-dark);
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-secondary);
 }
-#header h1 span { color: var(--color-on-dark); }
+#header h1 span { color: var(--text-primary); }
 
 /* ── Main scroll container ── */
 #main { flex: 1; overflow-y: auto; }
 
-/* ── Chapter strip (frosted glass sticky bar) ── */
+/* ── Chapter strip ── */
 #chapter-strip {
-  padding: 20px 24px 20px;
-  border-bottom: 1px solid var(--color-hairline);
-  background: rgba(255,255,255,0.88);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  padding: 16px 24px 18px;
+  border-bottom: 1px solid var(--border-default);
+  background: var(--surface-panel);
   position: sticky; top: 0; z-index: 10;
 }
 #chapter-strip-label {
   display: flex; align-items: baseline; gap: 10px;
-  margin-bottom: 16px;
+  margin-bottom: 14px; flex-wrap: wrap;
 }
 #chapter-label-text {
-  font-family: var(--font-text);
-  font-size: 14px; font-weight: 400;
-  letter-spacing: -0.224px;
-  color: var(--color-ink-muted);
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-muted);
 }
+/* Chapter number — 24px uppercase mono token */
 #chapter-val {
-  font-family: var(--font-display);
-  font-size: 34px; font-weight: 600;
-  letter-spacing: -0.374px;
-  color: var(--color-primary);
-  line-height: 1; min-width: 32px;
+  font-family: var(--font-mono);
+  font-size: 24px; font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent);
+  line-height: 1; min-width: 2ch;
 }
 #chapter-val-suffix {
-  font-family: var(--font-text);
-  font-size: 14px; letter-spacing: -0.224px;
-  color: var(--color-ink-muted);
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }
+/* Era name — serif, narrative role */
 #chapter-era {
-  font-family: var(--font-text);
-  font-size: 17px; font-weight: 400;
-  letter-spacing: -0.374px; font-style: italic;
-  color: var(--color-ink);
+  font-family: var(--font-serif);
+  font-size: 15px; font-style: italic;
+  color: var(--text-secondary);
 }
 
-/* Slider — thin 3px track, circular thumb with affordance ring */
+/* ── Chapter scroller: 1px espresso track + 4px ticks + square ultramarine node ── */
 #chapter-slider {
   -webkit-appearance: none; appearance: none;
-  width: 100%; height: 3px; border-radius: 2px;
-  background: linear-gradient(
-    to right,
-    var(--color-primary) 0%,
-    var(--color-primary) calc(var(--pct,0%) * 1%),
-    var(--color-hairline) calc(var(--pct,0%) * 1%),
-    var(--color-hairline) 100%
-  );
+  width: 100%; height: 1px;
+  background: var(--border-default);
   outline: none; cursor: pointer;
 }
 #chapter-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 20px; height: 20px; border-radius: 50%;
-  background: var(--color-primary);
-  border: 2px solid #fff;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
-  transition: transform var(--dur-fast) var(--ease-out),
-              box-shadow var(--dur-fast) var(--ease-out);
+  width: 14px; height: 14px; border-radius: 0;
+  background: var(--accent);
+  border: none;
+  transition: transform var(--dur-fast) var(--ease-out);
 }
-#chapter-slider:hover::-webkit-slider-thumb {
-  box-shadow: 0 2px 8px rgba(0,102,204,0.4), 0 0 0 4px rgba(0,102,204,0.12);
-}
-#chapter-slider:active::-webkit-slider-thumb {
-  transform: scale(0.92);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-}
-#chapter-slider:focus-visible::-webkit-slider-thumb {
-  box-shadow: 0 0 0 4px rgba(0,102,204,0.35);
-}
+#chapter-slider:hover::-webkit-slider-thumb { transform: scale(1.15); }
+#chapter-slider:active::-webkit-slider-thumb { transform: scale(0.9); }
+#chapter-slider:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+
+/* Tick marks — 4px tall vertical lines + micro mono labels */
 #chapter-ticks {
   display: flex; justify-content: space-between;
-  margin-top: 8px; padding: 0 1px;
+  margin-top: 5px; padding: 0 1px;
 }
-#chapter-ticks span {
-  font-family: var(--font-text);
-  font-size: 11px; letter-spacing: 0;
-  color: var(--color-ink-subtle);
+.tick { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.tick-line {
+  width: 1px; height: 4px;
+  background: var(--border-default); opacity: 0.5;
+}
+.tick-label {
+  font-family: var(--font-mono);
+  font-size: 9px; text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
 }
 
 /* ── Timeline ── */
 #timeline-bar {
-  background: var(--color-parchment);
-  border-bottom: 1px solid var(--color-hairline);
+  background: var(--surface-bg);
+  border-bottom: 1px solid var(--border-default);
 }
-#timeline-header { padding: 20px 24px 10px; }
+#timeline-header { padding: 16px 24px 8px; }
 #timeline-header-label {
-  font-family: var(--font-text);
-  font-size: 11px; font-weight: 700;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--color-ink-subtle);
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-muted);
 }
-/* fade-right signals horizontal scroll */
-#timeline-scroll-wrap {
-  position: relative;
-}
+#timeline-scroll-wrap { position: relative; }
 #timeline-scroll-wrap::after {
   content: '';
-  position: absolute; top: 0; right: 0; bottom: 0;
-  width: 64px;
-  background: linear-gradient(to right, transparent, var(--color-parchment));
+  position: absolute; top: 0; right: 0; bottom: 0; width: 56px;
+  background: linear-gradient(to right, transparent, var(--surface-bg));
   pointer-events: none;
 }
 #timeline-scroll {
   display: flex; gap: 12px;
-  padding: 0 24px 20px;
+  padding: 0 24px 16px;
   overflow-x: auto; scrollbar-width: none;
 }
 #timeline-scroll::-webkit-scrollbar { display: none; }
@@ -197,64 +181,72 @@ body {
 }
 .timeline-event.future .tl-inner { transform: rotateY(180deg); }
 .tl-front, .tl-back {
-  position: absolute; inset: 0;
-  border-radius: var(--radius-sm);
+  position: absolute; inset: 0; border-radius: 0;
   backface-visibility: hidden; -webkit-backface-visibility: hidden;
 }
 .tl-front {
-  background: var(--color-canvas);
-  border: 1px solid var(--color-hairline);
-  padding: 12px 14px;
-  transition: border-color var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-fast);
-  cursor: default;
+  background: var(--surface-card);
+  border: 1px solid var(--border-default);
+  box-shadow: 3px 3px 0 var(--border-default);
+  padding: 10px 12px;
+  transition: box-shadow var(--dur-fast), transform var(--dur-fast);
 }
 .timeline-event:not(.future):hover .tl-front {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.09);
-  transform: translateY(-2px);
+  box-shadow: 5px 5px 0 var(--border-default);
+  transform: translate(-1px, -1px);
 }
+/* Active card: accent border + shadow + halftone fill */
 .timeline-event.current .tl-front {
-  border: 2px solid var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
+  border-color: var(--accent);
+  box-shadow: 3px 3px 0 var(--accent);
+  background-color: var(--surface-card);
+  background-image:
+    radial-gradient(circle, rgba(62,44,27,0.10) 1px, transparent 1px),
+    radial-gradient(circle, rgba(62,44,27,0.10) 1px, transparent 1px);
+  background-size: 8px 8px;
+  background-position: 4px 4px, 0 0;
 }
 .tl-back {
-  background: var(--color-parchment);
-  border: 1px solid var(--color-hairline);
+  background: var(--surface-panel);
+  border: 1px solid var(--border-default);
+  box-shadow: 3px 3px 0 var(--border-default);
   transform: rotateY(180deg);
   display: flex; align-items: center; justify-content: center;
+  background-image: radial-gradient(circle, rgba(62,44,27,0.12) 1px, transparent 1px);
+  background-size: 8px 8px;
 }
 .tl-back-mark {
-  width: 20px; height: 20px; border-radius: 50%;
-  border: 1px solid var(--color-hairline);
+  width: 20px; height: 20px; border-radius: 0;
+  border: 1px solid var(--border-default); opacity: 0.3;
 }
-.timeline-num { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+.timeline-num { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+/* Chapter dot — square, mono */
 .tl-dot {
-  width: 20px; height: 20px; border-radius: 50%;
-  background: var(--color-parchment);
-  border: 1px solid var(--color-hairline);
+  width: 18px; height: 18px; border-radius: 0;
+  background: var(--surface-panel);
+  border: 1px solid var(--border-default);
   display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-text);
-  font-size: 11px; font-weight: 600; color: var(--color-ink-muted); flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 700; color: var(--text-secondary); flex-shrink: 0;
 }
-.tl-dot.current-dot {
-  background: var(--color-primary); color: #fff;
-  border-color: var(--color-primary);
-}
+.tl-dot.current-dot { background: var(--accent); color: var(--surface-bg); border-color: var(--accent); }
+/* Date — 24px mono token (scaled down for card space: keeps mono/uppercase character) */
 .timeline-year {
-  font-family: var(--font-text);
-  font-size: 12px; letter-spacing: -0.12px;
-  color: var(--color-ink-muted);
+  font-family: var(--font-mono);
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--text-muted);
 }
+/* Event title — bold sans-serif (UI element) */
 .timeline-title {
-  font-family: var(--font-text);
-  font-size: 14px; font-weight: 600;
-  letter-spacing: -0.224px;
-  color: var(--color-ink); line-height: 1.29; margin-bottom: 6px;
+  font-family: var(--font-sans);
+  font-size: 14px; font-weight: 700;
+  color: var(--text-primary); line-height: 1.3; margin-bottom: 5px;
 }
+/* Description — serif (narrative content) */
 .timeline-desc {
-  font-family: var(--font-text);
-  font-size: 13px; font-weight: 400;
-  letter-spacing: -0.08px;
-  color: var(--color-ink-muted); line-height: 1.5;
+  font-family: var(--font-serif);
+  font-size: 11.5px; font-style: italic;
+  color: var(--text-secondary); line-height: 1.55;
 }
 
 /* ── Main grid ── */
@@ -263,67 +255,66 @@ body {
   padding: 24px 24px 48px;
 }
 
-/* ── Family card (store-utility-card style) ── */
+/* ── Family card — sepia surface, espresso border + offset shadow ── */
 .family-card {
-  background: var(--color-canvas);
-  border: 1px solid var(--color-hairline);
+  background: var(--surface-card);
+  border: 1px solid var(--border-default);
   border-left-width: 4px;
-  border-radius: var(--radius-lg);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--border-default);
   overflow: hidden;
   break-inside: avoid;
   margin-bottom: 20px;
-  transition: transform 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
-  cursor: default;
+  transition: box-shadow var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
 }
 .family-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.09), 0 2px 6px rgba(0,0,0,0.05);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--border-default);
 }
 .family-card-header {
-  padding: 16px 18px 14px;
-  border-bottom: 1px solid var(--color-divider-soft);
-  background: var(--color-parchment);
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid var(--border-default);
+  background: var(--surface-panel);
 }
+/* Family name — bold sans-serif (UI structural element) */
 .family-card-header h2 {
-  font-family: var(--font-display);
-  font-size: 21px; font-weight: 600;
-  letter-spacing: 0.231px;
-  color: var(--family-color, var(--color-ink));
-  line-height: 1.19;
+  font-family: var(--font-sans);
+  font-size: 15px; font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--family-color, var(--text-primary));
+  line-height: 1.2;
 }
 
 /* ── Character rows ── */
-.char-list { padding: 14px 18px 18px; display: flex; flex-direction: column; gap: 12px; }
-
+.char-list { padding: 12px 16px 16px; display: flex; flex-direction: column; gap: 10px; }
 .char-row { display: flex; flex-direction: column; gap: 3px; }
 
+/* Names — bold sans-serif (UI element) */
 .char-name {
-  font-family: var(--font-text);
-  font-size: 15px; font-weight: 400;
-  letter-spacing: -0.24px;
-  color: var(--color-ink-muted); line-height: 1.4;
+  font-family: var(--font-sans);
+  font-size: 14px; font-weight: 400;
+  color: var(--text-secondary); line-height: 1.4;
 }
 .char-name.primary {
-  font-family: var(--font-text);
-  font-size: 17px; font-weight: 600;
-  letter-spacing: -0.374px;
-  color: var(--color-ink);
+  font-size: 15px; font-weight: 700;
+  color: var(--text-primary);
 }
+/* Roles/bios — serif italic (narrative content) */
 .char-role {
-  font-family: var(--font-text);
-  font-size: 13px; font-weight: 400;
-  letter-spacing: -0.08px; font-style: italic;
-  color: var(--color-ink-subtle); line-height: 1.5;
+  font-family: var(--font-serif);
+  font-size: 13px; font-style: italic;
+  color: var(--text-secondary); line-height: 1.5;
 }
 
 /* ── Responsive ── */
 @media (max-width: 700px) {
-  #header-top { padding: 10px 16px; }
-  #chapter-strip { padding: 16px 16px 16px; position: static; }
-  #chapter-val { font-size: 28px; }
-  #timeline-header { padding: 16px 16px 8px; }
-  #timeline-scroll { padding: 0 16px 16px; }
-  #cluster-grid { columns: 1; padding: 16px 16px 32px; column-gap: 0; }
+  #header-top { padding: 12px 16px; }
+  #chapter-strip { padding: 12px 16px 14px; position: static; }
+  #chapter-val { font-size: 20px; }
+  #timeline-header { padding: 12px 16px 6px; }
+  #timeline-scroll { padding: 0 16px 12px; }
+  #cluster-grid { columns: 1; padding: 16px 16px 32px; }
   .family-card { margin-bottom: 16px; }
 }
 @media (min-width: 701px) and (max-width: 1100px) {
@@ -349,8 +340,15 @@ body {
     </div>
     <input type="range" id="chapter-slider" min="1" max="87" value="1">
     <div id="chapter-ticks">
-      <span>1</span><span>10</span><span>20</span><span>30</span><span>40</span>
-      <span>50</span><span>60</span><span>70</span><span>87</span>
+      <div class="tick"><div class="tick-line"></div><span class="tick-label">01</span></div>
+      <div class="tick"><div class="tick-line"></div><span class="tick-label">10</span></div>
+      <div class="tick"><div class="tick-line"></div><span class="tick-label">20</span></div>
+      <div class="tick"><div class="tick-line"></div><span class="tick-label">30</span></div>
+      <div class="tick"><div class="tick-line"></div><span class="tick-label">40</span></div>
+      <div class="tick"><div class="tick-line"></div><span class="tick-label">50</span></div>
+      <div class="tick"><div class="tick-line"></div><span class="tick-label">60</span></div>
+      <div class="tick"><div class="tick-line"></div><span class="tick-label">70</span></div>
+      <div class="tick"><div class="tick-line"></div><span class="tick-label">87</span></div>
     </div>
   </div>
   <div id="timeline-bar">
@@ -524,7 +522,7 @@ const slider = document.getElementById('chapter-slider');
 function updateSlider(){
   const pct = ((slider.value-slider.min)/(slider.max-slider.min))*100;
   slider.style.setProperty('--pct', pct);
-  document.getElementById('chapter-val').textContent = slider.value;
+  document.getElementById('chapter-val').textContent = String(slider.value).padStart(2,'0');
   document.getElementById('chapter-era').textContent = currentEra();
   renderTimeline();
 }
