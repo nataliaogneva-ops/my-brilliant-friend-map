@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Brilliant Friend — Character Relationships</title>
 <style>
-/* ============================================================  TOKENS  */
 :root {
   --cluster-greco:     #1A3A5C;
   --cluster-cerullo:   #7B2D8B;
@@ -18,10 +17,10 @@
   --cluster-spagnuolo: #6B3A6B;
   --cluster-other:     #4A4A5A;
 
-  --surface-bg:     #0D1117;
-  --surface-panel:  #161B22;
-  --surface-card:   #1C2431;
-  --surface-hover:  #252D3A;
+  --surface-bg:    #0D1117;
+  --surface-panel: #161B22;
+  --surface-card:  #1C2431;
+  --surface-hover: #252D3A;
 
   --text-primary:   #E6EDF3;
   --text-secondary: #8B949E;
@@ -35,7 +34,6 @@
   --dur-med:  260ms;
 }
 
-/* ============================================================  BASE  */
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -47,7 +45,7 @@ body {
   flex-direction: column;
 }
 
-/* ============================================================  HEADER  */
+/* ── Header ── */
 #header {
   flex-shrink: 0;
   background: var(--surface-panel);
@@ -59,50 +57,38 @@ body {
   border-bottom: 1px solid var(--border-subtle);
 }
 #header h1 {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: .09em;
-  text-transform: uppercase;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: .09em; text-transform: uppercase;
   color: var(--text-secondary);
 }
 #header h1 span { color: var(--text-primary); }
 
-/* Chapter strip */
+/* ── Chapter strip ── */
 #chapter-strip {
   padding: 12px 24px 14px;
   border-bottom: 1px solid var(--border-subtle);
   background: var(--surface-bg);
 }
 #chapter-strip-label {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
+  display: flex; align-items: baseline; gap: 6px;
   margin-bottom: 10px;
 }
 #chapter-label-text {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
   color: var(--text-muted);
 }
 #chapter-val {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 22px; font-weight: 700;
   color: var(--text-primary);
-  line-height: 1;
-  min-width: 36px;
-  letter-spacing: -.02em;
+  line-height: 1; min-width: 36px; letter-spacing: -.02em;
 }
 #chapter-val-suffix { font-size: 12px; color: var(--text-muted); }
 #chapter-era { font-size: 12px; color: var(--text-secondary); font-style: italic; }
 
 #chapter-slider {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 4px;
-  border-radius: 2px;
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 4px; border-radius: 2px;
   background: linear-gradient(
     to right,
     var(--text-primary) 0%,
@@ -110,13 +96,11 @@ body {
     var(--surface-hover) calc(var(--pct,0%) * 1%),
     var(--surface-hover) 100%
   );
-  outline: none;
-  cursor: pointer;
+  outline: none; cursor: pointer;
 }
 #chapter-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 20px; height: 20px;
-  border-radius: 50%;
+  width: 20px; height: 20px; border-radius: 50%;
   background: var(--text-primary);
   border: 3px solid var(--surface-bg);
   box-shadow: 0 0 0 1.5px rgba(255,255,255,.25), 0 2px 8px rgba(0,0,0,.5);
@@ -126,7 +110,7 @@ body {
 #chapter-ticks { display: flex; justify-content: space-between; margin-top: 6px; padding: 0 2px; }
 #chapter-ticks span { font-size: 10px; color: var(--text-muted); }
 
-/* Timeline */
+/* ── Timeline ── */
 #timeline-bar { background: var(--surface-panel); }
 #timeline-header { padding: 10px 24px 6px; }
 #timeline-header-label {
@@ -135,36 +119,27 @@ body {
   color: var(--text-muted);
 }
 #timeline-scroll {
-  display: flex;
-  gap: 10px;
+  display: flex; gap: 10px;
   padding: 0 24px 12px;
-  overflow-x: auto;
-  scrollbar-width: thin;
+  overflow-x: auto; scrollbar-width: thin;
   scrollbar-color: var(--border-default) transparent;
 }
 #timeline-scroll::-webkit-scrollbar { height: 3px; }
-#timeline-scroll::-webkit-scrollbar-track { background: transparent; }
 #timeline-scroll::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 2px; }
 
 .timeline-event {
-  flex-shrink: 0;
-  width: 156px;
-  height: 148px;
+  flex-shrink: 0; width: 156px; height: 148px;
   perspective: 700px;
 }
 .tl-inner {
-  position: relative;
-  width: 100%; height: 100%;
+  position: relative; width: 100%; height: 100%;
   transform-style: preserve-3d;
   transition: transform 520ms cubic-bezier(0.45, 0, 0.55, 1);
 }
 .timeline-event.future .tl-inner { transform: rotateY(180deg); }
 .tl-front, .tl-back {
-  position: absolute;
-  inset: 0;
-  border-radius: 8px;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+  position: absolute; inset: 0; border-radius: 8px;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
 }
 .tl-front {
   background: var(--surface-card);
@@ -183,46 +158,37 @@ body {
   display: flex; align-items: center; justify-content: center;
 }
 .tl-back-mark {
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  border: 1px solid var(--border-default);
-  opacity: .3;
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1px solid var(--border-default); opacity: .3;
 }
 .timeline-num { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
 .tl-dot {
-  width: 18px; height: 18px;
-  border-radius: 50%;
+  width: 18px; height: 18px; border-radius: 50%;
   background: var(--surface-hover);
   border: 1px solid var(--border-default);
   display: flex; align-items: center; justify-content: center;
-  font-size: 9px; font-weight: 700; color: var(--text-secondary);
-  flex-shrink: 0;
+  font-size: 9px; font-weight: 700; color: var(--text-secondary); flex-shrink: 0;
 }
 .tl-dot.current-dot { background: var(--text-primary); color: var(--surface-bg); border-color: transparent; }
 .timeline-year { font-size: 10px; color: var(--text-muted); }
 .timeline-title { font-size: 11px; font-weight: 600; color: var(--text-primary); line-height: 1.35; margin-bottom: 4px; }
 .timeline-desc { font-size: 10px; color: var(--text-secondary); line-height: 1.55; }
 
-/* ============================================================  MAIN  */
+/* ── Main grid ── */
 #main { flex: 1; overflow: hidden; }
-
 #cluster-grid {
   height: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  padding: 16px 24px;
-  overflow-y: auto;
-  align-content: start;
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 16px; padding: 16px 24px;
+  overflow-y: auto; align-content: start;
 }
 
-/* ============================================================  FAMILY CARD  */
+/* ── Family card ── */
 .family-card {
   background: var(--surface-card);
   border: 1px solid var(--border-subtle);
   border-left-width: 4px;
-  border-radius: 10px;
-  overflow: hidden;
+  border-radius: 10px; overflow: hidden;
 }
 .family-card-header { padding: 12px 16px 8px; }
 .family-card-header h2 {
@@ -230,94 +196,35 @@ body {
   letter-spacing: .1em; text-transform: uppercase;
   color: var(--text-secondary);
 }
-.char-list { padding: 0 16px 14px; display: flex; flex-direction: column; gap: 1px; }
-.char-row {
-  font-size: 12px;
-  color: var(--text-muted);
-  padding: 2px 0;
-  line-height: 1.55;
-  border-radius: 4px;
-  transition: color var(--dur-fast), background var(--dur-fast);
+
+/* ── Character rows ── */
+.char-list { padding: 0 16px 14px; display: flex; flex-direction: column; gap: 6px; }
+
+.char-row { display: flex; flex-direction: column; gap: 1px; }
+
+.char-name {
+  font-size: 12px; color: var(--text-muted);
+  line-height: 1.4;
 }
-.char-row.primary {
+.char-name.primary {
   font-size: 13px; font-weight: 600;
   color: var(--text-primary);
-  padding: 3px 0;
 }
-.char-row.has-bio {
-  cursor: pointer;
-  padding-left: 4px;
-  padding-right: 4px;
-  margin-left: -4px;
-  margin-right: -4px;
-}
-.char-row.has-bio:hover {
-  color: var(--text-primary);
-  background: var(--surface-hover);
-}
-.char-row.has-bio.primary:hover { background: rgba(255,255,255,.06); }
-
-/* ============================================================  CHARACTER INFO PANEL  */
-#char-panel {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%) translateY(16px);
-  width: min(480px, calc(100vw - 48px));
-  background: var(--surface-panel);
-  border: 1px solid var(--border-default);
-  border-radius: 12px;
-  padding: 20px 24px;
-  z-index: 200;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--dur-med) var(--ease-out),
-              transform var(--dur-med) var(--ease-out);
-  box-shadow: 0 20px 60px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.04);
-}
-#char-panel.visible {
-  opacity: 1;
-  pointer-events: all;
-  transform: translateX(-50%) translateY(0);
-}
-#char-panel-close {
-  position: absolute; top: 12px; right: 16px;
-  background: none; border: none;
-  color: var(--text-muted); font-size: 18px;
-  cursor: pointer; padding: 4px; line-height: 1;
-  transition: color var(--dur-fast);
-}
-#char-panel-close:hover { color: var(--text-secondary); }
-#char-panel-family {
-  font-size: 10px; font-weight: 700;
-  letter-spacing: .1em; text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 4px;
-}
-#char-panel-name {
-  font-size: 17px; font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -.01em;
-  margin-bottom: 10px;
-  line-height: 1.2;
-}
-#char-panel-bio {
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.65;
+.char-role {
+  font-size: 10px; color: var(--text-muted);
+  line-height: 1.4; letter-spacing: .01em;
 }
 
-/* ============================================================  RESPONSIVE  */
+/* ── Responsive ── */
 @media (max-width: 700px) {
   #cluster-grid { grid-template-columns: 1fr; padding: 12px; gap: 12px; }
   #header-top { padding: 12px 16px; }
   #chapter-strip { padding: 10px 16px 12px; }
   #timeline-header { padding: 8px 16px 4px; }
   #timeline-scroll { padding: 0 16px 10px; }
-  #char-panel { bottom: 16px; padding: 16px 20px; }
 }
 @media (min-width: 701px) and (max-width: 1100px) {
-  #cluster-grid { grid-template-columns: repeat(2, 1fr); }
+  #cluster-grid { grid-template-columns: repeat(2,1fr); }
 }
 </style>
 </head>
@@ -352,158 +259,103 @@ body {
   <div id="cluster-grid"></div>
 </div>
 
-<!-- Character info panel -->
-<div id="char-panel">
-  <button id="char-panel-close">×</button>
-  <div id="char-panel-family"></div>
-  <div id="char-panel-name"></div>
-  <div id="char-panel-bio"></div>
-</div>
-
 <script>
 const FAMILIES = [
   {
-    id: 'greco', name: 'Greco Family', color: 'var(--cluster-greco)',
-    members: [
-      { name: 'Elena "Lenù" Greco', primary: true,
-        bio: 'The protagonist and narrator of the series. She is a highly intelligent girl who uses education to escape her impoverished neighbourhood, driven by a lifelong rivalry and friendship with Lila.' },
-      { name: 'Mr. Greco',
-        bio: "Elena's father — an honest, quiet man who works as a porter at city hall. He supports Elena's education without fully understanding its significance." },
-      { name: 'Mrs. Greco',
-        bio: "Elena's mother, a strict and resentful housewife who walks with a pronounced limp. She often clashes with Elena and fears that education will take her daughter away from the neighbourhood." },
-      { name: 'Peppe',
-        bio: "One of Elena's younger siblings. Like most neighbourhood children, he grows up within the same narrow world Elena is desperate to escape." },
-      { name: 'Gianni',
-        bio: "One of Elena's younger siblings. He remains in the neighbourhood, shaped by the same forces of poverty and limited expectation." },
-      { name: 'Elisa',
-        bio: "Elena's younger sister. Her fate becomes entangled with the Solara family as she grows up, pulling her deeper into the neighbourhood's power structures." },
+    id:'greco', name:'Greco Family', color:'var(--cluster-greco)',
+    members:[
+      { name:'Elena "Lenù" Greco', primary:true, role:'Protagonist & narrator' },
+      { name:'Mr. Greco',                         role:'City hall porter' },
+      { name:'Mrs. Greco',                        role:'Strict mother, resents Elena\'s ambitions' },
+      { name:'Peppe',                             role:'Younger sibling' },
+      { name:'Gianni',                            role:'Younger sibling' },
+      { name:'Elisa',                             role:'Younger sibling, later linked to Solaras' },
     ]
   },
   {
-    id: 'cerullo', name: 'Cerullo Family', color: 'var(--cluster-cerullo)',
-    members: [
-      { name: 'Raffaella "Lila" Cerullo', primary: true,
-        bio: "Elena's best friend and the novel's other magnetic centre. Fiercely brilliant, beautiful, and rebellious, she is unable to continue her formal education past elementary school — a loss that shapes everything that follows." },
-      { name: 'Fernando Cerullo',
-        bio: "Lila's strict father, a shoemaker by trade. His love for his family is inseparable from a capacity for violence. He once threw Lila from a window for defying him." },
-      { name: 'Nunzia Cerullo',
-        bio: "Lila's mother — a quiet, enduring presence. She loves her children deeply but is powerless to shield Lila from the constraints the family and neighbourhood impose." },
-      { name: 'Rino Cerullo (Elder)', primary: true,
-        bio: "Lila's older brother, who works alongside Fernando in the shoe shop. He collaborates with Lila on an ambitious shoe design, but his ambition and weakness eventually lead them into conflict." },
-      { name: 'Rino (Younger)',
-        bio: "Lila's son, named after her older brother. He is born later in the story and represents Lila's deepest emotional attachments and vulnerabilities." },
+    id:'cerullo', name:'Cerullo Family', color:'var(--cluster-cerullo)',
+    members:[
+      { name:'Raffaella "Lila" Cerullo', primary:true, role:'Elena\'s best friend, fiercely brilliant' },
+      { name:'Fernando Cerullo',                       role:'Shoemaker, strict and volatile father' },
+      { name:'Nunzia Cerullo',                         role:'Lila\'s mother' },
+      { name:'Rino Cerullo (Elder)', primary:true,     role:'Older brother, Lila\'s shoe collaborator' },
+      { name:'Rino (Younger)',                         role:'Lila\'s son, named after her brother' },
     ]
   },
   {
-    id: 'carracci', name: 'Carracci Family', color: 'var(--cluster-carracci)',
-    members: [
-      { name: 'Don Achille †',
-        bio: 'The feared neighbourhood loan shark, viewed by Elena and Lila as the "ogre of fairy tales". He is murdered when the girls are children — his death sets off a chain of consequences that ripples through the entire novel.' },
-      { name: 'Donna Maria',
-        bio: "Don Achille's wife. After her husband's murder she keeps the family together, presiding over the household with quiet, durable authority." },
-      { name: 'Stefano Carracci', primary: true,
-        bio: 'The eldest son, who takes over the family grocery store after his father\'s death and builds it into a successful business. He becomes wealthy and marries Lila at sixteen — but his alliance with the Solaras destroys what little trust their marriage had.' },
-      { name: 'Alfonso Carracci', primary: true,
-        bio: 'A sweet, intelligent classmate of Elena and Lila, and a better student than his brother. He carries a quiet sensitivity that sets him apart from the neighbourhood\'s norms.' },
-      { name: 'Pinuccia',
-        bio: 'Stefano and Alfonso\'s sister. She is drawn into the Cerullo orbit through her brother\'s marriage to Lila and later becomes entangled with Rino Elder.' },
+    id:'carracci', name:'Carracci Family', color:'var(--cluster-carracci)',
+    members:[
+      { name:'Don Achille †',                      role:'Feared loan shark, murdered in childhood' },
+      { name:'Donna Maria',                         role:'Don Achille\'s wife' },
+      { name:'Stefano Carracci', primary:true,      role:'Grocer, marries Lila at sixteen' },
+      { name:'Alfonso Carracci', primary:true,      role:'Sweet, intelligent classmate' },
+      { name:'Pinuccia',                            role:'Stefano\'s sister' },
     ]
   },
   {
-    id: 'peluso', name: 'Peluso Family', color: 'var(--cluster-peluso)',
-    members: [
-      { name: 'Alfredo',
-        bio: 'A carpenter who loses his tools and livelihood to Don Achille through gambling debts. His ruin shapes the Peluso family\'s entire trajectory — and his son Pasquale grows up burning with resentment for the Carraccis.' },
-      { name: 'Giuseppina',
-        bio: "Alfredo's wife and a kind, steady mother. She holds the family together through poverty and the shame of her husband's imprisonment." },
-      { name: 'Pasquale Peluso', primary: true,
-        bio: 'The eldest son, a construction worker and passionate Communist. He harbours deep romantic feelings for Lila and treats Elena with genuine respect — one of the few neighbourhood boys who sees the women as full human beings.' },
-      { name: 'Carmela (Carmen) Peluso', primary: true,
-        bio: 'Pasquale\'s sister and a close friend to both Elena and Lila. Warm and loyal, she remains in the neighbourhood while the others scatter, and her steadiness makes her an anchor in both girls\' lives.' },
+    id:'peluso', name:'Peluso Family', color:'var(--cluster-peluso)',
+    members:[
+      { name:'Alfredo',                             role:'Carpenter ruined by Don Achille' },
+      { name:'Giuseppina',                          role:'Alfredo\'s wife' },
+      { name:'Pasquale Peluso', primary:true,       role:'Communist labourer, loves Lila' },
+      { name:'Carmela (Carmen) Peluso', primary:true, role:'Close friend to Elena & Lila' },
     ]
   },
   {
-    id: 'sarratore', name: 'Sarratore Family', color: 'var(--cluster-sarratore)',
-    members: [
-      { name: 'Donato Sarratore', primary: true,
-        bio: 'A railroad worker and amateur poet who presents a respectable face to the world. In private he is a serial womaniser — his affair with Melina Cappuccio destroys her mentally, and his later conduct toward Elena is a defining violation.' },
-      { name: 'Lidia',
-        bio: "Donato's wife — a woman who endures her husband's infidelities with suppressed rage and fierce protectiveness of her children." },
-      { name: 'Nino Sarratore', primary: true,
-        bio: "The eldest son — aloof, intellectual, and magnetic. Elena harbours a deep romantic obsession with him from childhood through much of her adult life. He embodies the educated world she aspires to enter." },
-      { name: 'Marisa Sarratore', primary: true,
-        bio: "Nino's younger sister. Elena befriends her largely to be near Nino — a calculated move Marisa may or may not perceive. She is warm but less intellectually driven than her brother." },
-      { name: 'Pino',
-        bio: 'One of the younger Sarratore children. He grows up in the shadow of his more prominent siblings and the neighbourhood\'s tight social world.' },
-      { name: 'Clelia',
-        bio: 'One of the younger Sarratore children — part of the household background that Elena observes during her time near the family.' },
-      { name: 'Ciro',
-        bio: 'The youngest Sarratore child. Like Pino and Clelia, he is part of the family fabric without a prominent individual role in this first book.' },
+    id:'sarratore', name:'Sarratore Family', color:'var(--cluster-sarratore)',
+    members:[
+      { name:'Donato Sarratore', primary:true,  role:'Railroad worker, poet, serial womaniser' },
+      { name:'Lidia',                            role:'Donato\'s long-suffering wife' },
+      { name:'Nino Sarratore', primary:true,    role:'Elena\'s lifelong obsession' },
+      { name:'Marisa Sarratore', primary:true,  role:'Nino\'s sister, befriended by Elena' },
+      { name:'Pino',                             role:'Younger sibling' },
+      { name:'Clelia',                           role:'Younger sibling' },
+      { name:'Ciro',                             role:'Youngest sibling' },
     ]
   },
   {
-    id: 'cappuccio', name: 'Cappuccio Family', color: 'var(--cluster-cappuccio)',
-    members: [
-      { name: 'Melina Cappuccio', primary: true,
-        bio: "A mentally unstable widow and distant relative of Lila's mother. Her affair with Donato Sarratore, and his abandonment of her, shattered her mind — she is one of the novel's most haunting examples of what happens to women destroyed by careless men." },
-      { name: 'Antonio Cappuccio', primary: true,
-        bio: "Melina's eldest son and a mechanic. He works to hold the family together with fierce protectiveness. He becomes romantically involved with Elena during their teenage years, but she keeps him at arm's length — he represents the neighbourhood's gravitational pull." },
-      { name: 'Ada',
-        bio: "Antonio's sister and Melina's daughter. She grows up quickly under the weight of family poverty and her mother's fragility." },
+    id:'cappuccio', name:'Cappuccio Family', color:'var(--cluster-cappuccio)',
+    members:[
+      { name:'Melina Cappuccio', primary:true,   role:'Unstable widow, Donato\'s former lover' },
+      { name:'Antonio Cappuccio', primary:true,  role:'Mechanic, Elena\'s teenage boyfriend' },
+      { name:'Ada',                              role:'Antonio\'s sister' },
     ]
   },
   {
-    id: 'solara', name: 'Solara Family', color: 'var(--cluster-solara)',
-    members: [
-      { name: 'Silvio Solara',
-        bio: 'The powerful, often violent owner of Bar Solara. He holds significant financial control over the neighbourhood through debt and intimidation — a local Camorra-adjacent patriarch whose authority everyone fears.' },
-      { name: 'Manuela Solara',
-        bio: "Silvio's wife, who aggressively manages the family's finances and debt book. She is the commercial brain of the Solara operation — cold, calculating, and deeply embedded in the neighbourhood's power structure." },
-      { name: 'Marcello Solara', primary: true,
-        bio: 'The arrogant elder son who becomes infatuated with Lila and pursues her aggressively for marriage. She refuses him with cold certainty. His obsession with her hangs over the novel like a slow-building threat.' },
-      { name: 'Michele Solara', primary: true,
-        bio: "The younger, colder son — Marcello's sidekick and in many ways the more calculating of the two. He later dates Gigliola Spagnuolo and develops his own unsettling fascination with Lila." },
+    id:'solara', name:'Solara Family', color:'var(--cluster-solara)',
+    members:[
+      { name:'Silvio Solara',                    role:'Violent bar owner, Camorra-linked' },
+      { name:'Manuela Solara',                   role:'Manages the family\'s debt book' },
+      { name:'Marcello Solara', primary:true,    role:'Pursues Lila obsessively' },
+      { name:'Michele Solara', primary:true,     role:'Colder, more calculating brother' },
     ]
   },
   {
-    id: 'scanno', name: 'Scanno Family', color: 'var(--cluster-scanno)',
-    members: [
-      { name: 'Nicola',
-        bio: 'Proprietor of the local fruit and vegetable cart with his wife Assunta. A familiar, steady presence in the neighbourhood market life.' },
-      { name: 'Assunta',
-        bio: "Nicola's wife and co-proprietor of their fruit and vegetable stall. Part of the neighbourhood's working fabric." },
-      { name: 'Enzo Scanno', primary: true,
-        bio: "Their son and a classmate of Elena and Lila. He struggles in school but shows quiet intelligence and endurance. He has a massive, enduring crush on Lila — and of all the boys, he is the one who respects her most consistently." },
+    id:'scanno', name:'Scanno Family', color:'var(--cluster-scanno)',
+    members:[
+      { name:'Nicola',                           role:'Fruit & vegetable seller' },
+      { name:'Assunta',                          role:'Nicola\'s wife' },
+      { name:'Enzo Scanno', primary:true,        role:'Classmate, steadfastly devoted to Lila' },
     ]
   },
   {
-    id: 'spagnuolo', name: 'Spagnuolo Family', color: 'var(--cluster-spagnuolo)',
-    members: [
-      { name: 'Signor Spagnuolo',
-        bio: "The pastry maker at the Solaras' bar — a craftsman whose professional dependence on the Solaras mirrors the neighbourhood's broader subordination to that family's power." },
-      { name: 'Rosa',
-        bio: "His wife. She is a background presence whose life is shaped by her husband's work and the family's proximity to the Solara orbit." },
-      { name: 'Gigliola Spagnuolo', primary: true,
-        bio: 'Their daughter and a classmate of Elena and Lila. Pretty and spirited, she dates Michele Solara — a relationship that entangles the Spagnuolo family further in the Solara web.' },
+    id:'spagnuolo', name:'Spagnuolo Family', color:'var(--cluster-spagnuolo)',
+    members:[
+      { name:'Signor Spagnuolo',                 role:'Pastry maker at Bar Solara' },
+      { name:'Rosa',                             role:'His wife' },
+      { name:'Gigliola Spagnuolo', primary:true, role:'Classmate, dates Michele Solara' },
     ]
   },
   {
-    id: 'other', name: 'Other Key Characters', color: 'var(--cluster-other)',
-    members: [
-      { name: 'Maestra Oliviero', primary: true,
-        bio: "The stern and perceptive elementary school teacher who recognises both Elena and Lila's extraordinary intelligence. She successfully pressures Elena's parents into sending her to middle school — but fails to do the same for Lila, a failure that haunts her." },
-      { name: 'Maestro Ferraro',
-        bio: 'An elementary school teacher who also serves as the neighbourhood librarian. He is a gentle authority figure who opens the world of books to the children of the rione.' },
-      { name: 'Gino', primary: true,
-        bio: "The son of the local pharmacist and Elena's first, brief teenage boyfriend. The romance is tentative and more about testing freedom than love — a rehearsal for the deeper entanglements to come." },
-      { name: 'Nella Incardo',
-        bio: "Maestra Oliviero's cousin, who runs a small inn on the island of Ischia. She hosts Elena during her summer vacations, providing one of the first windows Elena has into a life beyond the rione." },
-      { name: 'Prof. Gerace',
-        bio: 'A high school teacher who recognises Elena\'s academic promise and helps guide her through the rigorous classical curriculum of the liceo.' },
-      { name: 'Prof. Galiani',
-        bio: "A high school teacher who becomes an important intellectual mentor to Elena — sharp, politically engaged, and a model of the educated womanhood Elena aspires toward." },
-      { name: 'Pietro Airota',
-        bio: "An inflexible, intensely academic young man who eventually becomes Elena's husband later in the series. He represents entry into the Italian intellectual establishment — and all the contradictions that come with it." },
+    id:'other', name:'Other Key Characters', color:'var(--cluster-other)',
+    members:[
+      { name:'Maestra Oliviero', primary:true,   role:'Teacher who fights for Elena\'s education' },
+      { name:'Maestro Ferraro',                  role:'Teacher & neighbourhood librarian' },
+      { name:'Gino', primary:true,               role:'Elena\'s first boyfriend' },
+      { name:'Nella Incardo',                    role:'Hosts Elena on Ischia' },
+      { name:'Prof. Gerace',                     role:'High school teacher' },
+      { name:'Prof. Galiani',                    role:'Intellectual mentor to Elena' },
+      { name:'Pietro Airota',                    role:'Elena\'s future husband' },
     ]
   },
 ];
@@ -532,40 +384,12 @@ const ERAS = [
 ];
 
 let currentChapter = 1;
+function currentEra(){ return (ERAS.find(e=>currentChapter<=e.max)||ERAS[ERAS.length-1]).label; }
 
-function currentEra(){
-  return (ERAS.find(e => currentChapter <= e.max) || ERAS[ERAS.length-1]).label;
-}
-
-/* ============================================================  CHARACTER PANEL  */
-let hideTimer = null;
-
-function showCharPanel(name, bio, familyName, color){
-  clearTimeout(hideTimer);
-  document.getElementById('char-panel-family').textContent = familyName;
-  document.getElementById('char-panel-family').style.color = color || 'var(--text-muted)';
-  document.getElementById('char-panel-name').textContent = name;
-  document.getElementById('char-panel-bio').textContent = bio;
-  document.getElementById('char-panel').classList.add('visible');
-}
-
-function hideCharPanel(delay = 0){
-  clearTimeout(hideTimer);
-  hideTimer = delay
-    ? setTimeout(() => document.getElementById('char-panel').classList.remove('visible'), delay)
-    : (() => { document.getElementById('char-panel').classList.remove('visible'); })();
-}
-
-document.getElementById('char-panel').addEventListener('mouseenter', () => clearTimeout(hideTimer));
-document.getElementById('char-panel').addEventListener('mouseleave', () => hideCharPanel(200));
-document.getElementById('char-panel-close').addEventListener('click', () => hideCharPanel());
-
-/* ============================================================  RENDER CARDS  */
 function renderCards(){
   const grid = document.getElementById('cluster-grid');
   grid.innerHTML = '';
-
-  FAMILIES.forEach(family => {
+  FAMILIES.forEach(family=>{
     const card = document.createElement('div');
     card.className = 'family-card';
     card.style.borderLeftColor = family.color;
@@ -577,60 +401,41 @@ function renderCards(){
 
     const list = document.createElement('div');
     list.className = 'char-list';
-
-    family.members.forEach(m => {
+    family.members.forEach(m=>{
       const row = document.createElement('div');
-      row.className = 'char-row' + (m.primary ? ' primary' : '') + (m.bio ? ' has-bio' : '');
-      row.textContent = m.name;
-
-      if(m.bio){
-        row.addEventListener('mouseenter', () => {
-          clearTimeout(hideTimer);
-          showCharPanel(m.name, m.bio, family.name, family.color);
-        });
-        row.addEventListener('mouseleave', () => hideCharPanel(300));
-        row.addEventListener('click', () => showCharPanel(m.name, m.bio, family.name, family.color));
-      }
-
+      row.className = 'char-row';
+      row.innerHTML = `<span class="char-name${m.primary?' primary':''}">${m.name}</span>`
+        + (m.role ? `<span class="char-role">${m.role}</span>` : '');
       list.appendChild(row);
     });
-
     card.appendChild(list);
     grid.appendChild(card);
   });
 }
 
-/* ============================================================  SLIDER  */
 const slider = document.getElementById('chapter-slider');
-const chVal  = document.getElementById('chapter-val');
-const chEra  = document.getElementById('chapter-era');
-
 function updateSlider(){
-  const pct = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+  const pct = ((slider.value-slider.min)/(slider.max-slider.min))*100;
   slider.style.setProperty('--pct', pct);
-  chVal.textContent = slider.value;
-  chEra.textContent = currentEra();
+  document.getElementById('chapter-val').textContent = slider.value;
+  document.getElementById('chapter-era').textContent = currentEra();
   renderTimeline();
 }
-slider.addEventListener('input', () => {
-  currentChapter = parseInt(slider.value, 10);
-  updateSlider();
-});
+slider.addEventListener('input',()=>{ currentChapter=parseInt(slider.value,10); updateSlider(); });
 
-/* ============================================================  TIMELINE  */
 function renderTimeline(){
   const scroll = document.getElementById('timeline-scroll');
   scroll.innerHTML = '';
-  TIMELINE.forEach((ev, idx) => {
+  TIMELINE.forEach((ev,idx)=>{
     const isFuture  = ev.chapter > currentChapter;
-    const isCurrent = !isFuture && (idx === TIMELINE.length-1 || TIMELINE[idx+1].chapter > currentChapter);
+    const isCurrent = !isFuture && (idx===TIMELINE.length-1 || TIMELINE[idx+1].chapter>currentChapter);
     const div = document.createElement('div');
-    div.className = 'timeline-event' + (isFuture ? ' future' : '') + (isCurrent ? ' current' : '');
+    div.className = 'timeline-event'+(isFuture?' future':'')+(isCurrent?' current':'');
     div.innerHTML = `
       <div class="tl-inner">
         <div class="tl-front">
           <div class="timeline-num">
-            <div class="tl-dot${isCurrent ? ' current-dot' : ''}">${ev.num}</div>
+            <div class="tl-dot${isCurrent?' current-dot':''}">${ev.num}</div>
             <span class="timeline-year">${ev.year}</span>
           </div>
           <div class="timeline-title">${ev.title}</div>
@@ -642,14 +447,8 @@ function renderTimeline(){
   });
 }
 
-/* ============================================================  INIT  */
 renderCards();
 updateSlider();
-
-/* close panel on grid click (not on a char row) */
-document.getElementById('cluster-grid').addEventListener('click', e => {
-  if(!e.target.closest('.has-bio')) hideCharPanel();
-});
 </script>
 </body>
 </html>
