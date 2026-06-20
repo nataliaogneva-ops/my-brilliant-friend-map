@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Brilliant Friend — Character Relationships</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 /* ============================================================  TOKENS  */
 :root {
@@ -17,14 +16,7 @@
   --cluster-solara:    #A0272B;
   --cluster-scanno:    #3D6B4F;
   --cluster-spagnuolo: #6B3A6B;
-  --cluster-other:     #3A3A4A;
-
-  --rel-romance:    #E8527A;
-  --rel-friendship: #52B788;
-  --rel-alliance:   #4A90D9;
-  --rel-mentorship: #9B8AC4;
-  --rel-conflict:   #8B949E;
-  --rel-family:     #5A8FBF;
+  --cluster-other:     #4A4A5A;
 
   --surface-bg:     #0D1117;
   --surface-panel:  #161B22;
@@ -36,200 +28,256 @@
   --text-muted:     #484F58;
 
   --border-subtle:  rgba(255,255,255,0.07);
-  --border-default: rgba(255,255,255,0.13);
+  --border-default: rgba(255,255,255,0.12);
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-fast: 140ms;
   --dur-med:  260ms;
-
-  --sp-4:4px; --sp-6:6px; --sp-8:8px; --sp-12:12px;
-  --sp-16:16px; --sp-24:24px; --sp-32:32px;
 }
 
 /* ============================================================  BASE  */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  background:var(--surface-bg);color:var(--text-primary);
-  height:100dvh;overflow:hidden;display:flex;flex-direction:column;
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--surface-bg);
+  color: var(--text-primary);
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 /* ============================================================  HEADER  */
-#header{
-  flex-shrink:0;background:var(--surface-panel);
-  border-bottom:1px solid var(--border-subtle);z-index:20;
+#header {
+  flex-shrink: 0;
+  background: var(--surface-panel);
+  border-bottom: 1px solid var(--border-subtle);
+  z-index: 20;
 }
-#header-top{
-  display:flex;align-items:center;gap:var(--sp-24);
-  padding:var(--sp-12) var(--sp-24);flex-wrap:wrap;
-}
-#header h1{
-  font-size:13px;font-weight:600;letter-spacing:.08em;
-  text-transform:uppercase;color:var(--text-secondary);white-space:nowrap;
-}
-#header h1 span{color:var(--text-primary)}
 
-/* filters */
-#filters{display:flex;gap:var(--sp-6);flex-wrap:wrap}
-.filter-pill{
-  display:flex;align-items:center;gap:3px;padding:3px var(--sp-12);
-  border-radius:999px;border:1.5px solid transparent;font-size:11px;
-  font-weight:600;letter-spacing:.05em;cursor:pointer;
-  transition:background var(--dur-fast);user-select:none;
-  background:var(--surface-card);
+/* Title bar */
+#header-top {
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border-subtle);
 }
-.filter-pill[data-rel="romance"]    {border-color:var(--rel-romance);   color:var(--rel-romance)}
-.filter-pill[data-rel="friendship"] {border-color:var(--rel-friendship);color:var(--rel-friendship)}
-.filter-pill[data-rel="alliance"]   {border-color:var(--rel-alliance);  color:var(--rel-alliance)}
-.filter-pill[data-rel="mentorship"] {border-color:var(--rel-mentorship);color:var(--rel-mentorship)}
-.filter-pill[data-rel="conflict"]   {border-color:var(--rel-conflict);  color:var(--rel-conflict)}
-.filter-pill[data-rel="family"]     {border-color:var(--rel-family);    color:var(--rel-family)}
-.filter-pill.active[data-rel="romance"]    {background:var(--rel-romance);   color:#fff}
-.filter-pill.active[data-rel="friendship"] {background:var(--rel-friendship);color:#fff}
-.filter-pill.active[data-rel="alliance"]   {background:var(--rel-alliance);  color:#fff}
-.filter-pill.active[data-rel="mentorship"] {background:var(--rel-mentorship);color:#fff}
-.filter-pill.active[data-rel="conflict"]   {background:var(--rel-conflict);  color:#fff}
-.filter-pill.active[data-rel="family"]     {background:var(--rel-family);    color:#fff}
+#header h1 {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+#header h1 span { color: var(--text-primary); }
 
-/* chapter strip */
-#chapter-strip{
-  padding:var(--sp-8) var(--sp-24) var(--sp-12);
-  border-top:1px solid var(--border-subtle);background:var(--surface-bg);
+/* Chapter strip */
+#chapter-strip {
+  padding: 12px 24px 14px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-bg);
 }
-#chapter-strip-label{display:flex;align-items:baseline;gap:var(--sp-8);margin-bottom:var(--sp-6)}
-#chapter-strip-label>span:first-child{
-  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)
+#chapter-strip-label {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 10px;
 }
-#chapter-val{font-size:20px;font-weight:700;color:var(--text-primary);line-height:1;min-width:32px}
-#chapter-era{font-size:12px;color:var(--text-secondary);font-style:italic}
-#chapter-val-suffix{font-size:12px;color:var(--text-muted)}
-#chapter-slider{
-  -webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:3px;
-  background:linear-gradient(to right,var(--text-primary) 0%,
-    var(--text-primary) calc(var(--pct,0%) * 1%),
-    var(--surface-hover) calc(var(--pct,0%) * 1%),var(--surface-hover) 100%);
-  outline:none;cursor:pointer;
+#chapter-label-text {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }
-#chapter-slider::-webkit-slider-thumb{
-  -webkit-appearance:none;width:22px;height:22px;border-radius:50%;
-  background:var(--text-primary);border:3px solid var(--surface-bg);
-  box-shadow:0 0 0 2px rgba(255,255,255,.2),0 2px 8px rgba(0,0,0,.5);
-  transition:transform var(--dur-fast);
+#chapter-val {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  min-width: 36px;
+  letter-spacing: -.02em;
 }
-#chapter-slider:active::-webkit-slider-thumb{transform:scale(1.2)}
-#chapter-ticks{display:flex;justify-content:space-between;margin-top:4px;padding:0 2px}
-#chapter-ticks span{font-size:10px;color:var(--text-muted)}
+#chapter-val-suffix { font-size: 12px; color: var(--text-muted); }
+#chapter-era {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+#chapter-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    var(--text-primary) 0%,
+    var(--text-primary) calc(var(--pct, 0%) * 1%),
+    var(--surface-hover) calc(var(--pct, 0%) * 1%),
+    var(--surface-hover) 100%
+  );
+  outline: none;
+  cursor: pointer;
+}
+#chapter-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--text-primary);
+  border: 3px solid var(--surface-bg);
+  box-shadow: 0 0 0 1.5px rgba(255,255,255,.25), 0 2px 8px rgba(0,0,0,.5);
+  transition: transform var(--dur-fast);
+}
+#chapter-slider:active::-webkit-slider-thumb { transform: scale(1.15); }
+#chapter-ticks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  padding: 0 2px;
+}
+#chapter-ticks span { font-size: 10px; color: var(--text-muted); }
 
-/* ============================================================  TIMELINE STRIP (always open)  */
-#timeline-bar{
-  border-top:1px solid var(--border-subtle);
-  background:var(--surface-panel);
+/* Timeline */
+#timeline-bar {
+  background: var(--surface-panel);
 }
-#timeline-header{
-  display:flex;align-items:center;gap:var(--sp-8);
-  padding:var(--sp-8) var(--sp-24) var(--sp-6);
+#timeline-header {
+  padding: 10px 24px 6px;
 }
-#timeline-header-label{
-  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--text-muted);
+#timeline-header-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }
-#timeline-scroll{
-  display:flex;
-  gap:var(--sp-12);padding:0 var(--sp-24) var(--sp-12);
-  overflow-x:auto;scrollbar-width:thin;
+#timeline-scroll {
+  display: flex;
+  gap: 10px;
+  padding: 0 24px 12px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-default) transparent;
 }
-#timeline-scroll::-webkit-scrollbar{height:3px}
-#timeline-scroll::-webkit-scrollbar-track{background:transparent}
-#timeline-scroll::-webkit-scrollbar-thumb{background:var(--border-default);border-radius:2px}
-.timeline-event{
-  flex-shrink:0;width:152px;background:var(--surface-card);
-  border:1px solid var(--border-subtle);border-radius:8px;
-  padding:var(--sp-8) var(--sp-12);
-  transition:border-color var(--dur-fast),opacity var(--dur-med),background var(--dur-fast);
+#timeline-scroll::-webkit-scrollbar { height: 3px; }
+#timeline-scroll::-webkit-scrollbar-track { background: transparent; }
+#timeline-scroll::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 2px; }
+
+.timeline-event {
+  flex-shrink: 0;
+  width: 156px;
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 8px 12px;
+  transition: opacity var(--dur-med), background var(--dur-fast), border-color var(--dur-fast);
 }
-.timeline-event.future{opacity:.3}
-.timeline-event.current{
-  border-color:rgba(255,255,255,.22);
-  background:var(--surface-hover);
+.timeline-event.future { opacity: .28; }
+.timeline-event.current {
+  background: var(--surface-hover);
+  border-color: rgba(255,255,255,.2);
 }
-.timeline-num{
-  display:flex;align-items:center;gap:var(--sp-6);margin-bottom:4px;
+.timeline-num {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
 }
-.tl-dot{
-  width:18px;height:18px;border-radius:50%;background:var(--surface-hover);
-  border:1px solid var(--border-default);display:flex;align-items:center;
-  justify-content:center;font-size:9px;font-weight:700;color:var(--text-secondary);
-  flex-shrink:0;
+.tl-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--surface-hover);
+  border: 1px solid var(--border-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  flex-shrink: 0;
 }
-.tl-dot.current-dot{
-  background:var(--text-primary);color:var(--surface-bg);border-color:transparent;
+.tl-dot.current-dot {
+  background: var(--text-primary);
+  color: var(--surface-bg);
+  border-color: transparent;
 }
-.timeline-year{font-size:10px;color:var(--text-muted);letter-spacing:.02em}
-.timeline-title{font-size:11px;font-weight:600;color:var(--text-primary);margin-bottom:3px;line-height:1.3}
-.timeline-desc{font-size:10px;color:var(--text-secondary);line-height:1.5}
+.timeline-year { font-size: 10px; color: var(--text-muted); }
+.timeline-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.35;
+  margin-bottom: 4px;
+}
+.timeline-desc {
+  font-size: 10px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
 
 /* ============================================================  MAIN  */
-#main{flex:1;overflow:hidden}
+#main { flex: 1; overflow: hidden; }
 
-/* ============================================================  CLUSTER GRID  */
-#cluster-grid{
-  height:100%;display:grid;grid-template-columns:repeat(3,1fr);
-  gap:var(--sp-16);padding:var(--sp-16) var(--sp-24);
-  overflow-y:auto;align-content:start;
+#cluster-grid {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 16px 24px;
+  overflow-y: auto;
+  align-content: start;
 }
 
 /* ============================================================  FAMILY CARD  */
-.family-card{
-  background:var(--surface-card);border:1px solid var(--border-subtle);
-  border-radius:12px;overflow:hidden;
-}
-.family-card-header{
-  display:flex;align-items:center;gap:var(--sp-8);
-  padding:var(--sp-12) var(--sp-16);
-  border-bottom:1px solid var(--border-subtle);
-  cursor:pointer;user-select:none;
-}
-.cluster-bar{width:4px;height:20px;border-radius:2px;flex-shrink:0}
-.family-card-header h2{
-  font-size:11px;font-weight:700;letter-spacing:.08em;
-  text-transform:uppercase;color:var(--text-primary);flex:1;
-}
-.card-chevron{
-  color:var(--text-muted);font-size:10px;
-  transition:transform var(--dur-med) var(--ease-out);
-}
-.family-card.collapsed .card-chevron{transform:rotate(-90deg)}
-
-/* Character list */
-.char-list{
-  padding:var(--sp-8) var(--sp-16) var(--sp-12);
-  display:flex;flex-direction:column;
-  overflow:hidden;
-  transition:max-height var(--dur-med) var(--ease-out), opacity var(--dur-med);
-  max-height:600px;opacity:1;
-}
-.family-card.collapsed .char-list{
-  max-height:0;opacity:0;padding-top:0;padding-bottom:0;
-}
-.char-row{
-  font-size:12px;color:var(--text-muted);
-  padding:3px 0;line-height:1.5;letter-spacing:.01em;
-}
-.char-row.primary{
-  font-size:13px;color:var(--text-primary);font-weight:600;
-  letter-spacing:0;
+.family-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-left-width: 4px;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-/* ============================================================  MOBILE  */
-@media(max-width:700px){
-  #cluster-grid{grid-template-columns:1fr;padding:var(--sp-12);gap:var(--sp-12)}
-  #header-top{padding:var(--sp-12) var(--sp-16);gap:var(--sp-12)}
-  #chapter-strip{padding:var(--sp-8) var(--sp-16) var(--sp-12)}
-  #filters{gap:4px}
-  .filter-pill{padding:3px 8px;font-size:10px}
+.family-card-header {
+  padding: 12px 16px 8px;
 }
-@media(min-width:701px) and (max-width:1100px){
-  #cluster-grid{grid-template-columns:repeat(2,1fr)}
+.family-card-header h2 {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.char-list {
+  padding: 0 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.char-row {
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 2px 0;
+  line-height: 1.55;
+}
+.char-row.primary {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 3px 0;
+}
+
+/* ============================================================  RESPONSIVE  */
+@media (max-width: 700px) {
+  #cluster-grid { grid-template-columns: 1fr; padding: 12px; gap: 12px; }
+  #header-top { padding: 12px 16px; }
+  #chapter-strip { padding: 10px 16px 12px; }
+  #timeline-header { padding: 8px 16px 4px; }
+  #timeline-scroll { padding: 0 16px 10px; }
+}
+@media (min-width: 701px) and (max-width: 1100px) {
+  #cluster-grid { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
 </head>
@@ -238,18 +286,11 @@ body{
 <div id="header">
   <div id="header-top">
     <h1>My Brilliant Friend &mdash; <span>Character Relationships</span></h1>
-    <div id="filters">
-      <div class="filter-pill active" data-rel="romance"><i class="fa-solid fa-heart fa-xs"></i> Romance</div>
-      <div class="filter-pill active" data-rel="friendship"><i class="fa-solid fa-star fa-xs"></i> Friendship</div>
-      <div class="filter-pill active" data-rel="alliance"><i class="fa-solid fa-handshake fa-xs"></i> Alliance</div>
-      <div class="filter-pill active" data-rel="mentorship"><i class="fa-solid fa-graduation-cap fa-xs"></i> Mentorship</div>
-      <div class="filter-pill active" data-rel="conflict"><i class="fa-solid fa-bolt fa-xs"></i> Conflict</div>
-      <div class="filter-pill active" data-rel="family"><i class="fa-solid fa-house fa-xs"></i> Family</div>
-    </div>
   </div>
+
   <div id="chapter-strip">
     <div id="chapter-strip-label">
-      <span>Chapter</span>
+      <span id="chapter-label-text">Chapter</span>
       <span id="chapter-val">1</span>
       <span id="chapter-val-suffix">of 87 —</span>
       <span id="chapter-era">Childhood in Rione</span>
@@ -260,6 +301,7 @@ body{
       <span>50</span><span>60</span><span>70</span><span>87</span>
     </div>
   </div>
+
   <div id="timeline-bar">
     <div id="timeline-header">
       <span id="timeline-header-label">Timeline of Key Events</span>
@@ -273,179 +315,75 @@ body{
 </div>
 
 <script>
-/* ============================================================  DATA  */
-
 const FAMILIES = [
-  {
-    id:'greco', name:'Greco Family',
-    color:'var(--cluster-greco)',
-    members:[
-      {name:'Mr. Greco'},
-      {name:'Mrs. Greco'},
-      {name:'Elena "Lenù"', primary:true},
-      {name:'Peppe'},
-      {name:'Gianni'},
-      {name:'Elisa'},
-    ]
-  },
-  {
-    id:'cerullo', name:'Cerullo Family',
-    color:'var(--cluster-cerullo)',
-    members:[
-      {name:'Fernando'},
-      {name:'Nunzia'},
-      {name:'Rino (Elder)', primary:true},
-      {name:'Raffaella "Lila"', primary:true},
-      {name:'Rino (Younger)'},
-    ]
-  },
-  {
-    id:'carracci', name:'Carracci Family',
-    color:'var(--cluster-carracci)',
-    members:[
-      {name:'Don Achille †'},
-      {name:'Donna Maria'},
-      {name:'Stefano', primary:true},
-      {name:'Alfonso', primary:true},
-      {name:'Pinuccia'},
-    ]
-  },
-  {
-    id:'peluso', name:'Peluso Family',
-    color:'var(--cluster-peluso)',
-    members:[
-      {name:'Alfredo'},
-      {name:'Giuseppina'},
-      {name:'Pasquale', primary:true},
-      {name:'Carmela', primary:true},
-    ]
-  },
-  {
-    id:'sarratore', name:'Sarratore Family',
-    color:'var(--cluster-sarratore)',
-    members:[
-      {name:'Donato', primary:true},
-      {name:'Lidia'},
-      {name:'Nino', primary:true},
-      {name:'Marisa', primary:true},
-      {name:'Pino'},
-      {name:'Clelia'},
-      {name:'Ciro'},
-    ]
-  },
-  {
-    id:'cappuccio', name:'Cappuccio Family',
-    color:'var(--cluster-cappuccio)',
-    members:[
-      {name:'Melina', primary:true},
-      {name:'Antonio', primary:true},
-      {name:'Ada'},
-    ]
-  },
-  {
-    id:'solara', name:'Solara Family',
-    color:'var(--cluster-solara)',
-    members:[
-      {name:'Silvio'},
-      {name:'Manuela'},
-      {name:'Marcello', primary:true},
-      {name:'Michele', primary:true},
-    ]
-  },
-  {
-    id:'scanno', name:'Scanno Family',
-    color:'var(--cluster-scanno)',
-    members:[
-      {name:'Nicola'},
-      {name:'Assunta'},
-      {name:'Enzo', primary:true},
-    ]
-  },
-  {
-    id:'spagnuolo', name:'Spagnuolo Family',
-    color:'var(--cluster-spagnuolo)',
-    members:[
-      {name:'Signor Spagnuolo'},
-      {name:'Rosa'},
-      {name:'Gigliola', primary:true},
-    ]
-  },
-  {
-    id:'other', name:'Other Key Characters',
-    color:'var(--cluster-other)',
-    members:[
-      {name:'Maestra Oliviero', primary:true},
-      {name:'Maestro Ferraro'},
-      {name:'Gino', primary:true},
-    ]
-  },
+  { id:'greco',     name:'Greco Family',      color:'var(--cluster-greco)',
+    members:[{name:'Mr. Greco'},{name:'Mrs. Greco'},{name:'Elena "Lenù"',primary:true},{name:'Peppe'},{name:'Gianni'},{name:'Elisa'}] },
+  { id:'cerullo',   name:'Cerullo Family',    color:'var(--cluster-cerullo)',
+    members:[{name:'Fernando'},{name:'Nunzia'},{name:'Rino (Elder)',primary:true},{name:'Raffaella "Lila"',primary:true},{name:'Rino (Younger)'}] },
+  { id:'carracci',  name:'Carracci Family',   color:'var(--cluster-carracci)',
+    members:[{name:'Don Achille †'},{name:'Donna Maria'},{name:'Stefano',primary:true},{name:'Alfonso',primary:true},{name:'Pinuccia'}] },
+  { id:'peluso',    name:'Peluso Family',     color:'var(--cluster-peluso)',
+    members:[{name:'Alfredo'},{name:'Giuseppina'},{name:'Pasquale',primary:true},{name:'Carmela',primary:true}] },
+  { id:'sarratore', name:'Sarratore Family',  color:'var(--cluster-sarratore)',
+    members:[{name:'Donato',primary:true},{name:'Lidia'},{name:'Nino',primary:true},{name:'Marisa',primary:true},{name:'Pino'},{name:'Clelia'},{name:'Ciro'}] },
+  { id:'cappuccio', name:'Cappuccio Family',  color:'var(--cluster-cappuccio)',
+    members:[{name:'Melina',primary:true},{name:'Antonio',primary:true},{name:'Ada'}] },
+  { id:'solara',    name:'Solara Family',     color:'var(--cluster-solara)',
+    members:[{name:'Silvio'},{name:'Manuela'},{name:'Marcello',primary:true},{name:'Michele',primary:true}] },
+  { id:'scanno',    name:'Scanno Family',     color:'var(--cluster-scanno)',
+    members:[{name:'Nicola'},{name:'Assunta'},{name:'Enzo',primary:true}] },
+  { id:'spagnuolo', name:'Spagnuolo Family',  color:'var(--cluster-spagnuolo)',
+    members:[{name:'Signor Spagnuolo'},{name:'Rosa'},{name:'Gigliola',primary:true}] },
+  { id:'other',     name:'Other Key Characters', color:'var(--cluster-other)',
+    members:[{name:'Maestra Oliviero',primary:true},{name:'Maestro Ferraro'},{name:'Gino',primary:true}] },
 ];
 
 const TIMELINE = [
-  {num:1, year:'1944–45', chapter:1,  title:'Childhood in Rione',
-   desc:'Elena and Lila meet as little girls in the postwar years in the poor neighbourhood of Naples.'},
-  {num:2, year:'1947–48', chapter:5,  title:'Elementary School',
-   desc:"They begin school with Maestra Oliviero who recognises their extraordinary intelligence."},
-  {num:3, year:'1949',    chapter:15, title:"Don Achille's Murder",
-   desc:'Don Achille Carracci, the neighbourhood "ogre", is murdered. Alfredo Peluso is accused.'},
-  {num:4, year:'1950',    chapter:25, title:'End of Elementary School',
-   desc:"Elena graduates top of class. Maestra Oliviero secures her middle school place — but Lila is denied."},
-  {num:5, year:'1950–51', chapter:35, title:'New Paths',
-   desc:"Elena begins middle school far from the Rione. Lila stays behind, helping her father in the shoe shop."},
-  {num:6, year:'1951–52', chapter:45, title:'Adolescence & Awakening',
-   desc:"Elena's intense infatuation with Nino Sarratore deepens. She befriends Marisa to be near him."},
-  {num:7, year:'1952',    chapter:55, title:'Teenage Romances',
-   desc:'Elena has a brief romance with Gino, then begins a relationship with Antonio Cappuccio.'},
-  {num:8, year:'1952',    chapter:65, title:'Lila & the Solaras',
-   desc:'Marcello Solara pursues Lila aggressively for marriage, but she ultimately rejects him.'},
-  {num:9, year:'1952–53', chapter:75, title:'Lila Marries Stefano',
-   desc:'At sixteen, Lila marries Stefano Carracci and enters a life of wealth — but also confinement.'},
-  {num:10,year:'1953',    chapter:87, title:'Summer on Ischia',
-   desc:'Elena spends the summer on Ischia — a rare freedom, and the threshold of young adulthood.'},
+  {num:1, year:'1944–45', chapter:1,  title:'Childhood in Rione',       desc:'Elena and Lila meet as little girls in the postwar years in the poor neighbourhood of Naples.'},
+  {num:2, year:'1947–48', chapter:5,  title:'Elementary School',         desc:'They begin school with Maestra Oliviero who recognises their extraordinary intelligence.'},
+  {num:3, year:'1949',    chapter:15, title:"Don Achille's Murder",       desc:'Don Achille Carracci, the neighbourhood "ogre", is murdered. Alfredo Peluso is accused.'},
+  {num:4, year:'1950',    chapter:25, title:'End of Elementary School',   desc:'Elena graduates top of class. Maestra Oliviero secures her middle school place — but Lila is denied.'},
+  {num:5, year:'1950–51', chapter:35, title:'New Paths',                  desc:'Elena begins middle school far from the Rione. Lila stays behind, helping her father in the shoe shop.'},
+  {num:6, year:'1951–52', chapter:45, title:'Adolescence & Awakening',    desc:"Elena's intense infatuation with Nino Sarratore deepens. She befriends Marisa to be near him."},
+  {num:7, year:'1952',    chapter:55, title:'Teenage Romances',           desc:'Elena has a brief romance with Gino, then begins a relationship with Antonio Cappuccio.'},
+  {num:8, year:'1952',    chapter:65, title:'Lila & the Solaras',         desc:'Marcello Solara pursues Lila aggressively for marriage, but she ultimately rejects him.'},
+  {num:9, year:'1952–53', chapter:75, title:'Lila Marries Stefano',       desc:'At sixteen, Lila marries Stefano Carracci and enters a life of wealth — but also confinement.'},
+  {num:10,year:'1953',    chapter:87, title:'Summer on Ischia',           desc:'Elena spends the summer on Ischia — a rare freedom, and the threshold of young adulthood.'},
 ];
 
 const ERAS = [
-  {max:10,  label:'Childhood in Rione'},
-  {max:25,  label:'Elementary School Years'},
-  {max:40,  label:'Diverging Paths'},
-  {max:55,  label:'Adolescence & Awakening'},
-  {max:70,  label:'Teenage Romances'},
-  {max:80,  label:'Lila & the Solaras'},
-  {max:87,  label:'The Wedding'},
+  {max:10, label:'Childhood in Rione'},
+  {max:25, label:'Elementary School Years'},
+  {max:40, label:'Diverging Paths'},
+  {max:55, label:'Adolescence & Awakening'},
+  {max:70, label:'Teenage Romances'},
+  {max:80, label:'Lila & the Solaras'},
+  {max:87, label:'The Wedding'},
 ];
 
-/* ============================================================  STATE  */
 let currentChapter = 1;
 
 function currentEra(){
-  return (ERAS.find(e=>currentChapter<=e.max)||ERAS[ERAS.length-1]).label;
+  return (ERAS.find(e => currentChapter <= e.max) || ERAS[ERAS.length-1]).label;
 }
 
-/* ============================================================  RENDER CARDS  */
+/* Cards */
 function renderCards(){
   const grid = document.getElementById('cluster-grid');
   grid.innerHTML = '';
-
-  FAMILIES.forEach(family=>{
+  FAMILIES.forEach(family => {
     const card = document.createElement('div');
     card.className = 'family-card';
+    card.style.borderLeftColor = family.color;
 
-    /* header — click to collapse */
     const header = document.createElement('div');
     header.className = 'family-card-header';
-    header.innerHTML = `
-      <div class="cluster-bar" style="background:${family.color}"></div>
-      <h2>${family.name}</h2>
-      <i class="fa-solid fa-chevron-down card-chevron"></i>`;
-    header.addEventListener('click', ()=>{
-      card.classList.toggle('collapsed');
-    });
+    header.innerHTML = `<h2>${family.name}</h2>`;
     card.appendChild(header);
 
-    /* character list */
     const list = document.createElement('div');
     list.className = 'char-list';
-    family.members.forEach(m=>{
+    family.members.forEach(m => {
       const row = document.createElement('div');
       row.className = 'char-row' + (m.primary ? ' primary' : '');
       row.textContent = m.name;
@@ -457,17 +395,10 @@ function renderCards(){
   });
 }
 
-/* ============================================================  FILTERS  */
-document.querySelectorAll('.filter-pill').forEach(pill=>{
-  pill.addEventListener('click',()=>{
-    pill.classList.toggle('active');
-  });
-});
-
-/* ============================================================  CHAPTER SLIDER  */
-const slider  = document.getElementById('chapter-slider');
-const chVal   = document.getElementById('chapter-val');
-const chEra   = document.getElementById('chapter-era');
+/* Slider */
+const slider = document.getElementById('chapter-slider');
+const chVal  = document.getElementById('chapter-val');
+const chEra  = document.getElementById('chapter-era');
 
 function updateSlider(){
   const pct = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
@@ -476,23 +407,19 @@ function updateSlider(){
   chEra.textContent = currentEra();
   renderTimeline();
 }
-
-slider.addEventListener('input', ()=>{
+slider.addEventListener('input', () => {
   currentChapter = parseInt(slider.value, 10);
   updateSlider();
 });
-updateSlider();
 
-/* ============================================================  TIMELINE  */
+/* Timeline */
 function renderTimeline(){
   const scroll = document.getElementById('timeline-scroll');
   scroll.innerHTML = '';
-  TIMELINE.forEach(ev=>{
+  TIMELINE.forEach(ev => {
     const isFuture  = ev.chapter > currentChapter;
-    const isCurrent = !isFuture && (
-      TIMELINE.indexOf(ev) === TIMELINE.length - 1 ||
-      TIMELINE[TIMELINE.indexOf(ev) + 1].chapter > currentChapter
-    );
+    const idx       = TIMELINE.indexOf(ev);
+    const isCurrent = !isFuture && (idx === TIMELINE.length-1 || TIMELINE[idx+1].chapter > currentChapter);
     const div = document.createElement('div');
     div.className = 'timeline-event' + (isFuture ? ' future' : '') + (isCurrent ? ' current' : '');
     div.innerHTML = `
@@ -506,9 +433,9 @@ function renderTimeline(){
   });
 }
 
-/* ============================================================  INIT  */
+/* Init */
 renderCards();
-renderTimeline();
+updateSlider();
 </script>
 </body>
 </html>
