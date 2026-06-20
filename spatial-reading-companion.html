@@ -191,20 +191,20 @@ body {
   border-radius: 10px; overflow: hidden;
 }
 .family-card-header {
-  padding: 14px 16px 12px;
+  padding: 12px 14px 10px;
   border-bottom: 1px solid var(--border-subtle);
 }
 .family-card-header h2 {
-  font-size: 15px; font-weight: 700;
+  font-size: 14px; font-weight: 700;
   letter-spacing: -.01em;
-  color: var(--text-primary);
+  color: var(--family-color, var(--text-primary));
   line-height: 1.2;
 }
 
 /* ── Character rows ── */
-.char-list { padding: 10px 16px 14px; display: flex; flex-direction: column; gap: 8px; }
+.char-list { padding: 8px 14px 12px; display: flex; flex-direction: column; gap: 6px; }
 
-.char-row { display: flex; flex-direction: column; gap: 2px; }
+.char-row { display: flex; flex-direction: column; gap: 1px; }
 
 .char-name {
   font-size: 11px; color: var(--text-secondary);
@@ -216,7 +216,8 @@ body {
 }
 .char-role {
   font-size: 10px; color: var(--text-muted);
-  line-height: 1.4; letter-spacing: .01em;
+  font-style: italic;
+  line-height: 1.4;
 }
 
 /* ── Responsive ── */
@@ -397,6 +398,7 @@ function renderCards(){
     const card = document.createElement('div');
     card.className = 'family-card';
     card.style.borderLeftColor = family.color;
+    card.style.setProperty('--family-color', family.color);
 
     const header = document.createElement('div');
     header.className = 'family-card-header';
