@@ -163,20 +163,56 @@ body {
 #timeline-scroll::-webkit-scrollbar-track { background: transparent; }
 #timeline-scroll::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 2px; }
 
+/* 3D flip card container */
 .timeline-event {
   flex-shrink: 0;
   width: 156px;
+  height: 148px;
+  perspective: 700px;
+}
+.tl-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 520ms cubic-bezier(0.45, 0, 0.55, 1);
+}
+.timeline-event.future .tl-inner {
+  transform: rotateY(180deg);
+}
+.tl-front, .tl-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.tl-front {
   background: var(--surface-card);
   border: 1px solid var(--border-subtle);
-  border-radius: 8px;
   padding: 8px 12px;
-  transition: opacity var(--dur-med), background var(--dur-fast), border-color var(--dur-fast);
+  transition: background var(--dur-fast), border-color var(--dur-fast);
 }
-.timeline-event.future { opacity: .28; }
-.timeline-event.current {
+.timeline-event.current .tl-front {
   background: var(--surface-hover);
   border-color: rgba(255,255,255,.2);
 }
+.tl-back {
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  transform: rotateY(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tl-back-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border-default);
+  opacity: .3;
+}
+
 .timeline-num {
   display: flex;
   align-items: center;
@@ -347,8 +383,8 @@ const TIMELINE = [
   {num:6, year:'1951–52', chapter:45, title:'Adolescence & Awakening',    desc:"Elena's intense infatuation with Nino Sarratore deepens. She befriends Marisa to be near him."},
   {num:7, year:'1952',    chapter:55, title:'Teenage Romances',           desc:'Elena has a brief romance with Gino, then begins a relationship with Antonio Cappuccio.'},
   {num:8, year:'1952',    chapter:65, title:'Lila & the Solaras',         desc:'Marcello Solara pursues Lila aggressively for marriage, but she ultimately rejects him.'},
-  {num:9, year:'1952–53', chapter:75, title:'Lila Marries Stefano',       desc:'At sixteen, Lila marries Stefano Carracci and enters a life of wealth — but also confinement.'},
-  {num:10,year:'1953',    chapter:87, title:'Summer on Ischia',           desc:'Elena spends the summer on Ischia — a rare freedom, and the threshold of young adulthood.'},
+  {num:9, year:'1953',    chapter:75, title:'Summer on Ischia',           desc:'Elena spends the summer on Ischia — a rare freedom, and the threshold of young adulthood.'},
+  {num:10,year:'1952–53', chapter:87, title:'Lila Marries Stefano',       desc:'At sixteen, Lila marries Stefano Carracci and enters a life of wealth — but also confinement.'},
 ];
 
 const ERAS = [
@@ -416,19 +452,23 @@ slider.addEventListener('input', () => {
 function renderTimeline(){
   const scroll = document.getElementById('timeline-scroll');
   scroll.innerHTML = '';
-  TIMELINE.forEach(ev => {
+  TIMELINE.forEach((ev, idx) => {
     const isFuture  = ev.chapter > currentChapter;
-    const idx       = TIMELINE.indexOf(ev);
     const isCurrent = !isFuture && (idx === TIMELINE.length-1 || TIMELINE[idx+1].chapter > currentChapter);
     const div = document.createElement('div');
     div.className = 'timeline-event' + (isFuture ? ' future' : '') + (isCurrent ? ' current' : '');
     div.innerHTML = `
-      <div class="timeline-num">
-        <div class="tl-dot${isCurrent ? ' current-dot' : ''}">${ev.num}</div>
-        <span class="timeline-year">${ev.year}</span>
-      </div>
-      <div class="timeline-title">${ev.title}</div>
-      <div class="timeline-desc">${ev.desc}</div>`;
+      <div class="tl-inner">
+        <div class="tl-front">
+          <div class="timeline-num">
+            <div class="tl-dot${isCurrent ? ' current-dot' : ''}">${ev.num}</div>
+            <span class="timeline-year">${ev.year}</span>
+          </div>
+          <div class="timeline-title">${ev.title}</div>
+          <div class="timeline-desc">${ev.desc}</div>
+        </div>
+        <div class="tl-back"><div class="tl-back-mark"></div></div>
+      </div>`;
     scroll.appendChild(div);
   });
 }
