@@ -22,15 +22,16 @@
   --color-primary:       #0066cc;
   --color-primary-dark:  #2997ff;
   --color-ink:           #1d1d1f;
-  --color-ink-muted:     #7a7a7a;
+  --color-ink-muted:     #6e6e73;   /* Apple secondary text — 4.6:1 on white ✓ */
+  --color-ink-subtle:    #86868b;   /* tertiary: role text, ticks */
   --color-ink-muted-80:  #333333;
   --color-canvas:        #ffffff;
   --color-parchment:     #f5f5f7;
-  --color-hairline:      #e0e0e0;
+  --color-hairline:      #d2d2d7;   /* slightly stronger for definition */
   --color-divider-soft:  #f0f0f0;
-  --color-surface-black: #000000;
-  --color-on-dark:       #ffffff;
-  --color-muted-on-dark: #cccccc;
+  --color-surface-black: #1d1d1f;   /* near-black, not pure #000 */
+  --color-on-dark:       #f5f5f7;
+  --color-muted-on-dark: #a1a1a6;
 
   /* ── Radius scale ── */
   --radius-sm:   8px;
@@ -63,23 +64,25 @@ body {
   background: var(--color-surface-black);
   z-index: 20;
 }
-#header-top { padding: 12px 24px; }
+#header-top { padding: 13px 24px; }
 #header h1 {
   font-family: var(--font-text);
-  font-size: 12px; font-weight: 400;
-  letter-spacing: -0.12px;
-  color: rgba(255,255,255,0.72);
+  font-size: 14px; font-weight: 500;
+  letter-spacing: -0.16px;
+  color: var(--color-muted-on-dark);
 }
 #header h1 span { color: var(--color-on-dark); }
 
 /* ── Main scroll container ── */
 #main { flex: 1; overflow-y: auto; }
 
-/* ── Chapter strip (sub-nav-frosted style) ── */
+/* ── Chapter strip (frosted glass sticky bar) ── */
 #chapter-strip {
   padding: 20px 24px 20px;
   border-bottom: 1px solid var(--color-hairline);
-  background: var(--color-canvas);
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   position: sticky; top: 0; z-index: 10;
 }
 #chapter-strip-label {
@@ -111,10 +114,10 @@ body {
   color: var(--color-ink);
 }
 
-/* Slider — thin 2px track, circular Action Blue thumb */
+/* Slider — thin 3px track, circular thumb with affordance ring */
 #chapter-slider {
   -webkit-appearance: none; appearance: none;
-  width: 100%; height: 2px; border-radius: 1px;
+  width: 100%; height: 3px; border-radius: 2px;
   background: linear-gradient(
     to right,
     var(--color-primary) 0%,
@@ -126,20 +129,31 @@ body {
 }
 #chapter-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 18px; height: 18px; border-radius: 50%;
+  width: 20px; height: 20px; border-radius: 50%;
   background: var(--color-primary);
-  border: none;
-  transition: transform var(--dur-fast) var(--ease-out);
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+  transition: transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out);
 }
-#chapter-slider:active::-webkit-slider-thumb { transform: scale(0.95); }
+#chapter-slider:hover::-webkit-slider-thumb {
+  box-shadow: 0 2px 8px rgba(0,102,204,0.4), 0 0 0 4px rgba(0,102,204,0.12);
+}
+#chapter-slider:active::-webkit-slider-thumb {
+  transform: scale(0.92);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+#chapter-slider:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 4px rgba(0,102,204,0.35);
+}
 #chapter-ticks {
   display: flex; justify-content: space-between;
-  margin-top: 6px; padding: 0 1px;
+  margin-top: 8px; padding: 0 1px;
 }
 #chapter-ticks span {
   font-family: var(--font-text);
-  font-size: 12px; letter-spacing: -0.12px;
-  color: var(--color-ink-muted);
+  font-size: 11px; letter-spacing: 0;
+  color: var(--color-ink-subtle);
 }
 
 /* ── Timeline ── */
@@ -149,10 +163,21 @@ body {
 }
 #timeline-header { padding: 20px 24px 10px; }
 #timeline-header-label {
-  font-family: var(--font-display);
-  font-size: 21px; font-weight: 600;
-  letter-spacing: 0.231px;
-  color: var(--color-ink);
+  font-family: var(--font-text);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--color-ink-subtle);
+}
+/* fade-right signals horizontal scroll */
+#timeline-scroll-wrap {
+  position: relative;
+}
+#timeline-scroll-wrap::after {
+  content: '';
+  position: absolute; top: 0; right: 0; bottom: 0;
+  width: 64px;
+  background: linear-gradient(to right, transparent, var(--color-parchment));
+  pointer-events: none;
 }
 #timeline-scroll {
   display: flex; gap: 12px;
@@ -180,10 +205,16 @@ body {
   background: var(--color-canvas);
   border: 1px solid var(--color-hairline);
   padding: 12px 14px;
-  transition: border-color var(--dur-fast);
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-fast);
+  cursor: default;
+}
+.timeline-event:not(.future):hover .tl-front {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.09);
+  transform: translateY(-2px);
 }
 .timeline-event.current .tl-front {
   border: 2px solid var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
 }
 .tl-back {
   background: var(--color-parchment);
@@ -221,8 +252,8 @@ body {
 }
 .timeline-desc {
   font-family: var(--font-text);
-  font-size: 12px; font-weight: 400;
-  letter-spacing: -0.12px;
+  font-size: 13px; font-weight: 400;
+  letter-spacing: -0.08px;
   color: var(--color-ink-muted); line-height: 1.5;
 }
 
@@ -241,6 +272,12 @@ body {
   overflow: hidden;
   break-inside: avoid;
   margin-bottom: 20px;
+  transition: transform 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
+  cursor: default;
+}
+.family-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.09), 0 2px 6px rgba(0,0,0,0.05);
 }
 .family-card-header {
   padding: 16px 18px 14px;
@@ -256,15 +293,15 @@ body {
 }
 
 /* ── Character rows ── */
-.char-list { padding: 12px 18px 16px; display: flex; flex-direction: column; gap: 10px; }
+.char-list { padding: 14px 18px 18px; display: flex; flex-direction: column; gap: 12px; }
 
-.char-row { display: flex; flex-direction: column; gap: 1px; }
+.char-row { display: flex; flex-direction: column; gap: 3px; }
 
 .char-name {
   font-family: var(--font-text);
-  font-size: 14px; font-weight: 400;
-  letter-spacing: -0.224px;
-  color: var(--color-ink-muted); line-height: 1.43;
+  font-size: 15px; font-weight: 400;
+  letter-spacing: -0.24px;
+  color: var(--color-ink-muted); line-height: 1.4;
 }
 .char-name.primary {
   font-family: var(--font-text);
@@ -274,9 +311,9 @@ body {
 }
 .char-role {
   font-family: var(--font-text);
-  font-size: 12px; font-weight: 400;
-  letter-spacing: -0.12px; font-style: italic;
-  color: var(--color-ink-muted); line-height: 1.5;
+  font-size: 13px; font-weight: 400;
+  letter-spacing: -0.08px; font-style: italic;
+  color: var(--color-ink-subtle); line-height: 1.5;
 }
 
 /* ── Responsive ── */
@@ -320,7 +357,9 @@ body {
     <div id="timeline-header">
       <span id="timeline-header-label">Timeline of Key Events</span>
     </div>
-    <div id="timeline-scroll"></div>
+    <div id="timeline-scroll-wrap">
+      <div id="timeline-scroll"></div>
+    </div>
   </div>
   <div id="cluster-grid"></div>
 </div>
