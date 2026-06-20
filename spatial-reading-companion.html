@@ -177,9 +177,8 @@ body {
 /* ── Main grid ── */
 #main { flex: 1; overflow-y: auto; }
 #cluster-grid {
-  display: grid; grid-template-columns: repeat(6,1fr);
-  gap: 16px; padding: 16px 24px 32px;
-  align-items: start;
+  columns: 3; column-gap: 16px;
+  padding: 16px 24px 32px;
 }
 
 /* ── Family card ── */
@@ -188,6 +187,8 @@ body {
   border: 1px solid var(--border-subtle);
   border-left-width: 4px;
   border-radius: 10px; overflow: hidden;
+  break-inside: avoid;
+  margin-bottom: 16px;
 }
 .family-card-header {
   padding: 12px 14px 10px;
@@ -221,12 +222,14 @@ body {
 
 /* ── Responsive ── */
 @media (max-width: 700px) {
-  #cluster-grid { grid-template-columns: repeat(2,1fr); padding: 12px; gap: 12px; }
-  #cluster-grid .family-card { grid-column: span 2 !important; }
+  #cluster-grid { columns: 1; padding: 12px; }
   #header-top { padding: 12px 16px; }
   #chapter-strip { padding: 10px 16px 12px; }
   #timeline-header { padding: 8px 16px 4px; }
   #timeline-scroll { padding: 0 16px 10px; }
+}
+@media (min-width: 701px) and (max-width: 1100px) {
+  #cluster-grid { columns: 2; }
 }
 </style>
 </head>
@@ -394,7 +397,7 @@ function renderCards(){
   FAMILIES.forEach(family=>{
     const card = document.createElement('div');
     card.className = 'family-card';
-    card.style.gridColumn = `span ${family.cols || 2}`;
+
     card.style.borderLeftColor = family.color;
     card.style.setProperty('--family-color', family.color);
 
