@@ -106,8 +106,8 @@ body{
 #chapter-slider{
   -webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:3px;
   background:linear-gradient(to right,var(--text-primary) 0%,
-    var(--text-primary) calc(var(--pct,100%) * 1%),
-    var(--surface-hover) calc(var(--pct,100%) * 1%),var(--surface-hover) 100%);
+    var(--text-primary) calc(var(--pct,0%) * 1%),
+    var(--surface-hover) calc(var(--pct,0%) * 1%),var(--surface-hover) 100%);
   outline:none;cursor:pointer;
 }
 #chapter-slider::-webkit-slider-thumb{
@@ -166,59 +166,11 @@ body{
 .timeline-desc{font-size:10px;color:var(--text-secondary);line-height:1.5}
 
 /* ============================================================  MAIN  */
-#main{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative}
-
-/* ============================================================  RELATIONSHIP ROW  */
-#rel-row{
-  flex-shrink:0;padding:var(--sp-8) var(--sp-24);
-  border-bottom:1px solid var(--border-subtle);
-  background:var(--surface-bg);
-  display:none;
-  flex-wrap:wrap;gap:var(--sp-6);align-items:center;
-}
-#rel-row.visible{display:flex}
-#rel-row-label{
-  font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--text-muted);white-space:nowrap;margin-right:var(--sp-4);
-}
-.rel-conn-chip{
-  display:flex;align-items:center;gap:5px;
-  padding:4px 10px 4px 6px;border-radius:999px;
-  border:1.5px solid transparent;cursor:pointer;
-  background:var(--surface-card);
-  transition:background var(--dur-fast),transform var(--dur-fast);
-  font-size:11px;font-weight:600;
-  user-select:none;
-}
-.rel-conn-chip:hover{background:var(--surface-hover);transform:translateY(-1px)}
-.rel-conn-chip .chip-dot{
-  width:8px;height:8px;border-radius:50%;flex-shrink:0;
-}
-.rel-conn-chip .chip-name{color:var(--text-primary)}
-.rel-conn-chip .chip-type{font-size:10px;font-weight:700;letter-spacing:.04em}
-.rel-conn-chip[data-type="romance"]    {border-color:var(--rel-romance);   }
-.rel-conn-chip[data-type="friendship"] {border-color:var(--rel-friendship);}
-.rel-conn-chip[data-type="alliance"]   {border-color:var(--rel-alliance);  }
-.rel-conn-chip[data-type="mentorship"] {border-color:var(--rel-mentorship);}
-.rel-conn-chip[data-type="conflict"]   {border-color:var(--rel-conflict);  }
-.rel-conn-chip[data-type="family"]     {border-color:var(--rel-family);    }
-.rel-conn-chip[data-type="romance"]    .chip-type{color:var(--rel-romance)   }
-.rel-conn-chip[data-type="friendship"] .chip-type{color:var(--rel-friendship)}
-.rel-conn-chip[data-type="alliance"]   .chip-type{color:var(--rel-alliance)  }
-.rel-conn-chip[data-type="mentorship"] .chip-type{color:var(--rel-mentorship)}
-.rel-conn-chip[data-type="conflict"]   .chip-type{color:var(--rel-conflict)  }
-.rel-conn-chip[data-type="family"]     .chip-type{color:var(--rel-family)    }
-.rel-conn-chip[data-type="romance"]    .chip-dot{background:var(--rel-romance)   }
-.rel-conn-chip[data-type="friendship"] .chip-dot{background:var(--rel-friendship)}
-.rel-conn-chip[data-type="alliance"]   .chip-dot{background:var(--rel-alliance)  }
-.rel-conn-chip[data-type="mentorship"] .chip-dot{background:var(--rel-mentorship)}
-.rel-conn-chip[data-type="conflict"]   .chip-dot{background:var(--rel-conflict)  }
-.rel-conn-chip[data-type="family"]     .chip-dot{background:var(--rel-family)    }
-#rel-row-empty{font-size:11px;color:var(--text-muted);font-style:italic}
+#main{flex:1;overflow:hidden}
 
 /* ============================================================  CLUSTER GRID  */
 #cluster-grid{
-  flex:1;display:grid;grid-template-columns:repeat(3,1fr);
+  height:100%;display:grid;grid-template-columns:repeat(3,1fr);
   gap:var(--sp-16);padding:var(--sp-16) var(--sp-24);
   overflow-y:auto;align-content:start;
 }
@@ -226,122 +178,50 @@ body{
 /* ============================================================  FAMILY CARD  */
 .family-card{
   background:var(--surface-card);border:1px solid var(--border-subtle);
-  border-radius:12px;padding:var(--sp-12) var(--sp-16);position:relative;
-  transition:border-color var(--dur-fast);
+  border-radius:12px;overflow:hidden;
 }
 .family-card-header{
-  display:flex;align-items:flex-start;gap:var(--sp-8);margin-bottom:var(--sp-10);
-}
-.cluster-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:3px}
-.family-card-header h2{
-  font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-secondary)
-}
-.family-subtitle{font-size:10px;color:var(--text-muted);font-weight:400;letter-spacing:0;text-transform:none;margin-top:1px}
-
-/* Parents row */
-.family-parents{
-  display:flex;align-items:center;gap:4px;
-  padding:5px var(--sp-8);border-radius:6px;
-  background:rgba(255,255,255,.03);margin-bottom:var(--sp-8);
-  flex-wrap:wrap;
-}
-.parent-node{
-  font-size:11px;color:var(--text-secondary);
-  display:flex;align-items:center;gap:4px;
-}
-.parent-sep{font-size:10px;color:var(--text-muted);padding:0 2px}
-.tree-branch{
-  width:1px;height:10px;background:var(--border-default);
-  margin:0 auto var(--sp-6);
-}
-
-/* Children list */
-.children-list{display:flex;flex-direction:column;gap:3px}
-
-/* ============================================================  CHARACTER NODE  */
-.character-node{
   display:flex;align-items:center;gap:var(--sp-8);
-  padding:6px var(--sp-8);border-radius:8px;cursor:pointer;
-  transition:background var(--dur-fast),opacity var(--dur-med) var(--ease-out);
-  border:1px solid transparent;-webkit-tap-highlight-color:transparent;
-  min-height:44px;
+  padding:var(--sp-10) var(--sp-16);
+  border-bottom:1px solid var(--border-subtle);
+  cursor:pointer;user-select:none;
 }
-.character-node:hover{background:var(--surface-hover)}
-.character-node.selected{background:var(--surface-hover);border-color:var(--border-default)}
-.character-node.faded{opacity:.15}
+.cluster-bar{width:3px;height:16px;border-radius:2px;flex-shrink:0}
+.family-card-header h2{
+  font-size:12px;font-weight:700;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--text-primary);flex:1;
+}
+.card-chevron{
+  color:var(--text-muted);font-size:10px;
+  transition:transform var(--dur-med) var(--ease-out);
+}
+.family-card.collapsed .card-chevron{transform:rotate(-90deg)}
 
-.char-avatar{
-  width:28px;height:28px;border-radius:50%;display:flex;
-  align-items:center;justify-content:center;font-size:10px;
-  font-weight:700;flex-shrink:0;color:#fff;position:relative;
+/* Character list */
+.char-list{
+  padding:var(--sp-8) var(--sp-16) var(--sp-12);
+  display:flex;flex-direction:column;gap:2px;
+  overflow:hidden;
+  transition:max-height var(--dur-med) var(--ease-out), opacity var(--dur-med);
+  max-height:600px;
+  opacity:1;
 }
-.char-avatar.protagonist{
-  box-shadow:0 0 0 2px #fff,0 0 0 4px rgba(255,255,255,.3);
+.family-card.collapsed .char-list{
+  max-height:0;opacity:0;padding-top:0;padding-bottom:0;
 }
-.char-avatar .key-star{
-  position:absolute;top:-4px;right:-4px;font-size:9px;
-  background:var(--surface-card);border-radius:50%;padding:1px;
-  line-height:1;
+.char-row{
+  font-size:13px;color:var(--text-secondary);
+  padding:3px 0;line-height:1.4;
 }
-.char-name{font-size:13px;font-weight:500;flex:1;min-width:0}
-.char-role{font-size:10px;color:var(--text-secondary);line-height:1.3}
-
-/* Inline relationship badges */
-.rel-badges{display:flex;gap:3px;margin-left:auto;flex-shrink:0;padding-left:var(--sp-6)}
-.rel-badge{
-  font-size:9px;font-weight:700;letter-spacing:.03em;
-  padding:2px 6px;border-radius:999px;color:#fff;white-space:nowrap;
-}
-.rel-badge[data-type="romance"]    {background:var(--rel-romance)}
-.rel-badge[data-type="friendship"] {background:var(--rel-friendship)}
-.rel-badge[data-type="alliance"]   {background:var(--rel-alliance)}
-.rel-badge[data-type="mentorship"] {background:var(--rel-mentorship)}
-.rel-badge[data-type="conflict"]   {background:var(--rel-conflict)}
-.rel-badge[data-type="family"]     {background:var(--rel-family)}
-
-/* Collapsed toggle */
-.collapsed-toggle{
-  display:flex;align-items:center;gap:var(--sp-8);padding:5px var(--sp-8);
-  border-radius:6px;cursor:pointer;color:var(--text-muted);font-size:11px;
-  transition:color var(--dur-fast),background var(--dur-fast);user-select:none;
-  margin-top:3px;border-top:1px solid var(--border-subtle);padding-top:var(--sp-6);
-}
-.collapsed-toggle:hover{background:var(--surface-hover);color:var(--text-secondary)}
-
-/* ============================================================  NOTE PANEL  */
-#note-panel{
-  position:fixed;bottom:var(--sp-24);left:50%;
-  transform:translateX(-50%) translateY(20px);
-  background:var(--surface-panel);border:1px solid var(--border-default);
-  border-radius:12px;padding:var(--sp-16) var(--sp-24);
-  max-width:400px;width:calc(100% - 48px);z-index:100;
-  opacity:0;pointer-events:none;
-  transition:opacity var(--dur-med) var(--ease-out),transform var(--dur-med) var(--ease-out);
-  box-shadow:0 16px 48px rgba(0,0,0,.6);
-}
-#note-panel.visible{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
-#note-panel-close{
-  position:absolute;top:var(--sp-8);right:var(--sp-12);background:none;border:none;
-  color:var(--text-secondary);font-size:16px;cursor:pointer;padding:var(--sp-4);
-}
-#note-panel-types{display:flex;gap:var(--sp-6);flex-wrap:wrap;margin-bottom:var(--sp-8)}
-.note-type-chip{
-  font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-  padding:2px 8px;border-radius:999px;color:#fff;
-}
-#note-panel-chars{font-size:14px;font-weight:600;margin-bottom:var(--sp-8);color:var(--text-primary)}
-#note-panel-label{font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:var(--sp-6);font-style:italic}
-#note-panel-text{font-size:13px;color:var(--text-secondary);line-height:1.6}
+.char-row.primary{color:var(--text-primary);font-weight:500}
 
 /* ============================================================  MOBILE  */
 @media(max-width:700px){
   #cluster-grid{grid-template-columns:1fr;padding:var(--sp-12);gap:var(--sp-12)}
   #header-top{padding:var(--sp-12) var(--sp-16);gap:var(--sp-12)}
   #chapter-strip{padding:var(--sp-8) var(--sp-16) var(--sp-12)}
-  .family-card{padding:var(--sp-12)}
   #filters{gap:4px}
   .filter-pill{padding:3px 8px;font-size:10px}
-  #rel-row{padding:var(--sp-8) var(--sp-16)}
 }
 @media(min-width:701px) and (max-width:1100px){
   #cluster-grid{grid-template-columns:repeat(2,1fr)}
@@ -365,11 +245,11 @@ body{
   <div id="chapter-strip">
     <div id="chapter-strip-label">
       <span>Chapter</span>
-      <span id="chapter-val">87</span>
+      <span id="chapter-val">1</span>
       <span id="chapter-val-suffix">of 87 —</span>
-      <span id="chapter-era">The Wedding</span>
+      <span id="chapter-era">Childhood in Rione</span>
     </div>
-    <input type="range" id="chapter-slider" min="1" max="87" value="87">
+    <input type="range" id="chapter-slider" min="1" max="87" value="1">
     <div id="chapter-ticks">
       <span>1</span><span>10</span><span>20</span><span>30</span><span>40</span>
       <span>50</span><span>60</span><span>70</span><span>87</span>
@@ -385,19 +265,7 @@ body{
 </div>
 
 <div id="main">
-  <div id="rel-row">
-    <span id="rel-row-label">Connections</span>
-    <span id="rel-row-empty" style="display:none">No connections at this chapter</span>
-  </div>
   <div id="cluster-grid"></div>
-</div>
-
-<div id="note-panel">
-  <button id="note-panel-close"><i class="fa-solid fa-xmark"></i></button>
-  <div id="note-panel-types"></div>
-  <div id="note-panel-chars"></div>
-  <div id="note-panel-label"></div>
-  <div id="note-panel-text"></div>
 </div>
 
 <script>
@@ -405,215 +273,108 @@ body{
 
 const FAMILIES = [
   {
-    id:'greco', name:'Greco Family', subtitle:"The Porter's Family",
+    id:'greco', name:'Greco Family',
     color:'var(--cluster-greco)',
-    parents:[
-      {id:'mrgreco',  name:'Mr. Greco',  role:'City hall porter'},
-      {id:'mrsgreco', name:'Mrs. Greco', role:'Mother'},
-    ],
-    children:[
-      {id:'elena',  name:'Elena "Lenù"', role:'Protagonist & narrator', protagonist:true},
-      {id:'peppe',  name:'Peppe',  role:'Younger sibling'},
-      {id:'gianni', name:'Gianni', role:'Younger sibling'},
-      {id:'elisa',  name:'Elisa',  role:'Younger sibling'},
+    members:[
+      {name:'Mr. Greco'},
+      {name:'Mrs. Greco'},
+      {name:'Elena "Lenù"', primary:true},
+      {name:'Peppe'},
+      {name:'Gianni'},
+      {name:'Elisa'},
     ]
   },
   {
-    id:'cerullo', name:'Cerullo Family', subtitle:"The Shoemaker's Family",
+    id:'cerullo', name:'Cerullo Family',
     color:'var(--cluster-cerullo)',
-    parents:[
-      {id:'fernando', name:'Fernando', role:'Shoemaker'},
-      {id:'nunzia',   name:'Nunzia',   role:'Mother'},
-    ],
-    children:[
-      {id:'rinoElder',   name:'Rino (Elder)',   role:'Older brother'},
-      {id:'lila',        name:'Raffaella "Lila"', role:"Elena's best friend", protagonist:true},
-      {id:'rinoYounger', name:'Rino (Younger)', role:"Raffaella's son (later)"},
+    members:[
+      {name:'Fernando'},
+      {name:'Nunzia'},
+      {name:'Rino (Elder)', primary:true},
+      {name:'Raffaella "Lila"', primary:true},
+      {name:'Rino (Younger)'},
     ]
   },
   {
-    id:'carracci', name:'Carracci Family', subtitle:"The Don Achille / Grocer Family",
+    id:'carracci', name:'Carracci Family',
     color:'var(--cluster-carracci)',
-    parents:[
-      {id:'donAchille', name:'Don Achille', role:'Loan shark', died:true},
-      {id:'donnaMaria', name:'Donna Maria', role:'Wife'},
-    ],
-    children:[
-      {id:'stefano',  name:'Stefano',  role:'Eldest son, grocery owner'},
-      {id:'alfonso',  name:'Alfonso',  role:'Classmate'},
-      {id:'pinuccia', name:'Pinuccia', role:'Sister'},
+    members:[
+      {name:'Don Achille †'},
+      {name:'Donna Maria'},
+      {name:'Stefano', primary:true},
+      {name:'Alfonso', primary:true},
+      {name:'Pinuccia'},
     ]
   },
   {
-    id:'peluso', name:'Peluso Family', subtitle:"The Carpenter's Family",
+    id:'peluso', name:'Peluso Family',
     color:'var(--cluster-peluso)',
-    parents:[
-      {id:'alfredoPeluso', name:'Alfredo',    role:'Carpenter'},
-      {id:'giuseppina',    name:'Giuseppina', role:'Wife'},
-    ],
-    children:[
-      {id:'pasquale', name:'Pasquale', role:'Construction worker'},
-      {id:'carmela',  name:'Carmela',  role:'Sister (Carmen)'},
+    members:[
+      {name:'Alfredo'},
+      {name:'Giuseppina'},
+      {name:'Pasquale', primary:true},
+      {name:'Carmela', primary:true},
     ]
   },
   {
-    id:'sarratore', name:'Sarratore Family', subtitle:"The Railroad Worker & Poet's Family",
+    id:'sarratore', name:'Sarratore Family',
     color:'var(--cluster-sarratore)',
-    parents:[
-      {id:'donato', name:'Donato', role:'Railroad worker & poet'},
-      {id:'lidia',  name:'Lidia',  role:'Wife'},
-    ],
-    children:[
-      {id:'nino',   name:'Nino',   role:'Eldest son', key:true},
-      {id:'marisa', name:'Marisa', role:'Younger sister'},
-      {id:'pino',   name:'Pino',   role:'Younger child'},
-      {id:'clelia', name:'Clelia', role:'Younger child'},
-      {id:'ciro',   name:'Ciro',   role:'Younger child'},
+    members:[
+      {name:'Donato', primary:true},
+      {name:'Lidia'},
+      {name:'Nino', primary:true},
+      {name:'Marisa', primary:true},
+      {name:'Pino'},
+      {name:'Clelia'},
+      {name:'Ciro'},
     ]
   },
   {
-    id:'cappuccio', name:'Cappuccio Family', subtitle:"The Mad Widow's Family",
+    id:'cappuccio', name:'Cappuccio Family',
     color:'var(--cluster-cappuccio)',
-    parents:[
-      {id:'melina', name:'Melina', role:'Widow'},
-    ],
-    children:[
-      {id:'antonio', name:'Antonio', role:'Eldest son, mechanic'},
-      {id:'ada',     name:'Ada',     role:'Daughter'},
+    members:[
+      {name:'Melina', primary:true},
+      {name:'Antonio', primary:true},
+      {name:'Ada'},
     ]
   },
   {
-    id:'solara', name:'Solara Family', subtitle:"The Bar & Pastry Shop Owners",
+    id:'solara', name:'Solara Family',
     color:'var(--cluster-solara)',
-    parents:[
-      {id:'silvio',   name:'Silvio',  role:'Bar owner'},
-      {id:'manuela',  name:'Manuela', role:'Wife'},
-    ],
-    children:[
-      {id:'marcello',      name:'Marcello', role:'Elder son'},
-      {id:'micheleSolara', name:'Michele',  role:'Younger son'},
+    members:[
+      {name:'Silvio'},
+      {name:'Manuela'},
+      {name:'Marcello', primary:true},
+      {name:'Michele', primary:true},
     ]
   },
   {
-    id:'scanno', name:'Scanno Family', subtitle:"The Fruit & Vegetable Sellers",
+    id:'scanno', name:'Scanno Family',
     color:'var(--cluster-scanno)',
-    parents:[
-      {id:'nicola',  name:'Nicola',  role:'Fruit & vegetable seller'},
-      {id:'assunta', name:'Assunta', role:'Wife'},
-    ],
-    children:[
-      {id:'enzo', name:'Enzo', role:'Son, classmate'},
+    members:[
+      {name:'Nicola'},
+      {name:'Assunta'},
+      {name:'Enzo', primary:true},
     ]
   },
   {
-    id:'spagnuolo', name:'Spagnuolo Family', subtitle:"The Baker's Family",
+    id:'spagnuolo', name:'Spagnuolo Family',
     color:'var(--cluster-spagnuolo)',
-    parents:[
-      {id:'signorSpagnuolo', name:'Signor Spagnuolo', role:'Pastry maker'},
-      {id:'rosa',            name:'Rosa',             role:'Wife'},
-    ],
-    children:[
-      {id:'gigliola', name:'Gigliola', role:'Daughter'},
+    members:[
+      {name:'Signor Spagnuolo'},
+      {name:'Rosa'},
+      {name:'Gigliola', primary:true},
     ]
   },
   {
-    id:'other', name:'Other Key Characters', subtitle:'Teachers, mentors & neighbours',
+    id:'other', name:'Other Key Characters',
     color:'var(--cluster-other)',
-    parents:[],
-    children:[
-      {id:'maestraOliviero', name:'Maestra Oliviero', role:'Elementary school teacher', key:true},
-      {id:'maestroFerraro',  name:'Maestro Ferraro',  role:'Teacher & librarian'},
-      {id:'gino',            name:'Gino',             role:"Pharmacist's son, Elena's first boyfriend"},
+    members:[
+      {name:'Maestra Oliviero', primary:true},
+      {name:'Maestro Ferraro'},
+      {name:'Gino', primary:true},
     ]
   },
-];
-
-/* Types: romance | friendship | alliance | mentorship | conflict | family */
-const RELATIONSHIPS = [
-  /* ── Friendship ── */
-  {id:'r1', from:'elena', to:'lila', type:'friendship', fromChapter:1,
-   label:'Best friends',
-   note:'Elena and Raffaella form an intense bond as childhood friends — the central axis of the novel, marked by fierce rivalry, admiration, and love.'},
-  {id:'r2', from:'carmela', to:'elena', type:'friendship', fromChapter:10,
-   label:'Close friends',
-   note:'Carmela (Carmen) Peluso is a warm presence for Elena in the rione, one of the few friendships outside the Elena–Lila axis.'},
-  {id:'r3', from:'carmela', to:'lila', type:'friendship', fromChapter:10,
-   label:'Close friends',
-   note:'Carmen is close friends with both girls. She later marries and remains in the neighbourhood while the others scatter.'},
-  {id:'r4', from:'enzo', to:'lila', type:'friendship', fromChapter:10,
-   label:'Loyal solidarity',
-   note:'Enzo respects Lila without wanting to possess her. A quiet, durable solidarity forms between them over the years — he becomes her most reliable ally.'},
-  {id:'r5', from:'alfonso', to:'elena', type:'friendship', fromChapter:12,
-   label:'School bond',
-   note:'Alfonso and Elena are classmates at middle school — both academically strong in a neighbourhood where education is unusual.'},
-  /* ── Romance ── */
-  {id:'r6', from:'lila', to:'stefano', type:'romance', fromChapter:35,
-   label:'Marries at 16 💍',
-   note:'Lila agrees to marry Stefano in exchange for the family\'s financial security. Her choice is pragmatic and devastating — she marries power, not love.'},
-  {id:'r7', from:'elena', to:'nino', type:'romance', fromChapter:20,
-   label:'Enduring infatuation',
-   note:"Elena's enduring infatuation with Nino Sarratore through childhood and adolescence. She befriends Marisa to be near him."},
-  {id:'r8', from:'pasquale', to:'lila', type:'romance', fromChapter:15,
-   label:'Deep feelings',
-   note:'Pasquale has deep, unrequited feelings for Lila. He is one of the good men of the rione who sees her clearly and loves her for it.'},
-  {id:'r9', from:'antonio', to:'elena', type:'romance', fromChapter:25,
-   label:'Teenage romance',
-   note:'Antonio courts Elena with steady devotion but she keeps him at arm\'s length. He represents the neighbourhood\'s gravitational pull she fears she will never escape.'},
-  {id:'r10', from:'marcello', to:'lila', type:'romance', fromChapter:22,
-   label:'Obsessive pursuit',
-   note:'Marcello Solara pursues Lila aggressively. She refuses him with cold certainty. His obsession hangs over her like a threat the neighbourhood cannot undo.'},
-  {id:'r11', from:'micheleSolara', to:'gigliola', type:'romance', fromChapter:40,
-   label:'Dating',
-   note:'Michele Solara dates Gigliola Spagnuolo, a relationship that entangles both the Solara and Spagnuolo families in the rione\'s social web.'},
-  {id:'r12', from:'donato', to:'melina', type:'romance', fromChapter:6,
-   label:'Affair & rupture',
-   note:'Donato Sarratore had an affair with Melina after her husband\'s death, driving her to a breakdown. His departure is the wound that left her shattered.'},
-  {id:'r13', from:'elena', to:'gino', type:'romance', fromChapter:30,
-   label:'First boyfriend',
-   note:"Gino, the pharmacist's son, is Elena's first boyfriend — a brief, tentative romance that is more about testing freedom than love."},
-  /* ── Conflict ── */
-  {id:'r14', from:'elena', to:'lila', type:'conflict', fromChapter:4,
-   label:'Fierce rivalry',
-   note:"Beneath the friendship lies constant competitive tension. Lila's natural brilliance becomes both inspiration and wound for Elena. Each pushes and unsettles the other."},
-  {id:'r15', from:'lila', to:'stefano', type:'conflict', fromChapter:50,
-   label:'Betrayal & violence',
-   note:'Stefano betrays Lila\'s trust by allying with the Solaras, selling the shoes she designed without consent. Their marriage corrodes into violence.'},
-  {id:'r16', from:'lila', to:'rinoElder', type:'conflict', fromChapter:5,
-   label:'Shoe dream collapses',
-   note:'Rino and Lila collaborate on a revolutionary shoe design, but his ambition and weakness pit them against each other as the Cerullo dream collapses.'},
-  {id:'r17', from:'donato', to:'melina', type:'conflict', fromChapter:6,
-   label:'Devastating abandonment',
-   note:"Donato's affair with and abandonment of Melina drove her to mental breakdown. He represents the damage careless men leave in women's lives."},
-  {id:'r18', from:'elena', to:'mrsgreco', type:'conflict', fromChapter:1,
-   label:'Fear of becoming her',
-   note:"Elena's mother is the source of her early shame — her limp, her harshness, her dread of daughters leaving the neighbourhood. Elena fears becoming her."},
-  {id:'r19', from:'fernando', to:'lila', type:'conflict', fromChapter:3,
-   label:'Paternal violence',
-   note:'Fernando threw Lila out a window for defying him. His love is inseparable from violence — a pattern Lila internalises and spends her life resisting.'},
-  /* ── Alliance ── */
-  {id:'r20', from:'lila', to:'rinoElder', type:'alliance', fromChapter:5,
-   label:'Shoe collaboration',
-   note:'Lila and Rino Elder collaborate in secret on a revolutionary shoe design, dreaming of lifting the Cerullo family out of poverty together.'},
-  {id:'r21', from:'elena', to:'pasquale', type:'alliance', fromChapter:8,
-   label:'Mutual respect',
-   note:'Pasquale treats Elena with respect and political openness — one of the neighbourhood boys who sees her as a person rather than a prize.'},
-  /* ── Mentorship ── */
-  {id:'r22', from:'maestraOliviero', to:'elena', type:'mentorship', fromChapter:3,
-   label:'Fights for her education',
-   note:"Maestra Oliviero recognises Elena's brilliance and secures her admission to middle school over family resistance. She is Elena's first champion."},
-  {id:'r23', from:'maestraOliviero', to:'lila', type:'mentorship', fromChapter:3,
-   label:'Recognises brilliance',
-   note:"Maestra Oliviero recognises Lila's extraordinary mind but cannot secure her continued education. The system fails Lila; Maestra Oliviero does not."},
-  /* ── Family (cross-card) ── */
-  {id:'r24', from:'antonio', to:'melina', type:'family', fromChapter:1,
-   label:'Son protects mother',
-   note:'Antonio holds the Cappuccio household together with fierce protectiveness. His mother\'s fragility shapes his entire character.'},
-  {id:'r25', from:'pasquale', to:'carmela', type:'family', fromChapter:1,
-   label:'Siblings',
-   note:'Pasquale and Carmela are siblings in the Peluso family. Their father Alfredo\'s imprisonment for Don Achille\'s murder shapes both their lives.'},
-  {id:'r26', from:'nino', to:'marisa', type:'family', fromChapter:1,
-   label:'Siblings',
-   note:'Nino and Marisa are siblings, children of Donato Sarratore. Elena befriends Marisa in part to be closer to Nino.'},
 ];
 
 const TIMELINE = [
@@ -649,109 +410,12 @@ const ERAS = [
   {max:87,  label:'The Wedding'},
 ];
 
-const TYPE_LABELS = {
-  romance:'Romance', friendship:'Friendship', alliance:'Alliance',
-  mentorship:'Mentorship', conflict:'Conflict', family:'Family'
-};
-
-const TYPE_COLORS = {
-  romance:'var(--rel-romance)', friendship:'var(--rel-friendship)',
-  alliance:'var(--rel-alliance)', mentorship:'var(--rel-mentorship)',
-  conflict:'var(--rel-conflict)', family:'var(--rel-family)'
-};
-
-const TYPE_COLORS_HEX = {
-  romance:'#E8527A',friendship:'#52B788',alliance:'#4A90D9',
-  mentorship:'#9B8AC4',conflict:'#8B949E',family:'#5A8FBF'
-};
-
 /* ============================================================  STATE  */
-let currentChapter = 87;
-let activeFilters = new Set(['romance','friendship','alliance','mentorship','conflict','family']);
-let selectedCharId = null;
+let currentChapter = 1;
 let timelineOpen = false;
-
-const CHARS_WITH_RELS = new Set(RELATIONSHIPS.flatMap(r=>[r.from,r.to]));
-const charColorMap = {};
-FAMILIES.forEach(f=>{
-  [...f.parents,...f.children].forEach(c=>{ charColorMap[c.id]=f.color; });
-});
-
-function findChar(id){
-  for(const f of FAMILIES){
-    const c=[...f.parents,...f.children].find(ch=>ch.id===id);
-    if(c) return c;
-  }
-  return null;
-}
-function findFamily(charId){
-  return FAMILIES.find(f=>[...f.parents,...f.children].some(c=>c.id===charId));
-}
-
-function visibleRelationships(){
-  return RELATIONSHIPS.filter(r=>r.fromChapter<=currentChapter && activeFilters.has(r.type));
-}
 
 function currentEra(){
   return (ERAS.find(e=>currentChapter<=e.max)||ERAS[ERAS.length-1]).label;
-}
-
-function initials(name){
-  return name.replace(/["'""'']/g,'').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-}
-
-/* ============================================================  RENDER REL ROW  */
-function renderRelRow(){
-  const row = document.getElementById('rel-row');
-  const emptyMsg = document.getElementById('rel-row-empty');
-
-  /* remove old chips, keep label and empty message */
-  [...row.querySelectorAll('.rel-conn-chip')].forEach(el=>el.remove());
-
-  if(!selectedCharId){
-    row.classList.remove('visible');
-    return;
-  }
-
-  row.classList.add('visible');
-
-  const char = findChar(selectedCharId);
-  const label = document.getElementById('rel-row-label');
-  label.textContent = char ? `${char.name}'s connections` : 'Connections';
-
-  const visRels = visibleRelationships().filter(r=>r.from===selectedCharId||r.to===selectedCharId);
-
-  if(visRels.length===0){
-    emptyMsg.style.display='';
-    return;
-  }
-  emptyMsg.style.display='none';
-
-  /* group by other person, collect types */
-  const grouped = {};
-  visRels.forEach(r=>{
-    const otherId = r.from===selectedCharId ? r.to : r.from;
-    if(!grouped[otherId]) grouped[otherId]=[];
-    grouped[otherId].push(r);
-  });
-
-  Object.entries(grouped).forEach(([otherId, rels])=>{
-    const other = findChar(otherId);
-    if(!other) return;
-    /* one chip per relationship type with that person */
-    rels.forEach(rel=>{
-      if(!activeFilters.has(rel.type)) return;
-      const chip = document.createElement('div');
-      chip.className='rel-conn-chip';
-      chip.dataset.type=rel.type;
-      chip.title=rel.note||rel.label||'';
-      chip.innerHTML=`<div class="chip-dot"></div><span class="chip-name">${other.name}</span><span class="chip-type">${TYPE_LABELS[rel.type]}</span>`;
-      chip.addEventListener('click',()=>{
-        showNote([rel], rel.from, rel.to);
-      });
-      row.appendChild(chip);
-    });
-  });
 }
 
 /* ============================================================  RENDER CARDS  */
@@ -759,238 +423,78 @@ function renderCards(){
   const grid = document.getElementById('cluster-grid');
   grid.innerHTML = '';
 
-  const visRels = visibleRelationships();
-  const connectedInfo = {};
-  const connectedPairs = new Set();
-
-  visRels.forEach(r=>{
-    connectedPairs.add(r.from+'|'+r.to);
-    connectedPairs.add(r.to+'|'+r.from);
-    if(selectedCharId){
-      const other = r.from===selectedCharId ? r.to : r.to===selectedCharId ? r.from : null;
-      if(other){
-        if(!connectedInfo[other]) connectedInfo[other]=new Set();
-        connectedInfo[other].add(r.type);
-      }
-    }
-  });
-
   FAMILIES.forEach(family=>{
     const card = document.createElement('div');
-    card.className='family-card';
-    card.dataset.family=family.id;
+    card.className = 'family-card';
 
-    const col = family.color;
+    /* header — click to collapse */
+    const header = document.createElement('div');
+    header.className = 'family-card-header';
+    header.innerHTML = `
+      <div class="cluster-bar" style="background:${family.color}"></div>
+      <h2>${family.name}</h2>
+      <i class="fa-solid fa-chevron-down card-chevron"></i>`;
+    header.addEventListener('click', ()=>{
+      card.classList.toggle('collapsed');
+    });
+    card.appendChild(header);
 
-    card.innerHTML=`
-      <div class="family-card-header">
-        <div class="cluster-dot" style="background:${col}"></div>
-        <div>
-          <h2>${family.name}</h2>
-          <div class="family-subtitle">${family.subtitle}</div>
-        </div>
-      </div>`;
-
-    /* parents row */
-    if(family.parents.length>0){
-      const pRow = document.createElement('div');
-      pRow.className='family-parents';
-      family.parents.forEach((p,i)=>{
-        if(i>0){
-          const sep=document.createElement('span');
-          sep.className='parent-sep';
-          sep.textContent='×';
-          pRow.appendChild(sep);
-        }
-        const pn=document.createElement('div');
-        pn.className='parent-node';
-        pn.dataset.charId=p.id;
-        pn.title=p.role;
-
-        if(CHARS_WITH_RELS.has(p.id)){
-          pn.style.cursor='pointer';
-          pn.style.color='var(--text-primary)';
-          pn.addEventListener('click',e=>{e.stopPropagation();handleCharClick(p.id);});
-        }
-
-        let fadeStyle='';
-        if(selectedCharId){
-          const isSelected=p.id===selectedCharId;
-          const isConnected=connectedPairs.has(selectedCharId+'|'+p.id);
-          if(!isSelected&&!isConnected) fadeStyle='opacity:.15;';
-          else if(isSelected) pn.style.fontWeight='700';
-        }
-        pn.style.cssText+=fadeStyle;
-        if(p.died) pn.innerHTML=p.name+'<span style="color:var(--text-muted)"> †</span>';
-        else pn.textContent=p.name;
-
-        if(selectedCharId && connectedInfo[p.id]){
-          const types=[...connectedInfo[p.id]];
-          const badgeEl=document.createElement('div');
-          badgeEl.className='rel-badges';
-          badgeEl.style.display='inline-flex';badgeEl.style.marginLeft='4px';
-          types.forEach(t=>{
-            const b=document.createElement('span');
-            b.className='rel-badge';b.dataset.type=t;
-            b.textContent=TYPE_LABELS[t];
-            badgeEl.appendChild(b);
-          });
-          pn.appendChild(badgeEl);
-        }
-
-        pRow.appendChild(pn);
-      });
-      card.appendChild(pRow);
-
-      if(family.children.length>0){
-        const branch=document.createElement('div');
-        branch.className='tree-branch';
-        card.appendChild(branch);
-      }
-    }
-
-    /* children */
-    const childrenWithRels  = family.children.filter(c=>CHARS_WITH_RELS.has(c.id));
-    const childrenWithout   = family.children.filter(c=>!CHARS_WITH_RELS.has(c.id));
-
-    const list=document.createElement('div');
-    list.className='children-list';
-
-    const renderChildNode=(char)=>{
-      const isSelected  = char.id===selectedCharId;
-      const isConnected = selectedCharId && connectedPairs.has(selectedCharId+'|'+char.id);
-      const isFaded     = selectedCharId && !isSelected && !isConnected;
-
-      const node=document.createElement('div');
-      node.className='character-node'+(isSelected?' selected':'')+(isFaded?' faded':'');
-      node.dataset.charId=char.id;
-      node.setAttribute('role','button');
-      node.setAttribute('tabindex','0');
-
-      const avatarClass='char-avatar'+(char.protagonist?' protagonist':'');
-      const avatar=`<div class="${avatarClass}" style="background:${col}">${initials(char.name)}${char.key?'<span class="key-star">★</span>':''}</div>`;
-
-      let badgesHtml='';
-      if(isConnected && connectedInfo[char.id]){
-        const types=[...connectedInfo[char.id]];
-        badgesHtml=`<div class="rel-badges">${types.map(t=>`<span class="rel-badge" data-type="${t}">${TYPE_LABELS[t]}</span>`).join('')}</div>`;
-      }
-
-      node.innerHTML=`${avatar}<div style="flex:1;min-width:0"><div class="char-name">${char.name}</div><div class="char-role">${char.role}</div></div>${badgesHtml}`;
-      node.addEventListener('click',()=>handleCharClick(char.id));
-      node.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')handleCharClick(char.id);});
-      list.appendChild(node);
-    };
-
-    childrenWithRels.forEach(renderChildNode);
-
-    if(childrenWithout.length>0){
-      const names=childrenWithout.map(c=>c.name).join(', ');
-      const toggle=document.createElement('div');
-      toggle.className='collapsed-toggle';
-      toggle.dataset.expanded='false';
-      toggle.innerHTML=`<i class="fa-solid fa-plus fa-xs"></i><span>+${childrenWithout.length} — ${names}</span>`;
-
-      const minorList=document.createElement('div');
-      minorList.style.display='none';
-      childrenWithout.forEach(c=>{
-        const row=document.createElement('div');
-        row.className='character-node';
-        row.style.cursor='default';
-        const isFaded=selectedCharId&&!connectedPairs.has(selectedCharId+'|'+c.id)&&c.id!==selectedCharId;
-        if(isFaded) row.classList.add('faded');
-        row.innerHTML=`<div class="char-avatar" style="background:${col};opacity:.5">${initials(c.name)}</div><div><div class="char-name" style="color:var(--text-secondary)">${c.name}</div><div class="char-role">${c.role}</div></div>`;
-        minorList.appendChild(row);
-      });
-
-      toggle.addEventListener('click',e=>{
-        e.stopPropagation();
-        const exp=toggle.dataset.expanded==='true';
-        toggle.dataset.expanded=String(!exp);
-        minorList.style.display=exp?'none':'block';
-        toggle.querySelector('i').className=exp?'fa-solid fa-plus fa-xs':'fa-solid fa-minus fa-xs';
-      });
-      list.appendChild(toggle);
-      list.appendChild(minorList);
-    }
-
+    /* character list */
+    const list = document.createElement('div');
+    list.className = 'char-list';
+    family.members.forEach(m=>{
+      const row = document.createElement('div');
+      row.className = 'char-row' + (m.primary ? ' primary' : '');
+      row.textContent = m.name;
+      list.appendChild(row);
+    });
     card.appendChild(list);
+
     grid.appendChild(card);
   });
 }
 
-/* ============================================================  INTERACTIONS  */
-function handleCharClick(charId){
-  selectedCharId = selectedCharId===charId ? null : charId;
-  renderCards();
-  renderRelRow();
-}
-
-function showNote(rels, fromId, toId){
-  const fromChar=findChar(fromId), toChar=findChar(toId);
-  if(!fromChar||!toChar) return;
-  const types=[...new Set(rels.map(r=>r.type))];
-  document.getElementById('note-panel-types').innerHTML=types.map(t=>`<span class="note-type-chip" style="background:${TYPE_COLORS_HEX[t]}">${TYPE_LABELS[t]}</span>`).join('');
-  document.getElementById('note-panel-chars').textContent=`${fromChar.name} & ${toChar.name}`;
-  document.getElementById('note-panel-label').textContent=rels[0].label||'';
-  document.getElementById('note-panel-text').textContent=rels.map(r=>r.note).join('\n\n');
-  document.getElementById('note-panel').classList.add('visible');
-}
-
-document.getElementById('note-panel-close').addEventListener('click',()=>{
-  document.getElementById('note-panel').classList.remove('visible');
-});
-
-document.getElementById('cluster-grid').addEventListener('click',e=>{
-  if(!e.target.closest('.character-node')&&!e.target.closest('.parent-node')){
-    selectedCharId=null; renderCards(); renderRelRow();
-  }
-});
-
 /* ============================================================  FILTERS  */
 document.querySelectorAll('.filter-pill').forEach(pill=>{
   pill.addEventListener('click',()=>{
-    const rel=pill.dataset.rel;
-    if(activeFilters.has(rel)){ activeFilters.delete(rel); pill.classList.remove('active'); }
-    else{ activeFilters.add(rel); pill.classList.add('active'); }
-    renderCards(); renderRelRow();
+    pill.classList.toggle('active');
   });
 });
 
 /* ============================================================  CHAPTER SLIDER  */
-const slider=document.getElementById('chapter-slider');
-const chVal =document.getElementById('chapter-val');
-const chEra =document.getElementById('chapter-era');
+const slider  = document.getElementById('chapter-slider');
+const chVal   = document.getElementById('chapter-val');
+const chEra   = document.getElementById('chapter-era');
 
 function updateSlider(){
-  const pct=((slider.value-slider.min)/(slider.max-slider.min))*100;
-  slider.style.setProperty('--pct',pct);
-  chVal.textContent=slider.value;
-  chEra.textContent=currentEra();
+  const pct = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+  slider.style.setProperty('--pct', pct);
+  chVal.textContent = slider.value;
+  chEra.textContent = currentEra();
   renderTimeline();
 }
 
-slider.addEventListener('input',()=>{
-  currentChapter=parseInt(slider.value,10);
-  updateSlider(); renderCards(); renderRelRow();
+slider.addEventListener('input', ()=>{
+  currentChapter = parseInt(slider.value, 10);
+  updateSlider();
 });
 updateSlider();
 
 /* ============================================================  TIMELINE  */
 function renderTimeline(){
-  const scroll=document.getElementById('timeline-scroll');
-  scroll.innerHTML='';
+  const scroll = document.getElementById('timeline-scroll');
+  scroll.innerHTML = '';
   TIMELINE.forEach(ev=>{
-    const isFuture=ev.chapter>currentChapter;
-    const isCurrent=!isFuture && (
-      TIMELINE.indexOf(ev)===TIMELINE.length-1 ||
-      TIMELINE[TIMELINE.indexOf(ev)+1].chapter>currentChapter
+    const isFuture  = ev.chapter > currentChapter;
+    const isCurrent = !isFuture && (
+      TIMELINE.indexOf(ev) === TIMELINE.length - 1 ||
+      TIMELINE[TIMELINE.indexOf(ev) + 1].chapter > currentChapter
     );
-    const div=document.createElement('div');
-    div.className='timeline-event'+(isFuture?' future':'')+(isCurrent?' current':'');
-    div.innerHTML=`
+    const div = document.createElement('div');
+    div.className = 'timeline-event' + (isFuture ? ' future' : '') + (isCurrent ? ' current' : '');
+    div.innerHTML = `
       <div class="timeline-num">
-        <div class="tl-dot${isCurrent?' current-dot':''}">${ev.num}</div>
+        <div class="tl-dot${isCurrent ? ' current-dot' : ''}">${ev.num}</div>
         <span class="timeline-year">${ev.year}</span>
       </div>
       <div class="timeline-title">${ev.title}</div>
@@ -999,19 +503,20 @@ function renderTimeline(){
   });
 }
 
-const tlToggle=document.getElementById('timeline-toggle');
-const tlScroll=document.getElementById('timeline-scroll');
-const tlChevron=document.getElementById('tl-chevron');
-tlToggle.addEventListener('click',()=>{
-  timelineOpen=!timelineOpen;
-  tlScroll.style.display=timelineOpen?'flex':'none';
-  tlChevron.className=timelineOpen?'fa-solid fa-chevron-up fa-xs':'fa-solid fa-chevron-down fa-xs';
+const tlToggle  = document.getElementById('timeline-toggle');
+const tlScroll  = document.getElementById('timeline-scroll');
+const tlChevron = document.getElementById('tl-chevron');
+tlToggle.addEventListener('click', ()=>{
+  timelineOpen = !timelineOpen;
+  tlScroll.style.display  = timelineOpen ? 'flex' : 'none';
+  tlChevron.className = timelineOpen
+    ? 'fa-solid fa-chevron-up fa-xs'
+    : 'fa-solid fa-chevron-down fa-xs';
   if(timelineOpen) renderTimeline();
 });
 
 /* ============================================================  INIT  */
 renderCards();
-renderRelRow();
 </script>
 </body>
 </html>
