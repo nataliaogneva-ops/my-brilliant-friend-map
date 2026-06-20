@@ -175,12 +175,11 @@ body {
 .timeline-desc { font-size: 10px; color: var(--text-secondary); line-height: 1.55; }
 
 /* ── Main grid ── */
-#main { flex: 1; overflow: hidden; }
+#main { flex: 1; overflow-y: auto; }
 #cluster-grid {
-  min-height: 100%;
-  display: grid; grid-template-columns: repeat(3,1fr);
+  display: grid; grid-template-columns: repeat(6,1fr);
   gap: 16px; padding: 16px 24px 32px;
-  overflow-y: auto; align-content: start; align-items: start;
+  align-items: start;
 }
 
 /* ── Family card ── */
@@ -222,14 +221,12 @@ body {
 
 /* ── Responsive ── */
 @media (max-width: 700px) {
-  #cluster-grid { grid-template-columns: 1fr; padding: 12px; gap: 12px; }
+  #cluster-grid { grid-template-columns: repeat(2,1fr); padding: 12px; gap: 12px; }
+  #cluster-grid .family-card { grid-column: span 2 !important; }
   #header-top { padding: 12px 16px; }
   #chapter-strip { padding: 10px 16px 12px; }
   #timeline-header { padding: 8px 16px 4px; }
   #timeline-scroll { padding: 0 16px 10px; }
-}
-@media (min-width: 701px) and (max-width: 1100px) {
-  #cluster-grid { grid-template-columns: repeat(2,1fr); }
 }
 </style>
 </head>
@@ -267,7 +264,7 @@ body {
 <script>
 const FAMILIES = [
   {
-    id:'greco', name:'Greco Family', color:'var(--cluster-greco)',
+    id:'greco', name:'Greco Family', color:'var(--cluster-greco)', cols:3,
     members:[
       { name:'Elena "Lenù" Greco', primary:true, role:'Protagonist & narrator' },
       { name:'Mr. Greco',                         role:'City hall porter' },
@@ -278,7 +275,7 @@ const FAMILIES = [
     ]
   },
   {
-    id:'cerullo', name:'Cerullo Family', color:'var(--cluster-cerullo)',
+    id:'cerullo', name:'Cerullo Family', color:'var(--cluster-cerullo)', cols:3,
     members:[
       { name:'Raffaella "Lila" Cerullo', primary:true, role:'Elena\'s best friend, fiercely brilliant' },
       { name:'Fernando Cerullo',                       role:'Shoemaker, strict and volatile father' },
@@ -288,7 +285,7 @@ const FAMILIES = [
     ]
   },
   {
-    id:'carracci', name:'Carracci Family', color:'var(--cluster-carracci)',
+    id:'carracci', name:'Carracci Family', color:'var(--cluster-carracci)', cols:2,
     members:[
       { name:'Don Achille †',                      role:'Feared loan shark, murdered in childhood' },
       { name:'Donna Maria',                         role:'Don Achille\'s wife' },
@@ -298,7 +295,7 @@ const FAMILIES = [
     ]
   },
   {
-    id:'peluso', name:'Peluso Family', color:'var(--cluster-peluso)',
+    id:'peluso', name:'Peluso Family', color:'var(--cluster-peluso)', cols:2,
     members:[
       { name:'Alfredo',                             role:'Carpenter ruined by Don Achille' },
       { name:'Giuseppina',                          role:'Alfredo\'s wife' },
@@ -307,7 +304,7 @@ const FAMILIES = [
     ]
   },
   {
-    id:'sarratore', name:'Sarratore Family', color:'var(--cluster-sarratore)',
+    id:'sarratore', name:'Sarratore Family', color:'var(--cluster-sarratore)', cols:2,
     members:[
       { name:'Donato Sarratore', primary:true,  role:'Railroad worker, poet, serial womaniser' },
       { name:'Lidia',                            role:'Donato\'s long-suffering wife' },
@@ -319,7 +316,7 @@ const FAMILIES = [
     ]
   },
   {
-    id:'cappuccio', name:'Cappuccio Family', color:'var(--cluster-cappuccio)',
+    id:'cappuccio', name:'Cappuccio Family', color:'var(--cluster-cappuccio)', cols:2,
     members:[
       { name:'Melina Cappuccio', primary:true,   role:'Unstable widow, Donato\'s former lover' },
       { name:'Antonio Cappuccio', primary:true,  role:'Mechanic, Elena\'s teenage boyfriend' },
@@ -327,7 +324,7 @@ const FAMILIES = [
     ]
   },
   {
-    id:'solara', name:'Solara Family', color:'var(--cluster-solara)',
+    id:'solara', name:'Solara Family', color:'var(--cluster-solara)', cols:2,
     members:[
       { name:'Silvio Solara',                    role:'Violent bar owner, Camorra-linked' },
       { name:'Manuela Solara',                   role:'Manages the family\'s debt book' },
@@ -336,7 +333,7 @@ const FAMILIES = [
     ]
   },
   {
-    id:'scanno', name:'Scanno Family', color:'var(--cluster-scanno)',
+    id:'scanno', name:'Scanno Family', color:'var(--cluster-scanno)', cols:2,
     members:[
       { name:'Nicola',                           role:'Fruit & vegetable seller' },
       { name:'Assunta',                          role:'Nicola\'s wife' },
@@ -344,7 +341,7 @@ const FAMILIES = [
     ]
   },
   {
-    id:'spagnuolo', name:'Spagnuolo Family', color:'var(--cluster-spagnuolo)',
+    id:'spagnuolo', name:'Spagnuolo Family', color:'var(--cluster-spagnuolo)', cols:2,
     members:[
       { name:'Signor Spagnuolo',                 role:'Pastry maker at Bar Solara' },
       { name:'Rosa',                             role:'His wife' },
@@ -352,7 +349,7 @@ const FAMILIES = [
     ]
   },
   {
-    id:'other', name:'Other Key Characters', color:'var(--cluster-other)',
+    id:'other', name:'Other Key Characters', color:'var(--cluster-other)', cols:4,
     members:[
       { name:'Maestra Oliviero', primary:true,   role:'Teacher who fights for Elena\'s education' },
       { name:'Maestro Ferraro',                  role:'Teacher & neighbourhood librarian' },
@@ -397,6 +394,7 @@ function renderCards(){
   FAMILIES.forEach(family=>{
     const card = document.createElement('div');
     card.className = 'family-card';
+    card.style.gridColumn = `span ${family.cols || 2}`;
     card.style.borderLeftColor = family.color;
     card.style.setProperty('--family-color', family.color);
 
