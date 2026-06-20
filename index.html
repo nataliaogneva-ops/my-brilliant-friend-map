@@ -83,10 +83,10 @@ body {
   margin-bottom: 14px; flex-wrap: wrap;
 }
 #chapter-label-text {
-  font-family: var(--font-mono);
-  font-size: 10px; font-weight: 700;
-  letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 18px; font-weight: 700;
+  letter-spacing: -0.01em; text-transform: none;
+  color: var(--text-primary);
 }
 /* Chapter number — 24px uppercase mono token */
 #chapter-val {
@@ -258,23 +258,17 @@ body {
 /* ── Family card — sepia surface, espresso border + offset shadow ── */
 .family-card {
   background: var(--surface-card);
-  border: 1px solid var(--border-default);
-  border-left-width: 4px;
+  border: 1px solid var(--border-subtle);
+  border-left-width: 3px;
   border-radius: 0;
-  box-shadow: 4px 4px 0 var(--border-default);
+  box-shadow: 3px 3px 0 rgba(62,44,27,0.18);
   overflow: hidden;
   break-inside: avoid;
   margin-bottom: 20px;
-  transition: box-shadow var(--dur-fast) var(--ease-out),
-              transform var(--dur-fast) var(--ease-out);
-}
-.family-card:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 var(--border-default);
 }
 .family-card-header {
   padding: 14px 16px 12px;
-  border-bottom: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-subtle);
   background: var(--surface-panel);
 }
 /* Family name — bold sans-serif (UI structural element) */
