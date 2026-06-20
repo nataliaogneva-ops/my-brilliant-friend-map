@@ -242,10 +242,10 @@ body {
   font-size: 15px; font-weight: 700;
   color: var(--text-primary); line-height: 1.3; margin-bottom: 5px;
 }
-/* Description — serif (narrative content) */
+/* Description — sans regular */
 .timeline-desc {
-  font-family: var(--font-serif);
-  font-size: 13px; font-style: italic;
+  font-family: var(--font-sans);
+  font-size: 13px; font-style: normal;
   color: var(--text-secondary); line-height: 1.55;
 }
 
@@ -255,11 +255,10 @@ body {
   padding: 24px 24px 48px;
 }
 
-/* ── Family card — sepia surface, espresso border + offset shadow ── */
+/* ── Family card — uniform border, colored shadow, halftone header ── */
 .family-card {
   background: var(--surface-card);
   border: 1px solid var(--border-subtle);
-  border-left-width: 3px;
   border-radius: 0;
   box-shadow: 3px 3px 0 var(--family-color, rgba(62,44,27,0.18));
   overflow: hidden;
@@ -270,6 +269,11 @@ body {
   padding: 14px 16px 12px;
   border-bottom: 1px solid var(--border-subtle);
   background: var(--surface-panel);
+  background-image:
+    radial-gradient(circle, rgba(62,44,27,0.10) 1px, transparent 1px),
+    radial-gradient(circle, rgba(62,44,27,0.10) 1px, transparent 1px);
+  background-size: 8px 8px;
+  background-position: 4px 4px, 0 0;
 }
 /* Family card header — two-tier like "Chapter 01" */
 .family-card-header h2 { line-height: 1; }
@@ -520,7 +524,6 @@ function renderCards(){
     const card = document.createElement('div');
     card.className = 'family-card';
 
-    card.style.borderLeftColor = family.color;
     card.style.setProperty('--family-color', family.color);
 
     const header = document.createElement('div');
