@@ -81,14 +81,14 @@ body {
 
 /* ── Chapter strip ── */
 #chapter-strip {
-  padding: 16px 24px 18px;
+  padding: 20px 24px 18px;
   border-bottom: 1px solid var(--border-default);
   background: var(--surface-panel);
   position: sticky; top: 0; z-index: 10;
 }
 #chapter-strip-label {
   display: flex; align-items: flex-end; gap: 12px;
-  margin-bottom: 14px; flex-wrap: wrap;
+  margin-bottom: 20px; flex-wrap: wrap;
 }
 #chapter-label-text {
   font-family: var(--font-mono);
@@ -122,6 +122,23 @@ body {
   letter-spacing: -0.01em;
   padding-bottom: 8px;
 }
+
+/* ── Slider arrow hints ── */
+#slider-wrap { display: flex; align-items: center; gap: 10px; }
+.slider-arrow {
+  font-size: 18px; flex-shrink: 0;
+  color: var(--text-secondary);
+  opacity: 0.28;
+  font-family: var(--font-sans); line-height: 1;
+  user-select: none; pointer-events: none;
+  transition: opacity 400ms ease;
+}
+.slider-arrow.hidden { opacity: 0; }
+@keyframes arrowBlink {
+  0%, 100% { opacity: 0.12; }
+  50%       { opacity: 0.48; }
+}
+.slider-arrow.pulse { animation: arrowBlink 2s ease-in-out infinite; }
 
 /* ── Chapter scroller: 3px track filled with accent up to thumb position ── */
 #chapter-slider {
@@ -432,7 +449,11 @@ body {
       <span id="chapter-val-suffix">of 87 —</span>
       <span id="chapter-era">Childhood in Rione</span>
     </div>
-    <input type="range" id="chapter-slider" min="1" max="87" value="1">
+    <div id="slider-wrap">
+      <span id="arrow-left" class="slider-arrow hidden">←</span>
+      <input type="range" id="chapter-slider" min="1" max="87" value="1">
+      <span id="arrow-right" class="slider-arrow pulse">→</span>
+    </div>
     <div id="chapter-ticks">
       <div class="tick"><div class="tick-line"></div><span class="tick-label">01</span></div>
       <div class="tick"><div class="tick-line"></div><span class="tick-label">10</span></div>
@@ -617,6 +638,18 @@ function renderCards(){
 }
 
 const slider = document.getElementById('chapter-slider');
+const arrowLeft  = document.getElementById('arrow-left');
+const arrowRight = document.getElementById('arrow-right');
+
+function updateArrows(){
+  const ch = parseInt(slider.value);
+  const isFirst = ch === parseInt(slider.min);
+  const isLast  = ch === parseInt(slider.max);
+  arrowLeft.classList.toggle('hidden', isFirst);
+  arrowRight.classList.toggle('hidden', isLast);
+  arrowRight.classList.toggle('pulse', isFirst);
+}
+
 function updateSlider(){
   const pct = ((slider.value-slider.min)/(slider.max-slider.min))*100;
   slider.style.setProperty('--pct', pct);
@@ -626,6 +659,7 @@ function updateSlider(){
   void valEl.offsetWidth; // force reflow to restart animation
   valEl.classList.add('updating');
   document.getElementById('chapter-era').textContent = currentEra();
+  updateArrows();
   renderTimeline();
 }
 slider.addEventListener('input',()=>{ currentChapter=parseInt(slider.value,10); updateSlider(); });
