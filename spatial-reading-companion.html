@@ -338,7 +338,11 @@ body {
   color: var(--accent);
   line-height: 1.45;
   margin-top: 3px;
-  animation: cardIn 280ms var(--ease-out) backwards;
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+.char-reveal.visible {
+  opacity: 1;
 }
 
 /* Family card header — two-tier like "Chapter 01" */
@@ -745,42 +749,67 @@ const ERAS = [
 let currentChapter = 1;
 function currentEra(){ return (ERAS.find(e=>currentChapter<=e.max)||ERAS[ERAS.length-1]).label; }
 
-function renderCards(){
+function renderCards(animate){
   const grid = document.getElementById('cluster-grid');
-  grid.innerHTML = '';
   let visibleIdx = 0;
   FAMILIES.forEach((family)=>{
-    if ((family.firstChapter || 1) > currentChapter) return;
+    const familyKey = family.name.replace(/\s+/g,'-');
+    const isVisible = (family.firstChapter || 1) <= currentChapter;
+    let card = grid.querySelector(`[data-family="${familyKey}"]`);
 
-    const card = document.createElement('div');
-    card.className = 'family-card';
-    card.style.setProperty('--family-color', family.color);
+    if (!isVisible){ if(card) card.remove(); return; }
+
+    if (!card){
+      card = document.createElement('div');
+      card.className = 'family-card';
+      card.dataset.family = familyKey;
+      card.style.setProperty('--family-color', family.color);
+      const nameParts = family.name.split(' ');
+      const surname = nameParts.slice(0, -1).join(' ');
+      const header = document.createElement('div');
+      header.className = 'family-card-header';
+      header.innerHTML = `<h2><span class="family-surname">${surname}</span></h2>`
+        + (family.summary ? `<span class="family-summary">${family.summary}</span>` : '');
+      card.appendChild(header);
+      card.appendChild(document.createElement('div')).className = 'char-list';
+      grid.appendChild(card);
+    }
     card.style.setProperty('--card-index', visibleIdx++);
 
-    const nameParts = family.name.split(' ');
-    const surname = nameParts.slice(0, -1).join(' ');
-    const header = document.createElement('div');
-    header.className = 'family-card-header';
-    header.innerHTML = `<h2><span class="family-surname">${surname}</span></h2>`
-      + (family.summary ? `<span class="family-summary">${family.summary}</span>` : '');
-    card.appendChild(header);
-
-    const list = document.createElement('div');
-    list.className = 'char-list';
+    const list = card.querySelector('.char-list');
     family.members.forEach(m=>{
-      if ((m.firstChapter || 1) > currentChapter) return;
-      const row = document.createElement('div');
-      row.className = 'char-row';
-      const dot = m.primary ? `<span class="char-dot"></span>` : '';
-      const visibleReveals = (m.reveals || []).filter(r => r.chapter <= currentChapter);
-      const revealsHTML = visibleReveals.map(r => `<span class="char-reveal">${r.text}</span>`).join('');
-      row.innerHTML = `<div class="char-name-row">${dot}<span class="char-name${m.primary?' primary':''}">${m.name}</span></div>`
-        + (m.role ? `<span class="char-role">${m.role}</span>` : '')
-        + revealsHTML;
-      list.appendChild(row);
+      const memberKey = m.name.replace(/[^a-zA-Z0-9]/g,'-');
+      const memberVisible = (m.firstChapter || 1) <= currentChapter;
+      let row = list.querySelector(`[data-member="${memberKey}"]`);
+
+      if (!memberVisible){ if(row) row.remove(); return; }
+
+      if (!row){
+        row = document.createElement('div');
+        row.className = 'char-row';
+        row.dataset.member = memberKey;
+        const dot = m.primary ? `<span class="char-dot"></span>` : '';
+        row.innerHTML = `<div class="char-name-row">${dot}<span class="char-name${m.primary?' primary':''}">${m.name}</span></div>`
+          + (m.role ? `<span class="char-role">${m.role}</span>` : '');
+        list.appendChild(row);
+      }
+
+      (m.reveals || []).filter(r => r.chapter <= currentChapter).forEach(r=>{
+        const revealKey = `reveal-${memberKey}-${r.chapter}`;
+        if (!row.querySelector(`[data-reveal="${revealKey}"]`)){
+          const span = document.createElement('span');
+          span.className = 'char-reveal';
+          span.dataset.reveal = revealKey;
+          span.textContent = r.text;
+          row.appendChild(span);
+          if (animate){
+            requestAnimationFrame(()=> requestAnimationFrame(()=> span.classList.add('visible')));
+          } else {
+            span.classList.add('visible');
+          }
+        }
+      });
     });
-    card.appendChild(list);
-    grid.appendChild(card);
   });
 }
 
@@ -815,7 +844,7 @@ function updateSlider(){
   document.getElementById('chapter-era').textContent = currentEra();
   updateArrows();
   renderTimeline();
-  renderCards();
+  renderCards(true);
 }
 slider.addEventListener('input',()=>{
   currentChapter=parseInt(slider.value,10);
@@ -850,7 +879,7 @@ function renderTimeline(){
   });
 }
 
-renderCards();
+renderCards(false);
 updateSlider();
 </script>
 </body>
