@@ -123,22 +123,31 @@ body {
   padding-bottom: 8px;
 }
 
-/* ── Slider arrow hints ── */
-#slider-wrap { display: flex; align-items: center; gap: 10px; }
-.slider-arrow {
-  font-size: 18px; flex-shrink: 0;
-  color: var(--text-secondary);
-  opacity: 0.28;
-  font-family: var(--font-sans); line-height: 1;
-  user-select: none; pointer-events: none;
-  transition: opacity 400ms ease;
+/* ── Slider arrow hints overlaid on the thumb ── */
+#slider-wrap {
+  position: relative;
+  height: 24px;
+  display: flex; align-items: center;
 }
-.slider-arrow.hidden { opacity: 0; }
+/* Arrow overlay sits exactly on top of the orange thumb */
+#thumb-arrow {
+  position: absolute;
+  top: 50%;
+  left: calc(var(--pct, 0) / 100 * (100% - 24px) + 12px);
+  transform: translate(-50%, -50%);
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+  font-size: 13px; font-weight: 700; line-height: 1;
+  color: #fff;
+  z-index: 2;
+  letter-spacing: -0.04em;
+}
 @keyframes arrowBlink {
-  0%, 100% { opacity: 0.12; }
-  50%       { opacity: 0.48; }
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 1; }
 }
-.slider-arrow.pulse { animation: arrowBlink 2s ease-in-out infinite; }
+#thumb-arrow.pulse { animation: arrowBlink 2s ease-in-out infinite; }
 
 /* ── Chapter scroller: 3px track filled with accent up to thumb position ── */
 #chapter-slider {
@@ -450,9 +459,8 @@ body {
       <span id="chapter-era">Childhood in Rione</span>
     </div>
     <div id="slider-wrap">
-      <span id="arrow-left" class="slider-arrow hidden">←</span>
       <input type="range" id="chapter-slider" min="1" max="87" value="1">
-      <span id="arrow-right" class="slider-arrow pulse">→</span>
+      <div id="thumb-arrow" class="pulse">→</div>
     </div>
     <div id="chapter-ticks">
       <div class="tick"><div class="tick-line"></div><span class="tick-label">01</span></div>
@@ -637,22 +645,29 @@ function renderCards(){
   });
 }
 
-const slider = document.getElementById('chapter-slider');
-const arrowLeft  = document.getElementById('arrow-left');
-const arrowRight = document.getElementById('arrow-right');
+const slider     = document.getElementById('chapter-slider');
+const sliderWrap = document.getElementById('slider-wrap');
+const thumbArrow = document.getElementById('thumb-arrow');
 
 function updateArrows(){
   const ch = parseInt(slider.value);
   const isFirst = ch === parseInt(slider.min);
   const isLast  = ch === parseInt(slider.max);
-  arrowLeft.classList.toggle('hidden', isFirst);
-  arrowRight.classList.toggle('hidden', isLast);
-  arrowRight.classList.toggle('pulse', isFirst);
+  if (isFirst) {
+    thumbArrow.textContent = '→';
+    thumbArrow.classList.add('pulse');
+  } else if (isLast) {
+    thumbArrow.textContent = '←';
+    thumbArrow.classList.remove('pulse');
+  } else {
+    thumbArrow.textContent = '↔';
+    thumbArrow.classList.remove('pulse');
+  }
 }
 
 function updateSlider(){
   const pct = ((slider.value-slider.min)/(slider.max-slider.min))*100;
-  slider.style.setProperty('--pct', pct);
+  sliderWrap.style.setProperty('--pct', pct);
   const valEl = document.getElementById('chapter-val');
   valEl.textContent = String(slider.value).padStart(2,'0');
   valEl.classList.remove('updating');
