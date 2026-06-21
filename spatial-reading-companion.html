@@ -37,8 +37,9 @@
   --font-mono:  "Space Mono", "Roboto Mono", monospace;  /* data, numbers, dates */
   --font-serif: "Playfair Display", "Georgia", serif;    /* narrative, bios, descriptions */
 
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --dur-fast: 140ms;
+  --ease-out:        cubic-bezier(0.23, 1, 0.32, 1);   /* strong ease-out for entries */
+  --ease-in-out:     cubic-bezier(0.77, 0, 0.175, 1);  /* strong ease-in-out for flips */
+  --dur-fast: 160ms;
 }
 
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -115,11 +116,17 @@ body {
   padding-bottom: 8px;
 }
 
-/* ── Chapter scroller: 1px espresso track + 4px ticks + square ultramarine node ── */
+/* ── Chapter scroller: 1px track filled with accent up to thumb position ── */
 #chapter-slider {
   -webkit-appearance: none; appearance: none;
   width: 100%; height: 1px;
-  background: var(--border-default);
+  background: linear-gradient(
+    to right,
+    var(--accent) 0%,
+    var(--accent) calc(var(--pct, 0) * 1%),
+    var(--border-default) calc(var(--pct, 0) * 1%),
+    var(--border-default) 100%
+  );
   outline: none; cursor: pointer;
 }
 #chapter-slider::-webkit-slider-thumb {
@@ -129,8 +136,10 @@ body {
   border: none;
   transition: transform var(--dur-fast) var(--ease-out);
 }
-#chapter-slider:hover::-webkit-slider-thumb { transform: scale(1.15); }
-#chapter-slider:active::-webkit-slider-thumb { transform: scale(0.9); }
+@media (hover: hover) and (pointer: fine) {
+  #chapter-slider:hover::-webkit-slider-thumb { transform: scale(1.15); }
+}
+#chapter-slider:active::-webkit-slider-thumb { transform: scale(0.85); }
 #chapter-slider:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
 
 /* Tick marks — 4px tall vertical lines + micro mono labels */
@@ -183,7 +192,7 @@ body {
 .tl-inner {
   position: relative; width: 100%; height: 100%;
   transform-style: preserve-3d;
-  transition: transform 520ms cubic-bezier(0.45, 0, 0.55, 1);
+  transition: transform 380ms var(--ease-in-out);
 }
 .timeline-event.future .tl-inner { transform: rotateY(180deg); }
 .tl-front, .tl-back {
@@ -195,11 +204,13 @@ body {
   border: 1px solid var(--border-default);
   box-shadow: 3px 3px 0 var(--border-default);
   padding: 10px 12px;
-  transition: box-shadow var(--dur-fast), transform var(--dur-fast);
+  transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
-.timeline-event:not(.future):hover .tl-front {
-  box-shadow: 5px 5px 0 var(--border-default);
-  transform: translate(-1px, -1px);
+@media (hover: hover) and (pointer: fine) {
+  .timeline-event:not(.future):hover .tl-front {
+    box-shadow: 5px 5px 0 var(--border-default);
+    transform: translate(-1px, -1px);
+  }
 }
 /* Active card: accent border + shadow + halftone fill */
 .timeline-event.current .tl-front {
@@ -339,6 +350,47 @@ body {
   font-family: var(--font-sans);
   font-size: 13px; font-weight: 400; font-style: normal;
   color: var(--text-secondary); line-height: 1.4;
+}
+
+/* ── Stagger entry for family cards ── */
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.family-card {
+  animation: cardIn 300ms var(--ease-out) backwards;
+  animation-delay: calc(var(--card-index, 0) * 40ms);
+}
+
+/* ── Chapter number update pulse ── */
+@keyframes chapterPop {
+  0%   { opacity: 1;   transform: scale(1); }
+  35%  { opacity: 0.5; transform: scale(0.93); }
+  100% { opacity: 1;   transform: scale(1); }
+}
+#chapter-val.updating {
+  animation: chapterPop 220ms var(--ease-out);
+}
+
+/* ── Family card hover lift ── */
+.family-card {
+  transition: transform 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .family-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 3px 6px 0 var(--family-color, rgba(26,26,26,0.18));
+  }
+}
+
+/* ── Char-row hover feedback ── */
+.char-row {
+  transition: background 120ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .char-row:hover {
+    background: var(--surface-hover);
+  }
 }
 
 /* ── Responsive ── */
@@ -526,11 +578,12 @@ function currentEra(){ return (ERAS.find(e=>currentChapter<=e.max)||ERAS[ERAS.le
 function renderCards(){
   const grid = document.getElementById('cluster-grid');
   grid.innerHTML = '';
-  FAMILIES.forEach(family=>{
+  FAMILIES.forEach((family,idx)=>{
     const card = document.createElement('div');
     card.className = 'family-card';
 
     card.style.setProperty('--family-color', family.color);
+    card.style.setProperty('--card-index', idx);
 
     const header = document.createElement('div');
     header.className = 'family-card-header';
@@ -559,7 +612,11 @@ const slider = document.getElementById('chapter-slider');
 function updateSlider(){
   const pct = ((slider.value-slider.min)/(slider.max-slider.min))*100;
   slider.style.setProperty('--pct', pct);
-  document.getElementById('chapter-val').textContent = String(slider.value).padStart(2,'0');
+  const valEl = document.getElementById('chapter-val');
+  valEl.textContent = String(slider.value).padStart(2,'0');
+  valEl.classList.remove('updating');
+  void valEl.offsetWidth; // force reflow to restart animation
+  valEl.classList.add('updating');
   document.getElementById('chapter-era').textContent = currentEra();
   renderTimeline();
 }
