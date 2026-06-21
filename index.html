@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Brilliant Friend by Elena Ferrante — Book Companion</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root {
   /* ── Family identity colors ── */
@@ -20,17 +20,17 @@
   --cluster-spagnuolo: #5A2A5A;
   --cluster-other:     #3E3830;
 
-  /* ── Industrial Editorial v2.0 palette ── */
-  --surface-bg:    #F4EAD5;
-  --surface-panel: #DBCBAF;
-  --surface-card:  #F4EAD5;
-  --surface-hover: #EDE0C4;
-  --text-primary:  #2A1A0A;
-  --text-secondary:#4A3020;
-  --text-muted:    rgba(42,26,10,0.60);
-  --border-subtle: rgba(42,26,10,0.28);
-  --border-default:#3E2C1B;
-  --accent:        #0033CC;   /* ultramarine — active states only */
+  /* ── Swiss Editorial palette ── */
+  --surface-bg:    #EBEBEB;   /* cool editorial off-white */
+  --surface-panel: #D6D6D4;   /* cool mid-gray */
+  --surface-card:  #F2F2F0;   /* near-white card surface */
+  --surface-hover: #E0E0DE;
+  --text-primary:  #1A1A1A;   /* near-black */
+  --text-secondary:#5A5A5A;   /* medium gray */
+  --text-muted:    rgba(26,26,26,0.45);
+  --border-subtle: rgba(26,26,26,0.18);
+  --border-default:#1A1A1A;   /* near-black */
+  --accent:        #C8391A;   /* burnt orange-red — active states only */
 
   /* ── Dual-type system ── */
   --font-sans:  "Helvetica Neue", "Inter", sans-serif;   /* UI labels, names */
@@ -79,34 +79,40 @@ body {
   position: sticky; top: 0; z-index: 10;
 }
 #chapter-strip-label {
-  display: flex; align-items: baseline; gap: 10px;
+  display: flex; align-items: flex-end; gap: 12px;
   margin-bottom: 14px; flex-wrap: wrap;
 }
 #chapter-label-text {
-  font-family: var(--font-sans);
-  font-size: 18px; font-weight: 700;
-  letter-spacing: -0.01em; text-transform: none;
-  color: var(--text-primary);
-}
-/* Chapter number — 28px uppercase mono token */
-#chapter-val {
   font-family: var(--font-mono);
-  font-size: 28px; font-weight: 700;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-muted);
+  padding-bottom: 10px;
+}
+/* Chapter number — Swiss poster scale */
+#chapter-val {
+  font-family: var(--font-sans);
+  font-size: 56px; font-weight: 700;
+  letter-spacing: -0.03em;
   text-transform: uppercase;
   color: var(--accent);
-  line-height: 1; min-width: 2ch;
+  line-height: 0.9; min-width: 2ch;
 }
 #chapter-val-suffix {
   font-family: var(--font-mono);
-  font-size: 12px; letter-spacing: 0.06em;
+  font-size: 11px; letter-spacing: 0.10em;
   text-transform: uppercase;
   color: var(--text-muted);
+  padding-bottom: 10px;
 }
-/* Era name — serif, narrative role */
+/* Era name — sans, editorial */
 #chapter-era {
-  font-family: var(--font-serif);
-  font-size: 17px; font-style: italic;
+  font-family: var(--font-sans);
+  font-size: 15px; font-weight: 400;
+  font-style: italic;
   color: var(--text-secondary);
+  letter-spacing: -0.01em;
+  padding-bottom: 8px;
 }
 
 /* ── Chapter scroller: 1px espresso track + 4px ticks + square ultramarine node ── */
@@ -201,8 +207,8 @@ body {
   box-shadow: 3px 3px 0 var(--accent);
   background-color: var(--surface-card);
   background-image:
-    radial-gradient(circle, rgba(62,44,27,0.10) 1px, transparent 1px),
-    radial-gradient(circle, rgba(62,44,27,0.10) 1px, transparent 1px);
+    radial-gradient(circle, rgba(26,26,26,0.10) 1px, transparent 1px),
+    radial-gradient(circle, rgba(26,26,26,0.10) 1px, transparent 1px);
   background-size: 8px 8px;
   background-position: 4px 4px, 0 0;
 }
@@ -212,7 +218,7 @@ body {
   box-shadow: 3px 3px 0 var(--border-default);
   transform: rotateY(180deg);
   display: flex; align-items: center; justify-content: center;
-  background-image: radial-gradient(circle, rgba(62,44,27,0.12) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(26,26,26,0.12) 1px, transparent 1px);
   background-size: 8px 8px;
 }
 .tl-back-mark {
@@ -270,8 +276,8 @@ body {
   border-bottom: 1px solid var(--border-subtle);
   background: var(--surface-panel);
   background-image:
-    radial-gradient(circle, rgba(62,44,27,0.10) 1px, transparent 1px),
-    radial-gradient(circle, rgba(62,44,27,0.10) 1px, transparent 1px);
+    radial-gradient(circle, rgba(26,26,26,0.09) 1px, transparent 1px),
+    radial-gradient(circle, rgba(26,26,26,0.09) 1px, transparent 1px);
   background-size: 8px 8px;
   background-position: 4px 4px, 0 0;
 }
