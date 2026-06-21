@@ -817,7 +817,14 @@ function updateSlider(){
   renderTimeline();
   renderCards();
 }
-slider.addEventListener('input',()=>{ currentChapter=parseInt(slider.value,10); updateSlider(); });
+slider.addEventListener('input',()=>{
+  currentChapter=parseInt(slider.value,10);
+  updateSlider();
+  if(window.posthog){
+    posthog.capture('slider_moved',{chapter:currentChapter});
+    if(currentChapter===parseInt(slider.max,10)) posthog.capture('explored_full_book');
+  }
+});
 
 function renderTimeline(){
   const scroll = document.getElementById('timeline-scroll');
