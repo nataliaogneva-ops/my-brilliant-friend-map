@@ -123,10 +123,10 @@ body {
   padding-bottom: 8px;
 }
 
-/* ── Chapter scroller: 1px track filled with accent up to thumb position ── */
+/* ── Chapter scroller: 3px track filled with accent up to thumb position ── */
 #chapter-slider {
   -webkit-appearance: none; appearance: none;
-  width: 100%; height: 1px;
+  width: 100%; height: 3px;
   background: linear-gradient(
     to right,
     var(--accent) 0%,
@@ -135,18 +135,19 @@ body {
     var(--border-default) 100%
   );
   outline: none; cursor: pointer;
+  border-radius: 0;
 }
 #chapter-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 14px; height: 14px; border-radius: 0;
+  width: 24px; height: 24px; border-radius: 0;
   background: var(--accent);
   border: none;
   transition: transform var(--dur-fast) var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
-  #chapter-slider:hover::-webkit-slider-thumb { transform: scale(1.15); }
+  #chapter-slider:hover::-webkit-slider-thumb { transform: scale(1.12); }
 }
-#chapter-slider:active::-webkit-slider-thumb { transform: scale(0.85); }
+#chapter-slider:active::-webkit-slider-thumb { transform: scale(0.88); }
 #chapter-slider:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
 
 /* Tick marks — 4px tall vertical lines + micro mono labels */
