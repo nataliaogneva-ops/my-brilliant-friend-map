@@ -326,6 +326,28 @@ body {
   background-size: 8px 8px;
   background-position: 4px 4px, 0 0;
 }
+/* Family summary — italic subtitle below surname */
+.family-summary {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 400;
+  letter-spacing: 0.10em; text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 5px;
+  font-style: normal;
+}
+
+/* Revealed character detail — accent orange, second line */
+.char-reveal {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 12px; font-weight: 400;
+  color: var(--accent);
+  line-height: 1.45;
+  margin-top: 3px;
+  animation: cardIn 280ms var(--ease-out) backwards;
+}
+
 /* Family card header — two-tier like "Chapter 01" */
 .family-card-header h2 { line-height: 1; }
 .family-surname {
@@ -488,100 +510,231 @@ body {
 <script>
 const FAMILIES = [
   {
-    id:'greco', name:'Greco Family', color:'var(--cluster-greco)', cols:3,
+    id:'greco', name:'Greco Family', color:'var(--cluster-greco)',
+    summary:'The Porter\'s Family',
     members:[
-      { name:'Elena "Lenù" Greco', primary:true, role:'Protagonist & narrator' },
-      { name:'Mr. Greco',                         role:'City hall porter' },
-      { name:'Mrs. Greco',                        role:'Strict mother with a limp, resents Elena\'s ambitions' },
-      { name:'Peppe',                             role:'Younger sibling' },
-      { name:'Gianni',                            role:'Younger sibling' },
-      { name:'Elisa',                             role:'Younger sibling, later linked to Solaras' },
+      { name:'Elena "Lenù" Greco', primary:true, role:'Protagonist',
+        reveals:[
+          {chapter:1,  text:'Narrator of the story'},
+          {chapter:5,  text:'Recognised as exceptionally intelligent by Maestra Oliviero'},
+          {chapter:25, text:'Graduates top of class — wins a place in middle school'},
+          {chapter:45, text:'Studies intensely, develops ambitions beyond the neighbourhood'},
+        ]},
+      { name:'Mr. Greco', role:'Father',
+        reveals:[
+          {chapter:1, text:'Porter at city hall'},
+        ]},
+      { name:'Mrs. Greco', role:'Mother',
+        reveals:[
+          {chapter:25, text:'Resists Elena\'s education — fears it will take her away'},
+        ]},
+      { name:'Peppe', role:'Younger sibling', reveals:[] },
+      { name:'Gianni', role:'Younger sibling', reveals:[] },
+      { name:'Elisa', role:'Younger sibling',
+        reveals:[
+          {chapter:65, text:'Later becomes entangled with the Solara family'},
+        ]},
     ]
   },
   {
-    id:'cerullo', name:'Cerullo Family', color:'var(--cluster-cerullo)', cols:3,
+    id:'cerullo', name:'Cerullo Family', color:'var(--cluster-cerullo)',
+    summary:'The Shoemaker\'s Family',
     members:[
-      { name:'Raffaella "Lila" Cerullo', primary:true, role:'Elena\'s best friend, fiercely brilliant' },
-      { name:'Fernando Cerullo',                       role:'Shoemaker, strict and volatile father' },
-      { name:'Nunzia Cerullo',                         role:'Lila\'s mother' },
-      { name:'Rino Cerullo (Elder)', primary:true,     role:'Older brother, Lila\'s shoe collaborator' },
-      { name:'Rino (Younger)',                         role:'Lila\'s son, named after her brother' },
+      { name:'Raffaella "Lila" Cerullo', primary:true, role:'Elena\'s best friend',
+        reveals:[
+          {chapter:1,  text:'Fiercely brilliant and rebellious'},
+          {chapter:25, text:'Denied middle school despite matching Elena\'s intelligence'},
+          {chapter:35, text:'Works in her father\'s shoe shop; co-designs an ambitious shoe'},
+          {chapter:65, text:'Rejects Marcello Solara\'s persistent marriage proposal'},
+          {chapter:87, text:'Marries Stefano Carracci at sixteen'},
+        ]},
+      { name:'Fernando Cerullo', role:'Father',
+        reveals:[
+          {chapter:1, text:'Shoemaker — strict and volatile'},
+        ]},
+      { name:'Nunzia Cerullo', role:'Mother', reveals:[] },
+      { name:'Rino Cerullo (Elder)', primary:true, role:'Older brother',
+        reveals:[
+          {chapter:35, text:'Works alongside Lila on her bold shoe design'},
+        ]},
+      { name:'Rino (Younger)', role:'Lila\'s son', firstChapter:87,
+        reveals:[] },
     ]
   },
   {
-    id:'carracci', name:'Carracci Family', color:'var(--cluster-carracci)', cols:2,
+    id:'carracci', name:'Carracci Family', color:'var(--cluster-carracci)',
+    summary:'The Don Achille Family',
     members:[
-      { name:'Don Achille †',                      role:'Feared loan shark, murdered in childhood' },
-      { name:'Donna Maria',                         role:'Don Achille\'s wife' },
-      { name:'Stefano Carracci', primary:true,      role:'Grocer, marries Lila at sixteen' },
-      { name:'Alfonso Carracci', primary:true,      role:'Sweet, intelligent classmate' },
-      { name:'Pinuccia',                            role:'Stefano\'s sister' },
+      { name:'Don Achille Carracci', role:'Patriarch',
+        reveals:[
+          {chapter:1,  text:'Feared neighbourhood loan shark — the "ogre" of the rione'},
+          {chapter:15, text:'Murdered — Alfredo Peluso is accused of the killing'},
+        ]},
+      { name:'Donna Maria', role:'Wife', reveals:[] },
+      { name:'Stefano Carracci', primary:true, role:'Eldest son',
+        reveals:[
+          {chapter:15, text:'Takes over the family grocery store after his father\'s murder'},
+          {chapter:65, text:'Accumulates wealth and begins pursuing Lila'},
+          {chapter:87, text:'Marries Lila — she is sixteen years old'},
+        ]},
+      { name:'Alfonso Carracci', primary:true, role:'Younger son',
+        reveals:[
+          {chapter:5, text:'Sweet and intelligent classmate of Elena and Lila'},
+        ]},
+      { name:'Pinuccia', role:'Daughter', reveals:[] },
     ]
   },
   {
-    id:'peluso', name:'Peluso Family', color:'var(--cluster-peluso)', cols:2,
+    id:'peluso', name:'Peluso Family', color:'var(--cluster-peluso)',
+    summary:'The Carpenter\'s Family',
     members:[
-      { name:'Alfredo',                             role:'Carpenter ruined by Don Achille' },
-      { name:'Giuseppina',                          role:'Alfredo\'s wife' },
-      { name:'Pasquale Peluso', primary:true,       role:'Communist labourer, loves Lila' },
-      { name:'Carmela (Carmen) Peluso', primary:true, role:'Close friend to Elena & Lila' },
+      { name:'Alfredo Peluso', role:'Father',
+        reveals:[
+          {chapter:1,  text:'Carpenter'},
+          {chapter:15, text:'Accused of murdering Don Achille Carracci'},
+        ]},
+      { name:'Giuseppina Peluso', role:'Mother', reveals:[] },
+      { name:'Pasquale Peluso', primary:true, role:'Eldest son',
+        reveals:[
+          {chapter:35, text:'Construction worker and passionate Communist'},
+          {chapter:45, text:'Harbours romantic feelings for Lila'},
+        ]},
+      { name:'Carmela (Carmen) Peluso', primary:true, role:'Daughter',
+        reveals:[
+          {chapter:5, text:'Close friend to both Elena and Lila'},
+        ]},
     ]
   },
   {
-    id:'sarratore', name:'Sarratore Family', color:'var(--cluster-sarratore)', cols:2,
+    id:'sarratore', name:'Sarratore Family', color:'var(--cluster-sarratore)',
+    summary:'The Railroad Worker\'s Family',
     members:[
-      { name:'Donato Sarratore', primary:true,  role:'Railroad worker, poet, serial womaniser' },
-      { name:'Lidia',                            role:'Donato\'s long-suffering wife' },
-      { name:'Nino Sarratore', primary:true,    role:'Elena\'s lifelong obsession' },
-      { name:'Marisa Sarratore', primary:true,  role:'Nino\'s sister, befriended by Elena' },
-      { name:'Pino',                             role:'Younger sibling' },
-      { name:'Clelia',                           role:'Younger sibling' },
-      { name:'Ciro',                             role:'Youngest sibling' },
+      { name:'Donato Sarratore', primary:true, role:'Father',
+        reveals:[
+          {chapter:1,  text:'Railroad worker and amateur poet'},
+          {chapter:45, text:'Known womaniser — carries on an affair with Melina Cappuccio'},
+          {chapter:75, text:'Hosts Elena on Ischia — crosses a serious boundary with her'},
+        ]},
+      { name:'Lidia Sarratore', role:'Mother', reveals:[] },
+      { name:'Nino Sarratore', primary:true, role:'Eldest son',
+        reveals:[
+          {chapter:45, text:'Aloof and intellectual — Elena develops a deep obsession with him'},
+          {chapter:75, text:'Spends the summer on Ischia alongside Elena'},
+        ]},
+      { name:'Marisa Sarratore', primary:true, role:'Daughter',
+        reveals:[
+          {chapter:45, text:'Elena befriends her largely to stay close to Nino'},
+        ]},
+      { name:'Pino', role:'Younger sibling', reveals:[] },
+      { name:'Clelia', role:'Younger sibling', reveals:[] },
+      { name:'Ciro', role:'Youngest sibling', reveals:[] },
     ]
   },
   {
-    id:'cappuccio', name:'Cappuccio Family', color:'var(--cluster-cappuccio)', cols:2,
+    id:'cappuccio', name:'Cappuccio Family', color:'var(--cluster-cappuccio)',
+    summary:'The Mad Widow\'s Family',
     members:[
-      { name:'Melina Cappuccio', primary:true,   role:'Unstable widow, Donato\'s former lover' },
-      { name:'Antonio Cappuccio', primary:true,  role:'Mechanic, Elena\'s teenage boyfriend' },
-      { name:'Ada',                              role:'Antonio\'s sister' },
+      { name:'Melina Cappuccio', primary:true, role:'Widow',
+        reveals:[
+          {chapter:1,  text:'Distant relative of Lila\'s mother — emotionally unstable'},
+          {chapter:45, text:'Has a ruinous affair with Donato Sarratore'},
+        ]},
+      { name:'Antonio Cappuccio', primary:true, role:'Eldest son',
+        reveals:[
+          {chapter:55, text:'Works as a mechanic — becomes Elena\'s teenage boyfriend'},
+        ]},
+      { name:'Ada Cappuccio', role:'Daughter', reveals:[] },
     ]
   },
   {
-    id:'solara', name:'Solara Family', color:'var(--cluster-solara)', cols:2,
+    id:'solara', name:'Solara Family', color:'var(--cluster-solara)',
+    summary:'The Bar Owners\' Family',
     members:[
-      { name:'Silvio Solara',                    role:'Violent bar owner, Camorra-linked' },
-      { name:'Manuela Solara',                   role:'Manages the family\'s debt book' },
-      { name:'Marcello Solara', primary:true,    role:'Pursues Lila obsessively' },
-      { name:'Michele Solara', primary:true,     role:'Colder, more calculating brother' },
+      { name:'Silvio Solara', role:'Father',
+        reveals:[
+          {chapter:1,  text:'Powerful owner of Bar Solara'},
+          {chapter:65, text:'Holds financial control over the neighbourhood — Camorra ties suspected'},
+        ]},
+      { name:'Manuela Solara', role:'Mother',
+        reveals:[
+          {chapter:65, text:'Aggressively manages the family\'s debt book'},
+        ]},
+      { name:'Marcello Solara', primary:true, role:'Eldest son',
+        reveals:[
+          {chapter:65, text:'Becomes infatuated with Lila — pursues her aggressively for marriage'},
+          {chapter:87, text:'Ultimately rejected by Lila at the wedding'},
+        ]},
+      { name:'Michele Solara', primary:true, role:'Younger son',
+        reveals:[
+          {chapter:65, text:'Colder and more calculating than his brother'},
+          {chapter:87, text:'Begins a relationship with Gigliola Spagnuolo'},
+        ]},
     ]
   },
   {
-    id:'scanno', name:'Scanno Family', color:'var(--cluster-scanno)', cols:2,
+    id:'scanno', name:'Scanno Family', color:'var(--cluster-scanno)',
+    summary:'The Fruit Sellers\' Family',
     members:[
-      { name:'Nicola',                           role:'Fruit & vegetable seller' },
-      { name:'Assunta',                          role:'Nicola\'s wife' },
-      { name:'Enzo Scanno', primary:true,        role:'Classmate, steadfastly devoted to Lila' },
+      { name:'Nicola Scanno', role:'Father',
+        reveals:[
+          {chapter:1, text:'Runs the local fruit and vegetable cart'},
+        ]},
+      { name:'Assunta Scanno', role:'Mother', reveals:[] },
+      { name:'Enzo Scanno', primary:true, role:'Son',
+        reveals:[
+          {chapter:5,  text:'Classmate — struggles academically but kind and steadfast'},
+          {chapter:25, text:'Carries a persistent, silent devotion to Lila'},
+        ]},
     ]
   },
   {
-    id:'spagnuolo', name:'Spagnuolo Family', color:'var(--cluster-spagnuolo)', cols:2,
+    id:'spagnuolo', name:'Spagnuolo Family', color:'var(--cluster-spagnuolo)',
+    summary:'The Baker\'s Family',
     members:[
-      { name:'Signor Spagnuolo',                 role:'Pastry maker at Bar Solara' },
-      { name:'Rosa',                             role:'His wife' },
-      { name:'Gigliola Spagnuolo', primary:true, role:'Classmate, dates Michele Solara' },
+      { name:'Signor Spagnuolo', role:'Father',
+        reveals:[
+          {chapter:1, text:'Pastry maker at Bar Solara'},
+        ]},
+      { name:'Rosa Spagnuolo', role:'Mother', reveals:[] },
+      { name:'Gigliola Spagnuolo', primary:true, role:'Daughter',
+        reveals:[
+          {chapter:5,  text:'Classmate of Elena and Lila'},
+          {chapter:87, text:'Begins dating Michele Solara'},
+        ]},
     ]
   },
   {
-    id:'other', name:'Other Key Characters', color:'var(--cluster-other)', cols:4,
+    id:'other', name:'Other Key Characters', color:'var(--cluster-other)',
+    summary:'Teachers, Friends & Others',
     members:[
-      { name:'Maestra Oliviero', primary:true,   role:'Teacher who fights for Elena\'s education' },
-      { name:'Maestro Ferraro',                  role:'Teacher & neighbourhood librarian' },
-      { name:'Gino', primary:true,               role:'Son of the local pharmacist; Elena\'s first boyfriend' },
-      { name:'Nella Incardo',                    role:'Maestra Oliviero\'s cousin; hosts Elena on Ischia' },
-      { name:'Prof. Gerace',                     role:'High school teacher' },
-      { name:'Prof. Galiani',                    role:'Intellectual mentor to Elena' },
-      { name:'Pietro Airota',                    role:'Inflexible academic; Elena\'s future husband' },
+      { name:'Maestra Oliviero', primary:true, role:'Elementary school teacher',
+        reveals:[
+          {chapter:5,  text:'Recognises Elena and Lila\'s extraordinary intelligence'},
+          {chapter:25, text:'Fights to send Elena to middle school — fails to do the same for Lila'},
+        ]},
+      { name:'Maestro Ferraro', role:'Teacher & librarian',
+        reveals:[
+          {chapter:5, text:'Also serves as the neighbourhood librarian'},
+        ]},
+      { name:'Gino', primary:true, role:'Classmate',
+        reveals:[
+          {chapter:5,  text:'Son of the local pharmacist'},
+          {chapter:55, text:'Elena\'s first brief romantic relationship'},
+        ]},
+      { name:'Nella Incardo', role:'Family acquaintance', firstChapter:75,
+        reveals:[
+          {chapter:75, text:'Maestra Oliviero\'s cousin — hosts Elena on Ischia'},
+        ]},
+      { name:'Prof. Gerace', role:'High school teacher', firstChapter:45,
+        reveals:[] },
+      { name:'Prof. Galiani', role:'High school teacher', firstChapter:45,
+        reveals:[
+          {chapter:45, text:'Intellectual mentor — encourages Elena\'s ambitions'},
+        ]},
+      { name:'Pietro Airota', role:'Academic', firstChapter:87,
+        reveals:[
+          {chapter:87, text:'Elena\'s future husband — principled but inflexible'},
+        ]},
     ]
   },
 ];
@@ -615,29 +768,36 @@ function currentEra(){ return (ERAS.find(e=>currentChapter<=e.max)||ERAS[ERAS.le
 function renderCards(){
   const grid = document.getElementById('cluster-grid');
   grid.innerHTML = '';
-  FAMILIES.forEach((family,idx)=>{
+  let visibleIdx = 0;
+  FAMILIES.forEach((family)=>{
+    if ((family.firstChapter || 1) > currentChapter) return;
+
     const card = document.createElement('div');
     card.className = 'family-card';
-
     card.style.setProperty('--family-color', family.color);
-    card.style.setProperty('--card-index', idx);
+    card.style.setProperty('--card-index', visibleIdx++);
 
-    const header = document.createElement('div');
-    header.className = 'family-card-header';
     const nameParts = family.name.split(' ');
     const surname = nameParts.slice(0, -1).join(' ');
     const familyWord = nameParts[nameParts.length - 1];
-    header.innerHTML = `<h2><span class="family-surname">${surname}</span><span class="family-word">${familyWord}</span></h2>`;
+    const header = document.createElement('div');
+    header.className = 'family-card-header';
+    header.innerHTML = `<h2><span class="family-surname">${surname}</span><span class="family-word">${familyWord}</span></h2>`
+      + (family.summary ? `<span class="family-summary">${family.summary}</span>` : '');
     card.appendChild(header);
 
     const list = document.createElement('div');
     list.className = 'char-list';
     family.members.forEach(m=>{
+      if ((m.firstChapter || 1) > currentChapter) return;
       const row = document.createElement('div');
       row.className = 'char-row';
       const dot = m.primary ? `<span class="char-dot"></span>` : '';
+      const visibleReveals = (m.reveals || []).filter(r => r.chapter <= currentChapter);
+      const revealsHTML = visibleReveals.map(r => `<span class="char-reveal">${r.text}</span>`).join('');
       row.innerHTML = `<div class="char-name-row">${dot}<span class="char-name${m.primary?' primary':''}">${m.name}</span></div>`
-        + (m.role ? `<span class="char-role">${m.role}</span>` : '');
+        + (m.role ? `<span class="char-role">${m.role}</span>` : '')
+        + revealsHTML;
       list.appendChild(row);
     });
     card.appendChild(list);
@@ -676,6 +836,7 @@ function updateSlider(){
   document.getElementById('chapter-era').textContent = currentEra();
   updateArrows();
   renderTimeline();
+  renderCards();
 }
 slider.addEventListener('input',()=>{ currentChapter=parseInt(slider.value,10); updateSlider(); });
 
