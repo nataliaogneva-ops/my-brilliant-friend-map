@@ -238,13 +238,6 @@ body {
   border: 1px solid var(--border-default);
   box-shadow: 3px 3px 0 var(--border-default);
   padding: 10px 12px;
-  transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
-}
-@media (hover: hover) and (pointer: fine) {
-  .timeline-event:not(.future):hover .tl-front {
-    box-shadow: 5px 5px 0 var(--border-default);
-    transform: translate(-1px, -1px);
-  }
 }
 /* Active card: accent border + shadow + halftone fill */
 .timeline-event.current .tl-front {
@@ -766,10 +759,9 @@ function renderCards(){
 
     const nameParts = family.name.split(' ');
     const surname = nameParts.slice(0, -1).join(' ');
-    const familyWord = nameParts[nameParts.length - 1];
     const header = document.createElement('div');
     header.className = 'family-card-header';
-    header.innerHTML = `<h2><span class="family-surname">${surname}</span><span class="family-word">${familyWord}</span></h2>`
+    header.innerHTML = `<h2><span class="family-surname">${surname}</span></h2>`
       + (family.summary ? `<span class="family-summary">${family.summary}</span>` : '');
     card.appendChild(header);
 
