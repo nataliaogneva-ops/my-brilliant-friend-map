@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  /* ── Family identity colors ── */
+  /* ── Family identity colors (categorical) ── */
   --cluster-greco:     #1A3A5C;
   --cluster-cerullo:   #6B1F7A;
   --cluster-carracci:  #B5411C;
@@ -27,26 +27,44 @@
   --cluster-spagnuolo: #5A2A5A;
   --cluster-other:     #3E3830;
 
-  /* ── Swiss Editorial palette ── */
-  --surface-bg:    #EBEBEB;   /* cool editorial off-white */
-  --surface-panel: #D6D6D4;   /* cool mid-gray */
-  --surface-card:  #F2F2F0;   /* near-white card surface */
-  --surface-hover: #E0E0DE;
-  --text-primary:  #1A1A1A;   /* near-black */
-  --text-secondary:#5A5A5A;   /* medium gray */
-  --text-muted:    rgba(26,26,26,0.45);
-  --border-subtle: rgba(26,26,26,0.18);
-  --border-default:#1A1A1A;   /* near-black */
-  --accent:        #C8391A;   /* burnt orange-red — active states only */
+  /* ── Reference DS — surface tokens ── */
+  --surface-warm-white: #F0EDE6;
+  --surface-sage:       #C8CFBF;
+  --surface-powder:     #C4D4E3;
+  --surface-slate:      #8A9A9A;
+  --surface-dark:       #1A1A1A;
 
-  /* ── Dual-type system ── */
-  --font-sans:  "Helvetica Neue", "Inter", sans-serif;   /* UI labels, names */
-  --font-mono:  "Space Mono", "Roboto Mono", monospace;  /* data, numbers, dates */
-  --font-serif: "Playfair Display", "Georgia", serif;    /* narrative, bios, descriptions */
+  /* Aliases */
+  --surface-bg:    var(--surface-warm-white);
+  --surface-panel: var(--surface-sage);
+  --surface-card:  var(--surface-warm-white);
 
-  --ease-out:        cubic-bezier(0.23, 1, 0.32, 1);   /* strong ease-out for entries */
-  --ease-in-out:     cubic-bezier(0.77, 0, 0.175, 1);  /* strong ease-in-out for flips */
-  --dur-fast: 160ms;
+  /* ── Text ── */
+  --text-primary:   #1A1A1A;
+  --text-secondary: #595959;
+  --text-tertiary:  #8A8A8A;
+  --text-muted:     rgba(26,26,26,0.38);
+  --text-inverse:   #F0EDE6;
+
+  /* ── Accent — one per screen ── */
+  --accent: #E85D22;
+
+  /* ── Typography ── */
+  --font-sans: "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Space Mono", monospace;
+
+  /* ── Border radius ── */
+  --radius-none: 0px;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+
+  /* ── Motion ── */
+  --ease-out:    ease-out;
+  --ease-in-out: ease-in-out;
+  --dur-fast:   150ms;
+  --dur-normal: 200ms;
 }
 
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -60,67 +78,65 @@ body {
   flex-direction: column;
 }
 
-/* ── Header ── */
+/* ── Header — dark inversion ── */
 #header {
   flex-shrink: 0;
-  background: var(--surface-panel);
-  border-bottom: 1px solid var(--border-default);
+  background: var(--surface-dark);
   z-index: 20;
 }
 #header-top { padding: 14px 24px; }
 #header h1 {
   font-family: var(--font-mono);
-  font-size: 13px; font-weight: 700;
-  letter-spacing: 0.10em; text-transform: uppercase;
-  color: var(--text-secondary);
+  font-size: 12px; font-weight: 400;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(240,237,230,0.45);
 }
-#header h1 span { color: var(--text-primary); }
+#header h1 span { color: var(--text-inverse); }
 
 /* ── Main scroll container ── */
 #main { flex: 1; overflow-y: auto; }
 
 /* ── Chapter strip ── */
 #chapter-strip {
-  padding: 20px 24px 18px;
-  border-bottom: 1px solid var(--border-default);
-  background: var(--surface-panel);
+  padding: 20px 24px 16px;
+  background: var(--surface-sage);
   position: sticky; top: 0; z-index: 10;
+  border-bottom: 1px solid rgba(26,26,26,0.15);
 }
 #chapter-strip-label {
-  display: flex; align-items: flex-end; gap: 12px;
-  margin-bottom: 20px; flex-wrap: wrap;
+  display: flex; align-items: baseline; gap: 16px;
+  margin-bottom: 16px; flex-wrap: wrap;
 }
 #chapter-label-text {
   font-family: var(--font-mono);
-  font-size: 11px; font-weight: 700;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--text-muted);
-  padding-bottom: 10px;
+  font-size: 12px; font-weight: 400;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-tertiary);
+  padding-bottom: 6px;
 }
-/* Chapter number — Swiss poster scale */
+/* Chapter number — text-h1 scale, typographic duality */
 #chapter-val {
   font-family: var(--font-sans);
-  font-size: 56px; font-weight: 700;
+  font-size: 64px; font-weight: 700;
   letter-spacing: -0.03em;
-  text-transform: uppercase;
   color: var(--accent);
-  line-height: 0.9; min-width: 2ch;
+  line-height: 1.0; min-width: 2ch;
 }
 #chapter-val-suffix {
   font-family: var(--font-mono);
-  font-size: 11px; letter-spacing: 0.10em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  padding-bottom: 10px;
+  font-size: 12px; font-weight: 400;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-tertiary);
+  padding-bottom: 6px;
 }
-/* Era name — sans, editorial */
+/* Era name — small mono, subordinate to display number */
 #chapter-era {
-  font-family: var(--font-sans);
-  font-size: 15px; font-weight: 400;
-  font-style: italic;
+  font-family: var(--font-mono);
+  font-size: 13px; font-weight: 400;
+  letter-spacing: 0.05em;
   color: var(--text-secondary);
-  letter-spacing: -0.01em;
-  padding-bottom: 8px;
+  padding-bottom: 6px;
+  text-transform: uppercase;
 }
 
 /* ── Slider arrow hints overlaid on the thumb ── */
@@ -149,79 +165,82 @@ body {
 }
 #thumb-arrow.pulse { animation: arrowBlink 2s ease-in-out infinite; }
 
-/* ── Chapter scroller: 3px track filled with accent up to thumb position ── */
+/* ── Slider ── */
 #chapter-slider {
   -webkit-appearance: none; appearance: none;
-  width: 100%; height: 3px;
+  width: 100%; height: 2px;
   background: linear-gradient(
     to right,
     var(--accent) 0%,
     var(--accent) calc(var(--pct, 0) * 1%),
-    var(--border-default) calc(var(--pct, 0) * 1%),
-    var(--border-default) 100%
+    rgba(26,26,26,0.25) calc(var(--pct, 0) * 1%),
+    rgba(26,26,26,0.25) 100%
   );
   outline: none; cursor: pointer;
-  border-radius: 0;
+  border-radius: var(--radius-none);
 }
 #chapter-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 24px; height: 24px; border-radius: 0;
+  width: 24px; height: 24px; border-radius: var(--radius-none);
   background: var(--accent);
   border: none;
   transition: transform var(--dur-fast) var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
-  #chapter-slider:hover::-webkit-slider-thumb { transform: scale(1.12); }
+  #chapter-slider:hover::-webkit-slider-thumb { transform: scale(1.08); }
 }
-#chapter-slider:active::-webkit-slider-thumb { transform: scale(0.88); }
+#chapter-slider:active::-webkit-slider-thumb { transform: scale(0.92); }
 #chapter-slider:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
 
-/* Tick marks — 4px tall vertical lines + micro mono labels */
+/* Tick marks — instrument panel style */
 #chapter-ticks {
   display: flex; justify-content: space-between;
-  margin-top: 5px; padding: 0 1px;
+  margin-top: 6px; padding: 0 1px;
 }
 .tick { display: flex; flex-direction: column; align-items: center; gap: 3px; }
 .tick-line {
-  width: 1px; height: 4px;
-  background: var(--border-default); opacity: 0.5;
+  width: 1px; height: 5px;
+  background: rgba(26,26,26,0.3);
 }
 .tick-label {
   font-family: var(--font-mono);
-  font-size: 11px; text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
+  font-size: 12px; text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-tertiary);
 }
 
 /* ── Timeline ── */
 #timeline-bar {
-  background: var(--surface-bg);
-  border-bottom: 1px solid var(--border-default);
+  background: var(--surface-warm-white);
+  border-bottom: 1px solid rgba(26,26,26,0.12);
 }
-#timeline-header { padding: 16px 24px 8px; }
+#timeline-header { padding: 20px 24px 8px; }
 #timeline-header-label {
   font-family: var(--font-mono);
-  font-size: 10px; font-weight: 700;
-  letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--text-muted);
+  font-size: 12px; font-weight: 400;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-tertiary);
 }
 #timeline-scroll-wrap { position: relative; }
 #timeline-scroll-wrap::after {
   content: '';
   position: absolute; top: 0; right: 0; bottom: 0; width: 56px;
-  background: linear-gradient(to right, transparent, var(--surface-bg));
+  background: linear-gradient(to right, transparent, var(--surface-warm-white));
   pointer-events: none;
 }
 #timeline-scroll {
-  display: flex; gap: 12px;
-  padding: 0 24px 16px;
+  display: flex; gap: 20px;
+  padding: 12px 24px 20px;
   overflow-x: auto; scrollbar-width: none;
 }
 #timeline-scroll::-webkit-scrollbar { display: none; }
 
 .timeline-event {
-  flex-shrink: 0; width: 180px; height: 210px;
+  flex-shrink: 0; width: 188px; height: 210px;
   perspective: 700px;
+  border: 1px solid rgba(26,26,26,0.2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
 }
 .tl-inner {
   position: relative; width: 100%; height: 100%;
@@ -230,217 +249,186 @@ body {
 }
 .timeline-event.future .tl-inner { transform: rotateY(180deg); }
 .tl-front, .tl-back {
-  position: absolute; inset: 0; border-radius: 0;
+  position: absolute; inset: 0;
+  border-radius: var(--radius-lg);
   backface-visibility: hidden; -webkit-backface-visibility: hidden;
 }
 .tl-front {
-  background: var(--surface-card);
-  border: 1px solid var(--border-default);
-  box-shadow: 3px 3px 0 var(--border-default);
-  padding: 10px 12px;
+  background: var(--surface-warm-white);
+  padding: 14px 16px;
 }
-/* Active card: accent border + shadow + halftone fill */
+/* Active cell — accent block, inverted text */
 .timeline-event.current .tl-front {
-  border-color: var(--accent);
-  box-shadow: 3px 3px 0 var(--accent);
-  background-color: var(--surface-card);
-  background-image:
-    radial-gradient(circle, rgba(26,26,26,0.10) 1px, transparent 1px),
-    radial-gradient(circle, rgba(26,26,26,0.10) 1px, transparent 1px);
-  background-size: 8px 8px;
-  background-position: 4px 4px, 0 0;
+  background: var(--accent);
 }
+.timeline-event.current .timeline-year,
+.timeline-event.current .timeline-title,
+.timeline-event.current .timeline-desc { color: var(--text-inverse); }
+.timeline-event.current .tl-dot { background: var(--text-inverse); color: var(--accent); }
 .tl-back {
-  background: var(--surface-panel);
-  border: 1px solid var(--border-default);
-  box-shadow: 3px 3px 0 var(--border-default);
+  background: var(--surface-sage);
   transform: rotateY(180deg);
   display: flex; align-items: center; justify-content: center;
-  background-image: radial-gradient(circle, rgba(26,26,26,0.12) 1px, transparent 1px);
-  background-size: 8px 8px;
 }
 .tl-back-mark {
-  width: 20px; height: 20px; border-radius: 0;
-  border: 1px solid var(--border-default); opacity: 0.3;
+  font-family: var(--font-mono);
+  font-size: 12px; font-weight: 400;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-tertiary);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
 }
 .timeline-num { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
-/* Chapter dot — square, mono */
+/* Archival index number */
 .tl-dot {
-  width: 18px; height: 18px; border-radius: 0;
-  background: var(--surface-panel);
-  border: 1px solid var(--border-default);
+  width: 18px; height: 18px;
+  border-radius: var(--radius-none);
+  background: var(--surface-sage);
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-mono);
-  font-size: 9px; font-weight: 700; color: var(--text-secondary); flex-shrink: 0;
+  font-size: 11px; font-weight: 700; color: var(--text-secondary); flex-shrink: 0;
 }
-.tl-dot.current-dot { background: var(--accent); color: var(--surface-bg); border-color: var(--accent); }
-/* Date — 24px mono token (scaled down for card space: keeps mono/uppercase character) */
+.tl-dot.current-dot { background: var(--text-inverse); color: var(--accent); }
 .timeline-year {
   font-family: var(--font-mono);
-  font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;
-  color: var(--text-muted);
+  font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--text-tertiary);
 }
-/* Event title — bold sans-serif (UI element) */
 .timeline-title {
   font-family: var(--font-sans);
   font-size: 15px; font-weight: 700;
   color: var(--text-primary); line-height: 1.3; margin-bottom: 5px;
 }
-/* Description — sans regular */
 .timeline-desc {
   font-family: var(--font-sans);
-  font-size: 13px; font-style: normal;
-  color: var(--text-secondary); line-height: 1.55;
+  font-size: 14px;
+  color: var(--text-secondary); line-height: 1.5;
 }
 
 /* ── Main grid ── */
 #cluster-grid {
   columns: 3; column-gap: 20px;
-  padding: 24px 24px 48px;
+  padding: 28px 24px 64px;
 }
 
-/* ── Family card — uniform border, colored shadow, halftone header ── */
+/* ── Family card — archival grid cell ── */
 .family-card {
-  background: var(--surface-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 0;
-  box-shadow: 3px 3px 0 var(--family-color, rgba(62,44,27,0.18));
+  background: var(--surface-warm-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(26,26,26,0.2);
   overflow: hidden;
   break-inside: avoid;
   margin-bottom: 20px;
 }
+#cluster-grid { margin-left: 0; margin-top: 0; }
+
 .family-card-header {
-  padding: 14px 16px 12px;
-  border-bottom: 1px solid var(--border-subtle);
-  background: var(--surface-panel);
-  background-image:
-    radial-gradient(circle, rgba(26,26,26,0.09) 1px, transparent 1px),
-    radial-gradient(circle, rgba(26,26,26,0.09) 1px, transparent 1px);
-  background-size: 8px 8px;
-  background-position: 4px 4px, 0 0;
+  padding: 16px 18px 12px;
+  background: var(--surface-sage);
+  border-bottom: 1px solid rgba(26,26,26,0.15);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
-/* Family summary — italic subtitle below surname */
 .family-summary {
   display: block;
   font-family: var(--font-mono);
-  font-size: 10px; font-weight: 400;
-  letter-spacing: 0.10em; text-transform: uppercase;
-  color: var(--text-muted);
+  font-size: 12px; font-weight: 400;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-tertiary);
   margin-top: 5px;
-  font-style: normal;
 }
 
-/* Revealed character detail — accent orange, second line */
+/* Revealed character detail — accent, own line below name+role */
 .char-reveal {
+  flex-basis: 100%; /* break to new line within the flex row */
   display: block;
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: 12px; font-weight: 400;
   color: var(--accent);
-  line-height: 1.45;
-  margin-top: 3px;
+  line-height: 1.5;
+  margin-top: 2px;
+  letter-spacing: 0.02em;
   opacity: 0;
   transition: opacity 500ms ease;
 }
-.char-reveal.visible {
-  opacity: 1;
-}
+.char-reveal.visible { opacity: 1; }
 
-/* Family card header — two-tier like "Chapter 01" */
 .family-card-header h2 { line-height: 1; }
 .family-surname {
   display: block;
   font-family: var(--font-sans);
   font-size: 22px; font-weight: 700;
-  letter-spacing: 0.03em; text-transform: uppercase;
+  letter-spacing: 0.04em; text-transform: uppercase;
   color: var(--family-color, var(--text-primary));
   line-height: 1.1;
 }
-.family-word {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 10px; font-weight: 700;
-  letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--text-muted);
-  margin-top: 3px;
-}
 
-/* ── Character entry cards ── */
-/* Panel tray — gives mini-cards a background to sit on */
+/* ── Character list — data-row pattern ── */
 .char-list {
-  padding: 10px;
-  display: flex; flex-direction: column; gap: 8px;
-  background: var(--surface-panel);
+  padding: 0;
+  display: flex; flex-direction: column;
+  background: var(--surface-warm-white);
 }
-/* Each member = isolated mini-card: cream surface, 1px espresso border, sharp corners */
+/* Data rows: thin border separators, name + role inline */
 .char-row {
-  display: flex; flex-direction: column; gap: 4px;
-  background: var(--surface-card);
-  border: 1px solid var(--border-default);
-  padding: 10px 12px;
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 8px;
+  background: transparent;
+  border-bottom: 1px solid rgba(26,26,26,0.1);
+  padding: 11px 18px;
 }
+.char-row:last-child { border-bottom: none; }
 
-/* Name row wrapper — aligns dot + name */
-.char-name-row { display: flex; align-items: center; gap: 7px; }
-
-/* Color-coded square dot for primary characters */
+/* Name row wraps together with dot */
+.char-name-row {
+  display: contents; /* let dot + name sit inline with role */
+}
+/* Family color dot — square mark */
 .char-dot {
-  width: 8px; height: 8px; flex-shrink: 0;
-  background: var(--family-color, var(--border-default));
+  width: 7px; height: 7px; flex-shrink: 0;
+  border-radius: var(--radius-none);
+  background: var(--family-color, var(--text-secondary));
+  align-self: center;
+  margin-right: 2px;
 }
-
-/* Names — consistent 15px, weight-only distinction */
 .char-name {
   font-family: var(--font-sans);
   font-size: 15px; font-weight: 400;
-  color: var(--text-secondary); line-height: 1.3;
+  color: var(--text-secondary); line-height: 1.4;
 }
 .char-name.primary {
   font-weight: 700;
   color: var(--text-primary);
 }
-/* Roles — sans regular */
+/* Role — inline after name, separated by em-dash via ::before */
 .char-role {
-  font-family: var(--font-sans);
-  font-size: 13px; font-weight: 400; font-style: normal;
-  color: var(--text-secondary); line-height: 1.4;
+  font-family: var(--font-mono);
+  font-size: 12px; font-weight: 400;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--text-tertiary); line-height: 1.4;
 }
-
-/* ── Stagger entry for family cards ── */
-@keyframes cardIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.family-card {
-  animation: cardIn 300ms var(--ease-out) backwards;
-  animation-delay: calc(var(--card-index, 0) * 40ms);
+.char-role::before {
+  content: "— ";
+  color: var(--text-muted);
+  font-style: normal;
 }
 
 /* ── Chapter number update pulse ── */
 @keyframes chapterPop {
   0%   { opacity: 1;   transform: scale(1); }
-  35%  { opacity: 0.5; transform: scale(0.93); }
+  35%  { opacity: 0.4; transform: scale(0.96); }
   100% { opacity: 1;   transform: scale(1); }
 }
 #chapter-val.updating {
-  animation: chapterPop 220ms var(--ease-out);
-}
-
-/* ── Family card hover lift ── */
-.family-card {
-}
-
-/* ── Char-row ── */
-.char-row {
+  animation: chapterPop var(--dur-normal) var(--ease-out);
 }
 
 /* ── Responsive ── */
 @media (max-width: 700px) {
   #header-top { padding: 12px 16px; }
-  #chapter-strip { padding: 12px 16px 14px; position: static; }
-  #chapter-val { font-size: 20px; }
-  #timeline-header { padding: 12px 16px 6px; }
-  #timeline-scroll { padding: 0 16px 12px; }
-  #cluster-grid { columns: 1; padding: 16px 16px 32px; }
+  #chapter-strip { padding: 14px 16px 12px; position: static; }
+  #chapter-val { font-size: 48px; }
+  #timeline-header { padding: 14px 16px 6px; }
+  #timeline-scroll { padding: 8px 16px 16px; }
+  #cluster-grid { columns: 1; padding: 16px 16px 48px; margin-left: 0; margin-top: 0; }
   .family-card { margin-bottom: 16px; }
 }
 @media (min-width: 701px) and (max-width: 1100px) {
